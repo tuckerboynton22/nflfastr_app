@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <h2>Glossary</h2>
+    <ul>
+        <li><b>Expected Points (EP):</b> using scoring event probabilities, the estimated expected points with respect to the possessing team before the play;
+        simply put, the value of a particular situation to the offensive team, measured by points
+        (more <a href="https://theathletic.com/1997663/2020/10/29/nfl-analytics-glossary-dvoa-epa-qbr/">here</a> if you're curious)</li>
+        <li><b>Expected Points Added (EPA):</b> expected points after the play minus expected points before</li>
+        <li><b>Completion Percentage Over Expected (CPOE):</b> 1 - completion probability</li>
+        <li><b>Completion Probability:</b> probability for a complete pass based on comparable game situations</li>
+        <li><b>Success Rate:</b> percent of plays with positive EPA</li>
+        <li><b>Yards Gained:</b> yards gained (or lost) by the possessing team, excluding yards gained via fumble recoveries and laterals</li>
+        <li><b>Yard Line:</b> number of yards from line of scrimmage to offensive end zone</li>
+        <li><b>Air Yards:</b> distance in yards perpendicular to the line of scrimmage at where the targeted receiver either caught or didn’t catch the ball</li>
+        <li><b>Yards After Catch (YAC):</b> distance in yards perpendicular to the yard line where the receiver made the reception to where the play ended.</li>
+        <li><b>Kick Distance:</b> distance in yards for kickoffs, field goals, and punts</li>
+        <li><b>Completed Air EPA:</b> EPA from the air yards alone on a completed pass</li>
+        <li><b>Completed YAC EPA:</b> EPA from the yards after catch alone on a completed pass</li>
+        <li><b>Win Probability (WP):</b> estimated win probabiity for the possessing team given the current situation at the start of the play</li>
+        <li><b>Win Probability Added (WPA):</b> win probability after the play minus win probability before</li>
+        <li><b>Completed Air WPA:</b> WPA from the air yards alone on a completed pass</li>
+        <li><b>YAC WPA:</b> WPA from the yards after catch alone on a completed pass</li>
+        <li><b>Drive Number:</b> total drive number in game (Tm + Opp)</li>
+        <li><b>Vegas Total:</b> closing Vegas line for the game (via Pro-Football-Ref)</li>
+        <li><b>Mean Expected YAC:</b> average expected yards after the catch based on where the ball was caught</li>
+        <li><b>Expected YAC EPA:</b> Expected value of EPA gained after the catch, starting from where the catch was made;
+        zero yards after the catch would be listed as zero EPA</li>
+        <li><b>QB EPA:</b> gives QB credit for EPA for up to the point where a receiver lost a fumble aftera completed catch;
+        makes EPA work more like passing yards on plays with fumbles</li>
+    </ul>
+    Definitions derived from nflfastR documentation.
+{% endblock %}

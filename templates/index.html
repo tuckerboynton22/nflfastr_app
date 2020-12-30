@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <h5>Find plays with...</h5>
+    <hr>
+    <form action="/index" method="post">
+        <select name="team">
+            <option selected value="">Team</option>
+            {% for team in teams %}
+                <option value="{{ team['posteam'] }}">{{ team["posteam"] }}</option>
+            {% endfor %}
+        </select>
+        vs.
+        <select name="opp">
+            <option selected value="">Opp</option>
+            {% for team in teams %}
+                <option value="{{ team['posteam'] }}">{{ team["posteam"] }}</option>
+            {% endfor %}
+        </select>
+        <hr>
+        Team is
+        <select name="home">
+            <option selected value="either">Either</option>
+            <option value="home">Home</option>
+            <option value="away">Away</option>
+        </select>
+        and on
+        <select name="offense">
+            <option selected value="either">Either</option>
+            <option value="offense">Offense</option>
+            <option value="defense">Defense</option>
+        </select>
+        <hr>
+        From
+        <select name="start">
+            {% for season in seasons %}
+                <option value="{{ season['season'] }}">{{ season["season"] }}</option>
+            {% endfor %}
+        </select>
+        to
+        <select name="end">
+            {% for season in seasons %}
+                <option value="{{ season['season'] }}">{{ season["season"] }}</option>
+            {% endfor %}
+        </select>
+        during the
+        <select name="season_type">
+            <option value="REG">Regular Season
+            <option value="POST">Playoffs
+            <option value="both">Both
+        </select>
+        <hr>
+        Quarter:
+        {% for quarter in quarters %}
+            <input name="{{ quarter }}" value="{{ quarter }}" type="checkbox" checked="checked"> {{ quarters[quarter] }}
+        {% endfor %}
+        <hr>
+        Play type:
+        {% for play_type in play_types %}
+            <input name="{{ play_type }}" value="{{ play_type }}" type="checkbox" checked="checked"> {{ play_types[play_type] }}
+        {% endfor %}
+        <hr>
+        {% for i in range(NUMFILTERS) %}
+            <select name={{ ["filter", i|string]|join }}>
+                <option selected value="">Choose Filter</option>
+                    {% for filter in filters %}
+                        <option value="{{ filter }}">{{ filters[filter] }}</option>
+                    {% endfor %}
+            </select>
+            <select name={{ ["inequality", i|string]|join }}>
+                <option selected value="">Choose</option>
+                    {% for inequality in inequalities %}
+                        <option value="{{ inequality }}">{{ inequality }}</option>
+                    {% endfor %}
+            </select>
+            <input name={{ ["filtervalue", i|string]|join }} placeholder=0 type="number" step=0.01>
+            <br>
+        {% endfor %}
+        <hr>
+        Penalty:
+        <select name="penalty">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        Turnover:
+        <select name="turnover">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        Score:
+        <select name="score">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <hr>
+        Sort by:
+        <select name="order">
+            <option value="DESC">Descending</option>
+            <option value="ASC">Ascending</option>
+        </select>
+        <select name="sort">
+            {% for filter in filters %}
+                <option value="{{ filter }}">{{ filters[filter] }}</option>
+            {% endfor %}
+        </select>
+        Group by:
+        <select name="grouping">
+            <option selected value="">Choose</option>
+            {% for grouping in groupings %}
+                <option value="{{ grouping }}">{{ groupings[grouping] }}</option>
+            {% endfor %}
+        </select>
+        <hr>
+        Minimum plays (for grouped searches):
+        <input name="minimum" placeholder=1 value=1 type="number" min="1">
+        <hr>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+{% endblock %}
