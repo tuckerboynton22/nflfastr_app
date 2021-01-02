@@ -75,7 +75,7 @@ quarters = {
 app = Flask(__name__)
 
 # Update database
-db = SQL(os.getenv("postgres://anlrtkzrgyvchg:d225aa685f1773484bc5a8561e69058e7f96ab84e416ab2d5b487dbb36660934@ec2-52-203-49-58.compute-1.amazonaws.com:5432/d365jpj4e1lpa7"))
+db = SQL(os.getenv("DATABASE_URL"))
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
