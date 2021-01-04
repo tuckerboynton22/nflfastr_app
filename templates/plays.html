@@ -31,8 +31,8 @@
                 <th>Down</th>
                 <th>Distance</th>
                 <th>Description</th>
-                {% for filter in filterdict %}
-                    <th>{{ filterdict[filter] }}</th>
+                {% for filter in filter_dict %}
+                    <th>{{ filter_dict[filter] }}</th>
                 {% endfor %}
                 <th>Box Scores</th>
             </tr>
@@ -46,16 +46,16 @@
                     <td>{{ play.defteam }}</td>
                     <td>{{ play.week }}</td>
                     <td>{{ play.game_date }}</td>
-                    <td>{{ play.qtr }}</td>
+                    <td>{{ play.qtr|int }}</td>
                     {%- if play.quarter_seconds_remaining|int % 60 < 10 -%}
                         <td>{{ play.quarter_seconds_remaining|int // 60 }}:0{{ play.quarter_seconds_remaining|int % 60 }}</td>
                     {%- else -%}
                         <td>{{ play.quarter_seconds_remaining|int // 60 }}:{{ play.quarter_seconds_remaining|int % 60 }}</td>
                     {%- endif -%}
-                    <td>{{ play.down }}</td>
-                    <td>{{ play.ydstogo }}</td>
+                    <td>{{ play.down|int }}</td>
+                    <td>{{ play.ydstogo|int }}</td>
                     <td>{{ play.desc }}</td>
-                    {%- for filter in filterdict.keys() -%}
+                    {%- for filter in filter_dict.keys() -%}
                         <td>{{ '%0.2f'|format(play[filter]|float) }}</td>
                     {%- endfor -%}
                     <td><a href="https://rbsdm.com/stats/box_scores/?_inputs_&type=%22{{ play.season_type|lower }}%22&away=%22{{ play.away_team }}%22&home=%22{{ play.home_team }}%22&year=%22{{ play.season }}%22">Box Score</a></td>

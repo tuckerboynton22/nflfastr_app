@@ -41,8 +41,8 @@
                         {% endif %}
                         <td>{{ play[grouping] }}</td>
                         <td>{{ play.total }}</td>
-                        <td>{{ '%0.2f'|format(play.epa) }}</td>
-                        <td>{{ '%0.2f'|format(play.success) }}</td>
+                        <td>{{ '%0.3f'|format(play.epa) }}</td>
+                        <td>{{ '%0.3f'|format(play.success) }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
