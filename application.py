@@ -369,8 +369,7 @@ def index():
                                 season>=? AND season<=?"
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
-                                + " AND " + sort[0] + "!='NA' \
-                                ORDER BY CAST(" + sort[0] + " AS float) " \
+                                + " ORDER BY CAST(" + sort[0] + " AS float) " \
                                 + order + " LIMIT 1000",
                                 season_start, season_end)
 
@@ -382,8 +381,9 @@ def index():
                                 AVG(CAST(epa AS float)) AS epa, \
                                 AVG(CAST(success AS float)) AS success, \
                                 AVG(CAST(" + sort[0] + " AS float)) AS " + sort[0]  \
-                                + ", posteam AS posteam"
-                                + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
+                                + ", posteam AS posteam" \
+                                + " FROM nflfastR_pbp WHERE season>=? AND season<=? " \
+                                + "AND " + grouping + "!='None'  AND " + grouping + " IS NOT NULL " \
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
                                 + "GROUP BY " + grouping + grouping2 \
