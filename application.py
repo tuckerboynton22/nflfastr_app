@@ -369,7 +369,7 @@ def index():
                                 season>=? AND season<=?"
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
-                                + " WHERE " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
+                                + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                                 + order + " LIMIT 1000",
                                 season_start, season_end)
 
