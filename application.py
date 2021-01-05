@@ -369,8 +369,8 @@ def index():
                                 season>=? AND season<=?"
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
-                                + " ORDER BY " + sort[0] + " " \
-                                + order + ", id LIMIT 1000",
+                                + " WHERE " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
+                                + order + " LIMIT 1000",
                                 season_start, season_end)
 
             return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
