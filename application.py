@@ -47,7 +47,8 @@ groupings = {
     "punter_player_name": "Punter",
     "posteam": "Offense",
     "defteam": "Defense",
-    "game_id": "Game"
+    "game_id": "Game",
+    "season": "Season"
 }
 
 # Create global play types
@@ -81,10 +82,9 @@ quarters = {
 app = Flask(__name__)
 
 # Update database
-# db = SQL(os.getenv("DATABASE_URL"))
+db = SQL(os.getenv("DATABASE_URL"))
 # db = SQL("sqlite:///cleaned_pbp.db")
-
-db = SQL("sqlite:///pbp.db")
+# db = SQL("sqlite:///pbp.db")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -390,7 +390,7 @@ def index():
                                 + " ORDER BY " + sort[0] + " " + order + " LIMIT 1000",
                                 season_start, season_end)
 
-            if grouping == "posteam" or grouping == "defteam" or grouping == "game_id":
+            if grouping == "posteam" or grouping == "defteam" or grouping == "game_id" or grouping == "season":
                 return render_template("teams.html", plays=plays, order=order, sort=sort,
                                         grouping=grouping, groupings=groupings, searchdesc=searchdesc, minplays=minplays)
 
