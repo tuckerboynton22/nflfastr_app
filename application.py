@@ -82,9 +82,9 @@ quarters = {
 app = Flask(__name__)
 
 # Update database
-db = SQL(os.getenv("DATABASE_URL"))
+# db = SQL(os.getenv("DATABASE_URL"))
 # db = SQL("sqlite:///cleaned_pbp.db")
-# db = SQL("sqlite:///pbp.db")
+db = SQL("sqlite:///pbp.db")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -284,7 +284,7 @@ def index():
 
             if request.form.get(filt) != "" and request.form.get(inequal) != "" and request.form.get(filtval) != "":
                 filter_query = filter_query + " AND CAST(" + str(request.form.get(filt)) + " AS float)" + str(request.form.get(inequal)) \
-                                + str(request.form.get(filtval)) + " AND " + str(request.form.get(filt)) + "!='NA' "
+                                + str(request.form.get(filtval)) + " "
                 filter_dict[request.form.get(filt)] = filters[request.form.get(filt)]
                 filter_results = filter_results + ", " + str(filters[request.form.get(filt)]) + str(request.form.get(inequal)) + str(request.form.get(filtval))
 
@@ -369,7 +369,7 @@ def index():
                                 season>=? AND season<=?"
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
-                                + " ORDER BY CAST(" + sort[0] + " AS float) " \
+                                + " ORDER BY " + sort[0] + " " \
                                 + order + " LIMIT 1000",
                                 season_start, season_end)
 
@@ -378,8 +378,8 @@ def index():
 
         else:
             plays = db.execute("SELECT " + grouping + grouping2 + ", COUNT(*) AS total, \
-                                AVG(CAST(epa AS float)) AS epa, \
-                                AVG(CAST(success AS float)) AS success, \
+                                AVG(epa) AS epa, \
+                                AVG(success) AS success, \
                                 AVG(CAST(" + sort[0] + " AS float)) AS " + sort[0]  \
                                 + ", posteam AS posteam" \
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=? " \
