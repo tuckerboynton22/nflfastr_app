@@ -284,7 +284,7 @@ def index():
 
             if request.form.get(filt) != "" and request.form.get(inequal) != "" and request.form.get(filtval) != "":
                 filter_query = filter_query + " AND CAST(" + str(request.form.get(filt)) + " AS float)" + str(request.form.get(inequal)) \
-                                + str(request.form.get(filtval)) + " "
+                                + str(request.form.get(filtval)) + " AND " + str(request.form.get(filt)) + " IS NOT NULL "
                 filter_dict[request.form.get(filt)] = filters[request.form.get(filt)]
                 filter_results = filter_results + ", " + str(filters[request.form.get(filt)]) + str(request.form.get(inequal)) + str(request.form.get(filtval))
 
@@ -381,6 +381,7 @@ def index():
                                 AVG(epa) AS epa, \
                                 AVG(success) AS success, \
                                 AVG(CAST(" + sort[0] + " AS float)) AS " + sort[0]  \
+                                + + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL and epa IS NOT NULL" \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                                 + " AND " + grouping + "!='None'  AND " + grouping + " IS NOT NULL " \
