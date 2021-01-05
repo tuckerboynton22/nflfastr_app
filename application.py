@@ -82,7 +82,7 @@ quarters = {
 app = Flask(__name__)
 
 # Update database
-db = SQL(os.getenv("HEROKU_POSTGRESQL_PINK_URL"))
+db = SQL(os.getenv("DATABASE_URL"))
 # db = SQL("sqlite:///cleaned_pbp.db")
 # db = SQL("sqlite:///pbp.db")
 
