@@ -381,9 +381,9 @@ def index():
                                 AVG(epa) AS epa, \
                                 AVG(success) AS success, \
                                 AVG(CAST(" + sort[0] + " AS float)) AS " + sort[0]  \
-                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL and epa IS NOT NULL" \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
+                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL and epa IS NOT NULL" \
                                 + " AND " + grouping + "!='None'  AND " + grouping + " IS NOT NULL " \
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
