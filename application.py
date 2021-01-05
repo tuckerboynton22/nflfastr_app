@@ -179,7 +179,7 @@ def index():
         elif request.form.get("team") != "" and request.form.get("opp") != "":
             team_results = team
             opp_results = opp
-            team_query = team_query + " AND((posteam='" + opp + " OR defteam='" + team + ") OR (posteam='" + team + "' OR defteam='" + opp + "')) "
+            team_query = team_query + " AND((posteam='" + opp + "' OR defteam='" + team + "') OR (posteam='" + team + "' OR defteam='" + opp + "')) "
             if home != "":
                 team_query = team_query + " AND " + home + "='" + team + "' "
             if offense != "":
@@ -370,7 +370,7 @@ def index():
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
                                 + " ORDER BY " + sort[0] + " " \
-                                + order + " LIMIT 1000",
+                                + order + ", id LIMIT 1000",
                                 season_start, season_end)
 
             return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
@@ -381,7 +381,7 @@ def index():
                                 AVG(epa) AS epa, \
                                 AVG(success) AS success, \
                                 AVG(CAST(" + sort[0] + " AS float)) AS " + sort[0]  \
-                                + ", STRING_AGG(DISTINCT posteam, ' ') as posteam"
+                                + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                                 + " AND " + grouping + "!='None'  AND " + grouping + " IS NOT NULL " \
                                 + team_query + filter_query + indicators \
