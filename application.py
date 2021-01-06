@@ -349,7 +349,11 @@ def index():
             grouping_results = ""
 
         # Create minimum description
-        minplays = int(request.form.get("minimum"))
+        if request.form.get("minimum") != "":
+            minplays = int(request.form.get("minimum"))
+        else:
+            minplays = 1
+    
         if minplays > 0 and grouping != "":
             minplay_results = " Min. " + str(minplays) + " plays."
         else:
