@@ -353,7 +353,7 @@ def index():
         if request.form.get("minimum") != "":
             minplays = int(request.form.get("minimum"))
         else:
-            minplays = 1
+            minplays = 0
     
         if minplays > 0 and grouping != "":
             minplay_results = " Min. " + str(minplays) + " plays."
@@ -366,7 +366,7 @@ def index():
                     + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
                     + play_type_results + ". " + indicator_results + filter_results + ". " + grouping_results + minplay_results
 
-        select = select + " posteam, defteam, week, game_date, qtr, quarter_seconds_remaining, down, ydstogo, desc "
+        select = select + " posteam, defteam, week, game_date, qtr, quarter_seconds_remaining, down, ydstogo, 'desc' "
 
         # If no grouping, pass list of plays to plays.html
         if grouping == "":
