@@ -179,7 +179,7 @@ def index():
         elif request.form.get("team") != "" and request.form.get("opp") != "":
             team_results = team
             opp_results = opp
-            team_query = team_query + " AND((posteam='" + opp + "' OR defteam='" + team + "') OR (posteam='" + team + "' OR defteam='" + opp + "')) "
+            team_query = team_query + " AND((posteam='" + opp + "' AND defteam='" + team + "') OR (posteam='" + team + "' AND defteam='" + opp + "')) "
             if home != "":
                 team_query = team_query + " AND " + home + "='" + team + "' "
             if offense != "":
