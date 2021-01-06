@@ -291,6 +291,7 @@ def index():
 
         # Set desired sorting mechanism
         sort = [request.form.get("sort"), filters[request.form.get("sort")]]
+        select = select + request.form.get("sort") + ", "
         order = request.form.get("order")
 
         # Create penalty query
