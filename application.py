@@ -126,9 +126,9 @@ def homepage():
 # Play index
 @app.route("/index", methods=["GET", "POST"])
 def index():
+
     # Provide form for query
     if request.method == "GET":
-
         teams = db.execute("SELECT DISTINCT posteam FROM nflfastR_pbp WHERE posteam!='' ORDER BY posteam")
         inequalities = ["=", ">", "<"]
         seasons = db.execute("SELECT DISTINCT season FROM nflfastR_pbp ORDER BY season")
@@ -259,7 +259,7 @@ def index():
                 else:
                     play_type_query = play_type_query + "OR play_type='" + playtype + "' "
                     play_type_results = play_type_results + ", " + play_types[playtype]
-            if (playtype == "pass" or playtype == "rush" or playtype == "two_point_attempt") and playtype in play_types.keys():
+            elif (playtype == "pass" or playtype == "rush" or playtype == "two_point_attempt") and playtype in play_types.keys():
                 if play_type_query == "":
                     play_type_query = " AND(" + playtype + "=1 "
                     play_type_results = " "  + play_types[playtype]
@@ -274,6 +274,7 @@ def index():
         filter_query = ""
         filter_dict = {}
         filter_results = ""
+        select = ""
         NUMFILTERS = 5
         for i in range(NUMFILTERS):
             # Set variables to iterate over filter, inequality, and filter value for all filters
@@ -282,8 +283,9 @@ def index():
             filtval = "filtervalue"+str(i)
 
             if request.form.get(filt) != "" and request.form.get(inequal) != "" and request.form.get(filtval) != "":
-                filter_query = filter_query + " AND CAST(" + str(request.form.get(filt)) + " AS float)" + str(request.form.get(inequal)) \
+                filter_query = filter_query + " AND " + str(request.form.get(filt)) + str(request.form.get(inequal)) \
                                 + str(request.form.get(filtval)) + " AND " + str(request.form.get(filt)) + " IS NOT NULL "
+                select = select + str(request.form.get(filt)) + ", "
                 filter_dict[request.form.get(filt)] = filters[request.form.get(filt)]
                 filter_results = filter_results + ", " + str(filters[request.form.get(filt)]) + str(request.form.get(inequal)) + str(request.form.get(filtval))
 
@@ -364,11 +366,12 @@ def index():
                     + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
                     + play_type_results + ". " + indicator_results + filter_results + ". " + grouping_results + minplay_results
 
+        select = select + " posteam, defteam, week, game_date, qtr, quarter_seconds_remaining, down, ydstogo, desc "
 
         # If no grouping, pass list of plays to plays.html
         if grouping == "":
     
-            plays = db.execute("SELECT * FROM nflfastR_pbp WHERE \
+            plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                                 season>=? AND season<=?"
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
@@ -380,10 +383,10 @@ def index():
 
 
         else:
-            plays = db.execute("SELECT " + grouping + grouping2 + ", COUNT(*) AS total, \
+            plays = db.execute("SELECT " + grouping + grouping2 + ", COUNT(id) AS total, \
                                 AVG(epa) AS epa, \
                                 AVG(success) AS success, \
-                                AVG(CAST(" + sort[0] + " AS float)) AS " + sort[0]  \
+                                AVG(" + sort[0] + ") AS " + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL and epa IS NOT NULL" \
@@ -393,6 +396,7 @@ def index():
                                 + "GROUP BY " + grouping + grouping2 \
                                 + " ORDER BY " + sort[0] + " " + order + " LIMIT 1000",
                                 season_start, season_end)
+            
 
             if grouping == "posteam" or grouping == "defteam" or grouping == "game_id" or grouping == "season":
                 return render_template("teams.html", plays=plays, order=order, sort=sort,
