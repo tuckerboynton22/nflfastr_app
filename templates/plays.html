@@ -54,7 +54,7 @@
                     {%- endif -%}
                     <td>{{ play.down|int }}</td>
                     <td>{{ play.ydstogo|int }}</td>
-                    <td>{{ play.'desc' }}</td>
+                    <td>{{ play.desc }}</td>
                     {%- for filter in filter_dict.keys() -%}
                         <td>{{ '%0.2f'|format(play[filter]|float) }}</td>
                     {%- endfor -%}
