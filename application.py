@@ -169,12 +169,11 @@ def index():
         elif team == "" and opp != "":
             team_results = "any team"
             opp_results = opp
+            team_query = team_query + " AND(" + opp + "=posteam OR " + opp + "=defteam) "
             if home != "":
-                team_query = team_query + " AND " + home + "='" + opp + "' "
+                team_query = team_query + " AND " + home + "!='" + opp + "' "
             if offense != "":
-                team_query = team_query + " AND " + offense + "='" + opp + "' "
-            elif home == "" and offense == "":
-                team_query = team_query + " AND(posteam='" + opp + "' OR defteam='" + opp + "') "
+                team_query = team_query + " AND " + offense + "!='" + opp + "' "
 
         elif request.form.get("team") != "" and request.form.get("opp") != "":
             team_results = team
