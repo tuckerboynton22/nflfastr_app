@@ -348,7 +348,7 @@ def index():
             grouping = group
         
         if group2 == "name":
-            grouping = grouping + group2 + ", id, "
+            grouping = grouping + ", " + group2 + ", id "
         elif group2 == "kicker_player_name":
             grouping = grouping + ", " + group2 + ", kicker_player_id"
         elif group2 == "punter_player_name":
