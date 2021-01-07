@@ -344,15 +344,19 @@ def index():
             grouping = group + ", punter_player_id"
         elif group == "receiver_player_name":
             grouping = group + ", receiver_player_id"
+        else:
+            grouping = group
         
         if group2 == "name":
-            grouping = grouping + ", id"
+            grouping = grouping + group2 + ", id"
         elif group2 == "kicker_player_name":
-            grouping = grouping + ", kicker_player_id"
+            grouping = grouping + group2 + ", kicker_player_id"
         elif group2 == "punter_player_name":
-            grouping = grouping + ", punter_player_id"
+            grouping = grouping + group2 + ", punter_player_id"
         elif group2 == "receiver_player_name":
-            grouping = grouping + ", receiver_player_id"
+            grouping = grouping + group2 + ", receiver_player_id"
+        else:
+            grouping = grouping + group2
 
         if group != "":
             grouping_results = "Grouped by " + groupings[group]
