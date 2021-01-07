@@ -418,7 +418,7 @@ def index():
                                 + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
-                                and epa IS NOT NULL" + grouping_null \
+                                and epa IS NOT NULL" \
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
                                 + "GROUP BY " + grouping \
