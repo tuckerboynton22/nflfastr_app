@@ -421,7 +421,7 @@ def index():
                                 and epa IS NOT NULL" + grouping_null \
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
-                                + "GROUP BY " + grouping \
+                                + "GROUP BY " + grouping + " HAVING COUNT(*) > 100" \
                                 + " ORDER BY " + sort[0] + " " + order + " LIMIT 1000",
                                 season_start, season_end)
             
