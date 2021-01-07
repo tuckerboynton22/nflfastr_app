@@ -337,13 +337,13 @@ def index():
         group2 = request.form.get("grouping2")
 
         if group == "name":
-            grouping = grouping + ", id"
+            grouping = group + ", id"
         elif group == "kicker_player_name":
-            grouping = grouping + ", kicker_player_id"
+            grouping = group + ", kicker_player_id"
         elif group == "punter_player_name":
-            grouping = grouping + ", punter_player_id"
+            grouping = group + ", punter_player_id"
         elif group == "receiver_player_name":
-            grouping = grouping + ", receiver_player_id"
+            grouping = group + ", receiver_player_id"
         
         if group2 == "name":
             grouping = grouping + ", id"
