@@ -337,26 +337,26 @@ def index():
         group2 = request.form.get("grouping2")
 
         if group == "name":
-            grouping = group + ", id, "
+            grouping = group + ", id"
         elif group == "kicker_player_name":
-            grouping = group + ", kicker_player_id, "
+            grouping = group + ", kicker_player_id"
         elif group == "punter_player_name":
-            grouping = group + ", punter_player_id, "
+            grouping = group + ", punter_player_id"
         elif group == "receiver_player_name":
-            grouping = group + ", receiver_player_id, "
+            grouping = group + ", receiver_player_id"
         else:
-            grouping = group + ", "
+            grouping = group
         
         if group2 == "name":
             grouping = grouping + group2 + ", id, "
         elif group2 == "kicker_player_name":
-            grouping = grouping + group2 + ", kicker_player_id, "
+            grouping = grouping + ", " + group2 + ", kicker_player_id"
         elif group2 == "punter_player_name":
-            grouping = grouping + group2 + ", punter_player_id, "
+            grouping = grouping + ", " + group2 + ", punter_player_id"
         elif group2 == "receiver_player_name":
-            grouping = grouping + group2 + ", receiver_player_id, "
-        else:
-            grouping = grouping + group2 + ", "
+            grouping = grouping + ", " + group2 + ", receiver_player_id"
+        elif group2 != "":
+            grouping = grouping + ", " + group2
 
         if group != "":
             grouping_results = "Grouped by " + groupings[group]
@@ -401,7 +401,7 @@ def index():
 
 
         else:
-            plays = db.execute("SELECT " + grouping + " COUNT(id) AS total, \
+            plays = db.execute("SELECT " + grouping + ", COUNT(id) AS total, \
                                 AVG(epa) AS epa, \
                                 AVG(success) AS success, \
                                 AVG(" + sort[0] + ") AS " + sort[0]  \
