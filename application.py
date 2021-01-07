@@ -422,8 +422,8 @@ def index():
                                         grouping=grouping, groupings=groupings, searchdesc=searchdesc, minplays=minplays)
 
             else:
-                return render_template("players.html", plays=plays, order=order, sort=sort,
-                                        grouping=grouping, groupings=groupings, searchdesc=searchdesc, minplays=minplays)
+                return render_template("players.html", plays=plays, order=order, sort=sort, group=group
+                                        group2=group2, groupings=groupings, searchdesc=searchdesc, minplays=minplays)
 
 # Render about page
 @app.route("/about", methods=["GET"])

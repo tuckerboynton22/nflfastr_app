@@ -23,7 +23,12 @@
             <tr>
                 <th>Rank</th>
                 <th>{{ sort[1] }}</th>
-                <th>{{ groupings[grouping] }}</th>
+                {% if group != '' %}
+                    <th>{{ groupings[group] }}</td>
+                {% endif %}
+                {% if group2 != '' %}
+                    <th>{{ groupings[group2] }}</td>
+                {% endif %}
                 <th>Team</th>
                 <th>Plays</th>
                 <th>Expected Points Added</th>
@@ -40,7 +45,12 @@
                         {% else %}
                             <td>{{ '%0.3f'|format(play['WEEK']|float) }}</td>
                         {% endif %}
-                        <td>{{ play[grouping] }}</td>
+                        {% if group != '' %}
+                            <td>{{ play[group] }}</td>
+                        {% endif %}
+                        {% if group2 != '' %}
+                            <td>{{ play[group2] }}</td>
+                        {% endif %}
                         <td>{{ play.posteam }}</td>
                         <td>{{ play.total }}</td>
                         <td>{{ '%0.3f'|format(play.epa) }}</td>
