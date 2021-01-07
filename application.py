@@ -411,7 +411,7 @@ def index():
 
 
         else:
-            plays = db.execute("SELECT " + grouping + ", COUNT(id) AS total, \
+            plays = db.execute("SELECT " + grouping + ", COUNT(*) AS total, \
                                 AVG(epa) AS epa, \
                                 AVG(success) AS success, \
                                 AVG(" + sort[0] + ") AS " + sort[0]  \
