@@ -400,7 +400,7 @@ def index():
         # If no grouping, pass list of plays to plays.html
         if grouping == "":
             
-            plays = db.execute("SELECT posteam FROM nflfastR_pbp")
+            plays = db.execute("SELECT posteam FROM nflfastR_pbp LIMIT 20")
     
             # plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
             #                     season>=? AND season<=?"
