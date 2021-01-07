@@ -37,26 +37,24 @@
         </thead>
         <tbody>
             {% for play in plays %}
-                {% if play.total >= minplays %}
-                    <tr>
-                        <td></td>
-                        {% if sort[0] != 'week' %}
-                            <td>{{ '%0.3f'|format(play[sort[0]]|float) }}</td>
-                        {% else %}
-                            <td>{{ '%0.3f'|format(play['WEEK']|float) }}</td>
-                        {% endif %}
-                        {% if group != '' %}
-                            <td>{{ play[group] }}</td>
-                        {% endif %}
-                        {% if group2 != '' %}
-                            <td>{{ play[group2] }}</td>
-                        {% endif %}
-                        <td>{{ play.posteam }}</td>
-                        <td>{{ play.total }}</td>
-                        <td>{{ '%0.3f'|format(play.epa) }}</td>
-                        <td>{{ '%0.3f'|format(play.success) }}</td>
-                    </tr>
-                {% endif %}
+                <tr>
+                    <td></td>
+                    {% if sort[0] != 'week' %}
+                        <td>{{ '%0.3f'|format(play[sort[0]]|float) }}</td>
+                    {% else %}
+                        <td>{{ '%0.3f'|format(play['WEEK']|float) }}</td>
+                    {% endif %}
+                    {% if group != '' %}
+                        <td>{{ play[group] }}</td>
+                    {% endif %}
+                    {% if group2 != '' %}
+                        <td>{{ play[group2] }}</td>
+                    {% endif %}
+                    <td>{{ play.posteam }}</td>
+                    <td>{{ play.total }}</td>
+                    <td>{{ '%0.3f'|format(play.epa) }}</td>
+                    <td>{{ '%0.3f'|format(play.success) }}</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>

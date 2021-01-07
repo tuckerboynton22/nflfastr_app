@@ -381,10 +381,12 @@ def index():
         # Create minimum description
         if request.form.get("minimum") != "":
             minplays = int(request.form.get("minimum"))
+            minplay_query = " HAVING COUNT(*) >=" + str(request.form.get("minimum")) + " "
         else:
             minplays = 0
+            minplay_query = ""
     
-        if minplays > 0 and grouping != "":
+        if minplay_query != "" and grouping != "":
             minplay_results = " Min. " + str(minplays) + " plays."
         else:
             minplay_results = ""
@@ -421,18 +423,18 @@ def index():
                                 and epa IS NOT NULL" + grouping_null \
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
-                                + "GROUP BY " + grouping + " HAVING COUNT(*) > 100" \
+                                + "GROUP BY " + grouping + minplay_query \
                                 + " ORDER BY " + sort[0] + " " + order + " LIMIT 1000",
                                 season_start, season_end)
             
 
             if grouping == "posteam" or grouping == "defteam" or grouping == "game_id" or grouping == "season":
                 return render_template("teams.html", plays=plays, order=order, sort=sort,
-                                        grouping=grouping, groupings=groupings, searchdesc=searchdesc, minplays=minplays)
+                                        grouping=grouping, groupings=groupings, searchdesc=searchdesc)
 
             else:
                 return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
-                                        group2=group2, groupings=groupings, searchdesc=searchdesc, minplays=minplays)
+                                        group2=group2, groupings=groupings, searchdesc=searchdesc)
 
 # Render about page
 @app.route("/about", methods=["GET"])
