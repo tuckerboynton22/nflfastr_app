@@ -106,8 +106,16 @@
                 <option value="{{ filter }}">{{ filters[filter] }}</option>
             {% endfor %}
         </select>
+        <hr>
         Group by:
         <select name="grouping">
+            <option selected value="">Choose</option>
+            {% for grouping in groupings %}
+                <option value="{{ grouping }}">{{ groupings[grouping] }}</option>
+            {% endfor %}
+        </select>
+        ,
+        <select name="grouping2">
             <option selected value="">Choose</option>
             {% for grouping in groupings %}
                 <option value="{{ grouping }}">{{ groupings[grouping] }}</option>

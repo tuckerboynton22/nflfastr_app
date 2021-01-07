@@ -331,23 +331,36 @@ def index():
         indicators = penaltyindicator + turnoverindicator + scoreindicator
         indicator_results = penaltyresults + turnoverresults + scoreresults
 
-        # Set grouping
-        grouping = request.form.get("grouping")
+        # Set groupings
+        grouping = ""
+        group = request.form.get("grouping")
+        group2 = request.form.get("grouping2")
 
         if grouping == "name":
-            grouping2 = ", id"
+            grouping = grouping + ", id"
         elif grouping == "kicker_player_name":
-            grouping2 = ", kicker_player_id"
+            grouping = grouping + ", kicker_player_id"
         elif grouping == "punter_player_name":
-            grouping2 = ", punter_player_id"
+            grouping = grouping + ", punter_player_id"
         elif grouping == "receiver_player_name":
-            grouping2 = ", receiver_player_id"
-        else:
-            grouping2 = ""
+            grouping = grouping + ", receiver_player_id"
+        
+        if group2 == "name":
+            grouping = grouping + ", id"
+        elif group2 == "kicker_player_name":
+            grouping = grouping + ", kicker_player_id"
+        elif group2 == "punter_player_name":
+            grouping = grouping + ", punter_player_id"
+        elif group2 == "receiver_player_name":
+            grouping = grouping + ", receiver_player_id"
 
-        if grouping != "":
-            grouping_results = "Grouped by " + groupings[grouping] + "."
-        else:
+        if group != "":
+            grouping_results = "Grouped by " + groupings[group]
+            if group2 != "":
+                grouping_results = grouping_results + ", " + groupings[group2]
+        elif group2 != "":
+            grouping_results = "Grouped by " + groupings[group2]
+        else:    
             grouping_results = ""
 
         # Create minimum description
@@ -384,17 +397,18 @@ def index():
 
 
         else:
-            plays = db.execute("SELECT " + grouping + grouping2 + ", COUNT(id) AS total, \
+            plays = db.execute("SELECT " + grouping + ", COUNT(id) AS total, \
                                 AVG(epa) AS epa, \
                                 AVG(success) AS success, \
                                 AVG(" + sort[0] + ") AS " + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL and epa IS NOT NULL" \
-                                + " AND " + grouping + "!='None'  AND " + grouping + " IS NOT NULL " \
+                                + " AND " + group + "!='None'  AND " + group + " IS NOT NULL " \
+                                + " AND " + group2 + "!='None'  AND " + group2 + " IS NOT NULL " \
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
-                                + "GROUP BY " + grouping + grouping2 \
+                                + "GROUP BY " + grouping \
                                 + " ORDER BY " + sort[0] + " " + order + " LIMIT 1000",
                                 season_start, season_end)
             
