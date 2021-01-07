@@ -398,17 +398,14 @@ def index():
         select = select + ' season_type, season, home_team, away_team, posteam, defteam, week, game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
         # If no grouping, pass list of plays to plays.html
-        if grouping == "":
-            
-            plays = db.execute("SELECT posteam FROM nflfastR_pbp LIMIT 20")
-    
-            # plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
-            #                     season>=? AND season<=?"
-            #                     + team_query + filter_query + indicators \
-            #                     + play_type_query + qtr_query + season_type_query \
-            #                     + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
-            #                     + order + " LIMIT 1000",
-            #                     season_start, season_end)
+        if grouping == "":    
+            plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
+                                season>=? AND season<=?"
+                                + team_query + filter_query + indicators \
+                                + play_type_query + qtr_query + season_type_query \
+                                + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
+                                + order + " LIMIT 1000",
+                                season_start, season_end)
 
             return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
 
