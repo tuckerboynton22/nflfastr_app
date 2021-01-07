@@ -333,30 +333,41 @@ def index():
 
         # Set groupings
         grouping = ""
+        grouping_null = ""
         group = request.form.get("grouping")
         group2 = request.form.get("grouping2")
 
         if group == "name":
             grouping = group + ", id"
+            grouping_null = "AND " + group + " IS NOT NULL "
         elif group == "kicker_player_name":
             grouping = group + ", kicker_player_id"
+            grouping_null = "AND " + group + " IS NOT NULL "
         elif group == "punter_player_name":
             grouping = group + ", punter_player_id"
+            grouping_null = "AND " + group + " IS NOT NULL "
         elif group == "receiver_player_name":
             grouping = group + ", receiver_player_id"
+            grouping_null = "AND " + group + " IS NOT NULL "
         else:
             grouping = group
+            grouping_null = "AND " + group + " IS NOT NULL "
         
         if group2 == "name":
             grouping = grouping + ", " + group2 + ", id "
+            grouping_null = grouping_null + "AND " + group2 + " IS NOT NULL "
         elif group2 == "kicker_player_name":
             grouping = grouping + ", " + group2 + ", kicker_player_id"
+            grouping_null = grouping_null + "AND " + group2 + " IS NOT NULL "
         elif group2 == "punter_player_name":
             grouping = grouping + ", " + group2 + ", punter_player_id"
+            grouping_null = grouping_null + "AND " + group2 + " IS NOT NULL "
         elif group2 == "receiver_player_name":
             grouping = grouping + ", " + group2 + ", receiver_player_id"
+            grouping_null = grouping_null + "AND " + group2 + " IS NOT NULL "
         elif group2 != "":
             grouping = grouping + ", " + group2
+            grouping_null = grouping_null + "AND " + group2 + " IS NOT NULL "
 
         if group != "":
             grouping_results = "Grouped by " + groupings[group]
@@ -407,9 +418,8 @@ def index():
                                 AVG(" + sort[0] + ") AS " + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
-                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL and epa IS NOT NULL" \
-                                + " AND " + group + " IS NOT NULL " \
-                                + " AND " + group2 + " IS NOT NULL " \
+                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
+                                and epa IS NOT NULL" + grouping_null \
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
                                 + "GROUP BY " + grouping \
