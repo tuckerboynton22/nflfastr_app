@@ -129,9 +129,14 @@ def index():
 
     # Provide form for query
     if request.method == "GET":
-        teams = db.execute("SELECT DISTINCT posteam FROM nflfastR_pbp WHERE posteam!='' ORDER BY posteam")
+        # teams = db.execute("SELECT DISTINCT posteam FROM nflfastR_pbp WHERE posteam!='' ORDER BY posteam")
+        teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
+                 "LA", "LAC", "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"]
+    
         inequalities = ["=", ">", "<"]
-        seasons = db.execute("SELECT DISTINCT season FROM nflfastR_pbp ORDER BY season")
+
+        seasons = [1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011,
+                    2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
 
         return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                                 inequalities=inequalities, seasons=seasons, play_types=play_types,
