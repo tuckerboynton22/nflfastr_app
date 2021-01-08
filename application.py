@@ -353,20 +353,23 @@ def index():
             grouping = group
             grouping_null = " AND " + group + " IS NOT NULL "
         
+        if group != "" and group2 != "":
+            grouping = grouping + ", "
+
         if group2 == "name":
-            grouping = grouping + ", " + group2 + ", id "
+            grouping = grouping + group2 + ", id "
             grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL "
         elif group2 == "kicker_player_name":
-            grouping = grouping + ", " + group2 + ", kicker_player_id"
+            grouping = grouping + group2 + ", kicker_player_id"
             grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL "
         elif group2 == "punter_player_name":
-            grouping = grouping + ", " + group2 + ", punter_player_id"
+            grouping = grouping + group2 + ", punter_player_id"
             grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL "
         elif group2 == "receiver_player_name":
-            grouping = grouping + ", " + group2 + ", receiver_player_id"
+            grouping = grouping + group2 + ", receiver_player_id"
             grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL "
         elif group2 != "":
-            grouping = grouping + ", " + group2
+            grouping = grouping + group2
             grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL "
 
         if group != "":
