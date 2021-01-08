@@ -7,14 +7,14 @@
         <select name="team">
             <option selected value="">Team</option>
             {% for team in teams %}
-                <option value="team">{{ team }}</option>
+                <option value="{{ team }}">{{ team }}</option>
             {% endfor %}
         </select>
         vs.
         <select name="opp">
             <option selected value="">Opp</option>
             {% for team in teams %}
-                <option value="team">{{ team }}</option>
+                <option value="{{ team }}">{{ team }}</option>
             {% endfor %}
         </select>
         <hr>
@@ -34,13 +34,13 @@
         From
         <select name="start">
             {% for season in seasons %}
-                <option value=season>{{ season }}</option>
+                <option value="{{ season }}">{{ season }}</option>
             {% endfor %}
         </select>
         to
         <select name="end">
             {% for season in seasons %}
-                <option value=season>{{ season }}</option>
+                <option value="{{ season }}">{{ season }}</option>
             {% endfor %}
         </select>
         during the
