@@ -436,8 +436,8 @@ def index():
                                 season_start, season_end)
             
 
-            if group == "posteam" or group == "defteam" or group == "game_id" or group == "season" \
-                or group2 == "posteam" or group2 == "defteam" or group2 == "game_id" or group2 == "season":
+            if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name" \
+                and group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name":
                 return render_template("teams.html", plays=plays, order=order, sort=sort,
                                         grouping=grouping, groupings=groupings, searchdesc=searchdesc)
 
