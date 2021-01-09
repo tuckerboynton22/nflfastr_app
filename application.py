@@ -438,8 +438,8 @@ def index():
 
             if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name" \
                 and group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name":
-                return render_template("teams.html", plays=plays, order=order, sort=sort,
-                                        grouping=grouping, groupings=groupings, searchdesc=searchdesc)
+                return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
+                                        group2=group2, groupings=groupings, searchdesc=searchdesc)
 
             else:
                 return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
