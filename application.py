@@ -354,7 +354,7 @@ def index():
         elif group == "receiver_player_name":
             grouping = group + ", receiver_player_id"
             grouping_null = " AND " + group + " IS NOT NULL "
-        else:
+        elif group != "":
             grouping = group
             grouping_null = " AND " + group + " IS NOT NULL "
         
@@ -437,7 +437,7 @@ def index():
             
 
             if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name" \
-                and group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name":
+                and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" and group2 != "receiver_player_name":
                 return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
                                         group2=group2, groupings=groupings, searchdesc=searchdesc)
 
