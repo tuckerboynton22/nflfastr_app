@@ -34,12 +34,11 @@ by descending Expected Points Added (i.e., most impactful offensive plays first)
 presented by altering "descending" to "ascending" and changing the variable used to sort the data (i.e., the sort value). This sort variable has the same
 options as the filters. The "Group by:" dropdown menu is where you can indicate that you'd like to see results grouped by offensive teams, defensive teams,
 passers, rushers, and receivers for plays that match a particular set of criteria. Choosing one of these options will give you the total number of plays,
-average EPA, average success rate, and average sort value for each rusher/receiver/passer/team on plays matching your specified criteria. The default settings
+average EPA, average success rate, and average sort value for each rusher/receiver/passer/team on plays matching your specified criteria. If you choose to group by two different variables, the query will group plays where both of those variables are consistent (e.g., if you choose offense and defense, you'll get plays grouped where a particular offense faced a particular defense). The default settings
 are such that if you press submit without entering any filters or changing any of the checkboxes/dropdown menus, you will search for every play in 2020,
-ungrouped and in order of descending EPA. Thus, you will get the 1,000 highest EPA plays of 2020, listed in descending order.
+ungrouped and in order of descending EPA. Thus, you will get the 1,000 highest EPA plays of 1999, listed in descending order.
 
 Viewing Results:
-
 
 Once you hit submit, you will get one of two things depending on whether you decide to group your results. If you choose not to group your results, you
 will get a table with up to 1,000 plays matching your criteria. Here, you can find the sort value (selected by you), offensive team, defensive team, week of
@@ -55,5 +54,3 @@ per page. Additionally, if you forget what you searched for, don't fret––you
 again, simply hit the "back" button on your browser to return to the form you just filled out. If you want to start a new search instead, press the "Index"
 button at the top of the page, and you'll be returned to a clean index form. Once again, if you have any questions about technical terminology, toggle over
 to the "Glossary" page, where you'll find a list of analytical phrases used on the website.
-
-URL: https://www.youtube.com/watch?v=fs0r1SaTN1Q&feature=youtu.be
