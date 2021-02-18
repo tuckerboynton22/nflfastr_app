@@ -426,7 +426,7 @@ def index():
             plays = db.execute("SELECT " + grouping + ", COUNT(*) AS total, \
                                 AVG(epa) AS epa, \
                                 AVG(success) AS success, " \
-                                + total + "(" + sort[0] + ") AS " + sort[0]  \
+                                + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
@@ -434,7 +434,7 @@ def index():
                                 + team_query + filter_query + indicators \
                                 + play_type_query + qtr_query + season_type_query \
                                 + "GROUP BY " + grouping + minplay_query \
-                                + " ORDER BY " + sort[0] + " " + order + " LIMIT 1000",
+                                + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                                 season_start, season_end)
             
 
