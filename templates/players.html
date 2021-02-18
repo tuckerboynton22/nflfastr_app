@@ -39,7 +39,7 @@
             {% for play in plays %}
                 <tr>
                     <td></td>
-                    <td>{{ '%0.3f'|format(play[[sort[0], "_total"]|join]|float) }}</td>
+                    <td>{{ '%0.3f'|format(play[["total_",sort[0]]|join]|float) }}</td>
                     {% if group != '' %}
                         <td>{{ play[group] }}</td>
                     {% endif %}
