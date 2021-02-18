@@ -399,6 +399,8 @@ def index():
         else:
             minplay_results = ""
 
+        total = request.form.get("total")
+
         # Create description of search for results page
         searchdesc = str(season_start) + "-" + str(season_end) + ", " + season_type + " season, " + team_results \
                     + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
@@ -423,8 +425,8 @@ def index():
         else:
             plays = db.execute("SELECT " + grouping + ", COUNT(*) AS total, \
                                 AVG(epa) AS epa, \
-                                AVG(success) AS success, \
-                                AVG(" + sort[0] + ") AS " + sort[0]  \
+                                AVG(success) AS success," \
+                                total + "(" + sort[0] + ") AS " + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
                                 + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \

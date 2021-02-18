@@ -101,6 +101,10 @@
             <option value="DESC">Descending</option>
             <option value="ASC">Ascending</option>
         </select>
+        <select name="total">
+            <option value="SUM">total</option>
+            <option value="AVG">average</option>
+        </select>
         <select name="sort">
             {% for filter in filters %}
                 <option value="{{ filter }}">{{ filters[filter] }}</option>
