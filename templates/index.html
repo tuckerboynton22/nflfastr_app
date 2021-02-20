@@ -3,7 +3,7 @@
 {% block main %}
     <h5>Find plays with...</h5>
     <hr>
-    <form action="/index" method="post">
+    <form action="/results" method="get">
         <select name="team">
             <option selected value="">Team</option>
             {% for team in teams %}
