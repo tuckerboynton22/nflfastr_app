@@ -124,328 +124,328 @@ def homepage():
     return render_template("homepage.html")
 
 # Play index
-@app.route("/index", methods=["GET", "POST"])
+@app.route("/index", methods=["GET"])
 def index():
 
     # Provide form for query
-    if request.method == "GET":
-        # teams = db.execute("SELECT DISTINCT posteam FROM nflfastR_pbp WHERE posteam!='' ORDER BY posteam")
-        teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
-                 "LA", "LAC", "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"]
-    
-        inequalities = ["=", ">", "<"]
+    # teams = db.execute("SELECT DISTINCT posteam FROM nflfastR_pbp WHERE posteam!='' ORDER BY posteam")
+    teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
+                "LA", "LAC", "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"]
 
-        seasons = [1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011,
-                    2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+    inequalities = ["=", ">", "<"]
 
-        return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
-                                inequalities=inequalities, seasons=seasons, play_types=play_types,
-                                quarters=quarters, NUMFILTERS=5)
+    seasons = [1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011,
+                2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+
+    return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
+                            inequalities=inequalities, seasons=seasons, play_types=play_types,
+                            quarters=quarters, NUMFILTERS=5)
 
     # Provide search results
+@app.route("/results", methods=["GET"])
+def results():
+    """
+
+    Note: all variables with 'results' suffix are created for front-facing search description to be displayed
+    along with search results.
+
+    """
+
+    # Create team query
+    team_query = ""
+    team_results = ""
+    opp_results = ""
+
+    team = request.form.get("team")
+    opp = request.form.get("opp")
+    home = request.form.get("home")
+    offense = request.form.get("offense")
+
+    if team != "" and opp == "":
+        team_results = team
+        opp_results = "any team"
+        if home != "":
+            team_query = team_query + " AND " + home + "='" + team + "' "
+        if offense != "":
+            team_query = team_query + " AND " + offense + "='" + team + "' "
+        elif offense == "" and home == "":
+            team_query = team_query + " AND(posteam='" + team + "' OR defteam='" + team + "') "
+
+    elif team == "" and opp != "":
+        team_results = "any team"
+        opp_results = opp
+        team_query = team_query + " AND(posteam='" + opp + "' OR defteam='" + opp + "') "
+        if home != "":
+            team_query = team_query + " AND " + home + "!='" + opp + "' "
+        if offense != "":
+            team_query = team_query + " AND " + offense + "!='" + opp + "' "
+
+    elif request.form.get("team") != "" and request.form.get("opp") != "":
+        team_results = team
+        opp_results = opp
+        team_query = team_query + " AND((posteam='" + opp + "' AND defteam='" + team + "') OR (posteam='" + team + "' AND defteam='" + opp + "')) "
+        if home != "":
+            team_query = team_query + " AND " + home + "='" + team + "' "
+        if offense != "":
+            team_query = team_query + " AND " + offense + "='" + team + "' "
+
     else:
-        """
-
-        Note: all variables with 'results' suffix are created for front-facing search description to be displayed
-        along with search results.
-
-        """
-
-        # Create team query
-        team_query = ""
-        team_results = ""
-        opp_results = ""
-
-        team = request.form.get("team")
-        opp = request.form.get("opp")
-        home = request.form.get("home")
-        offense = request.form.get("offense")
-
-        if team != "" and opp == "":
-            team_results = team
-            opp_results = "any team"
-            if home != "":
-                team_query = team_query + " AND " + home + "='" + team + "' "
-            if offense != "":
-                team_query = team_query + " AND " + offense + "='" + team + "' "
-            elif offense == "" and home == "":
-                team_query = team_query + " AND(posteam='" + team + "' OR defteam='" + team + "') "
-
-        elif team == "" and opp != "":
-            team_results = "any team"
-            opp_results = opp
-            team_query = team_query + " AND(posteam='" + opp + "' OR defteam='" + opp + "') "
-            if home != "":
-                team_query = team_query + " AND " + home + "!='" + opp + "' "
-            if offense != "":
-                team_query = team_query + " AND " + offense + "!='" + opp + "' "
-
-        elif request.form.get("team") != "" and request.form.get("opp") != "":
-            team_results = team
-            opp_results = opp
-            team_query = team_query + " AND((posteam='" + opp + "' AND defteam='" + team + "') OR (posteam='" + team + "' AND defteam='" + opp + "')) "
-            if home != "":
-                team_query = team_query + " AND " + home + "='" + team + "' "
-            if offense != "":
-                team_query = team_query + " AND " + offense + "='" + team + "' "
+        team_results = "any team"
+        opp_results = "any team"
     
-        else:
-            team_results = "any team"
-            opp_results = "any team"
-        
-        # Set offense/defense results
-        posteam_results = ""
-        defteam_results = ""
-        if request.form.get("offense") == "posteam":
-            posteam_results = team_results
-            defteam_results = opp_results
-        elif request.form.get("offense") == "defteam":
-            posteam_results = opp_results
-            defteam_results = team_results
-        else:
-            posteam_results = "any team"
-            defteam_results = "any team"
+    # Set offense/defense results
+    posteam_results = ""
+    defteam_results = ""
+    if request.form.get("offense") == "posteam":
+        posteam_results = team_results
+        defteam_results = opp_results
+    elif request.form.get("offense") == "defteam":
+        posteam_results = opp_results
+        defteam_results = team_results
+    else:
+        posteam_results = "any team"
+        defteam_results = "any team"
 
-        # Set home/away results
-        home_team_results = ""
-        away_team_results = ""
-        if request.form.get("home") == "home_team":
-            home_team_results = team_results
-            away_team_results = opp_results
-        elif request.form.get("home") == "away_team":
-            away_team_results = opp_results
-            home_team_results = team_results
-        else:
-            home_team_results = "any team"
-            away_team_results = "any team"
-                
-        # Identify start and end seasons
-        season_start = int(request.form.get("start"))
-        season_end = int(request.form.get("end"))
-
-        # Create season type query
-        if request.form.get("season_type") != "both":
-            season_type_query = " AND season_type='" + request.form.get("season_type") + "' "
-            season_type = request.form.get("season_type")
-        else:
-            season_type_query = ""
-            season_type = "REG or POST"
-
-        # Create quarter query
-        qtr_query = ""
-        for quarter in quarters:
-            if str(request.form.get(quarter)) in quarters:
-                if qtr_query == "":
-                    if str(request.form.get(quarter)) == "5":
-                        qtr_query = " AND(qtr=5 OR qtr=6"
-                        qtrs = "OT"
-                    else:
-                        qtr_query = " AND(qtr=" + str(request.form.get(quarter))
-                        qtrs = str(request.form.get(quarter))
-                else:
-                    if str(request.form.get(quarter)) == "5":
-                        qtr_query = qtr_query + " OR qtr=5 OR qtr=6"
-                        qtrs = qtrs + ", OT"
-                    else:
-                        qtr_query = qtr_query + " OR qtr=" + str(request.form.get(quarter))
-                        qtrs = qtrs + ", " + str(request.form.get(quarter))
-        if qtr_query != "":
-            qtr_query = qtr_query + ") "
-
-        # Create play type query
-        play_type_query = ""
-        play_type_results = ""
-        for play in play_types:
-            playtype = str(request.form.get(play))
-            if playtype != "rush" and playtype != "pass" and playtype != "two_point_attempt" and playtype in play_types.keys():
-                if play_type_query == "":
-                    play_type_query = "AND(play_type='" + str(request.form.get(play)) + "' "
-                    play_type_results = " " + str(play_types[playtype])
-                else:
-                    play_type_query = play_type_query + "OR play_type='" + playtype + "' "
-                    play_type_results = play_type_results + ", " + play_types[playtype]
-            elif (playtype == "pass" or playtype == "rush" or playtype == "two_point_attempt") and playtype in play_types.keys():
-                if play_type_query == "":
-                    play_type_query = " AND(" + playtype + "=1 "
-                    play_type_results = " "  + play_types[playtype]
-                else:
-                    play_type_query = play_type_query + " OR " + play + "=1 "
-                    play_type_results = play_type_results + ", " + play_types[playtype]
-
-        if play_type_query != "":
-            play_type_query = play_type_query + ") "
-
-        # Create filter query and dictionary for column titles on results page
-        filter_query = ""
-        filter_dict = {}
-        filter_results = ""
-        select = ""
-        NUMFILTERS = 5
-        for i in range(NUMFILTERS):
-            # Set variables to iterate over filter, inequality, and filter value for all filters
-            filt = "filter"+str(i)
-            inequal = "inequality"+str(i)
-            filtval = "filtervalue"+str(i)
-
-            if request.form.get(filt) != "" and request.form.get(inequal) != "" and request.form.get(filtval) != "":
-                filter_query = filter_query + " AND " + str(request.form.get(filt)) + str(request.form.get(inequal)) \
-                                + str(request.form.get(filtval)) + " AND " + str(request.form.get(filt)) + " IS NOT NULL "
-                select = select + str(request.form.get(filt)) + ", "
-                filter_dict[request.form.get(filt)] = filters[request.form.get(filt)]
-                filter_results = filter_results + ", " + str(filters[request.form.get(filt)]) + str(request.form.get(inequal)) + str(request.form.get(filtval))
-
-        # Set desired sorting mechanism
-        sort = [request.form.get("sort"), filters[request.form.get("sort")]]
-        select = select + request.form.get("sort") + ", "
-        order = request.form.get("order")
-
-        # Create penalty query
-        if request.form.get("penalty") != "either":
-            penaltyindicator = " AND penalty=" + request.form.get("penalty") + " "
-            if request.form.get("penalty") == "1":
-                penaltyresults = "A penalty, "
-            else:
-                penaltyresults = "No penalties, "
-        else:
-            penaltyindicator = ""
-            penaltyresults = "Either penalty or no penalty, "
-
-        # Create turnover query
-        if request.form.get("turnover") == "1":
-            turnoverindicator = " AND (interception=1 OR fumble_lost=1) "
-            turnoverresults = "a turnover, "
-        elif request.form.get("turnover") == "0":
-            turnoverindicator = " AND interception=0 AND fumble_lost=0 "
-            turnoverresults = "no turnover, "
-        else:
-            turnoverindicator = ""
-            turnoverresults = "either turnover or no turnover, "
-
-        # Create score query
-        if request.form.get("score") != "either":
-            scoreindicator = " AND sp=" + request.form.get("score") + " "
-            if request.form.get("score") == "1":
-                scoreresults = "a score"
-            else:
-                scoreresults = "no score"
-        else:
-            scoreindicator = ""
-            scoreresults = "either score or no score"
-
-        # Combine penalty, turnover, and score queries for single indicator query
-        indicators = penaltyindicator + turnoverindicator + scoreindicator
-        indicator_results = penaltyresults + turnoverresults + scoreresults
-
-        # Set groupings
-        grouping = ""
-        grouping_null = ""
-        group = request.form.get("grouping")
-        group2 = request.form.get("grouping2")
-
-        if group == "name":
-            grouping = group + ", id"
-            grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
-        elif group == "kicker_player_name":
-            grouping = group + ", kicker_player_id"
-            grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
-        elif group == "punter_player_name":
-            grouping = group + ", punter_player_id"
-            grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
-        elif group == "receiver_player_name":
-            grouping = group + ", receiver_player_id"
-            grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
-        elif group != "":
-            grouping = group
-            grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
-        
-        if group != "" and group2 != "":
-            grouping = grouping + ", "
-
-        if group2 == "name":
-            grouping = grouping + group2 + ", id "
-            grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
-        elif group2 == "kicker_player_name":
-            grouping = grouping + group2 + ", kicker_player_id"
-            grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
-        elif group2 == "punter_player_name":
-            grouping = grouping + group2 + ", punter_player_id"
-            grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
-        elif group2 == "receiver_player_name":
-            grouping = grouping + group2 + ", receiver_player_id"
-            grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
-        elif group2 != "":
-            grouping = grouping + group2
-            grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
-
-        if group != "":
-            grouping_results = "Grouped by " + groupings[group]
-            if group2 != "":
-                grouping_results = grouping_results + ", " + groupings[group2]
-        elif group2 != "":
-            grouping_results = "Grouped by " + groupings[group2]
-        else:    
-            grouping_results = ""
-
-        # Create minimum description
-        if request.form.get("minimum") != "":
-            minplays = int(request.form.get("minimum"))
-            minplay_query = " HAVING COUNT(*) >=" + str(request.form.get("minimum")) + " "
-        else:
-            minplays = 0
-            minplay_query = ""
-    
-        if minplay_query != "" and grouping != "":
-            minplay_results = " Min. " + str(minplays) + " plays."
-        else:
-            minplay_results = ""
-
-        total = request.form.get("total")
-
-        # Create description of search for results page
-        searchdesc = str(season_start) + "-" + str(season_end) + ", " + season_type + " season, " + team_results \
-                    + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
-                    + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
-                    + play_type_results + ". " + indicator_results + filter_results + ". " + grouping_results + ". "  + minplay_results
-
-        select = select + ' season_type, season, home_team, away_team, posteam, defteam, week, game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
-
-        # If no grouping, pass list of plays to plays.html
-        if grouping == "":    
-            plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
-                                season>=? AND season<=?"
-                                + team_query + filter_query + indicators \
-                                + play_type_query + qtr_query + season_type_query \
-                                + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
-                                + order + " LIMIT 1000",
-                                season_start, season_end)
-
-            return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
-
-
-        else:
-            plays = db.execute("SELECT " + grouping + ", COUNT(*) AS total, \
-                                AVG(epa) AS epa, \
-                                AVG(success) AS success, " \
-                                + total + "(" + sort[0] + ") AS total_" + sort[0]  \
-                                + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
-                                + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
-                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
-                                and epa IS NOT NULL" + grouping_null \
-                                + team_query + filter_query + indicators \
-                                + play_type_query + qtr_query + season_type_query \
-                                + "GROUP BY " + grouping + minplay_query \
-                                + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
-                                season_start, season_end)
+    # Set home/away results
+    home_team_results = ""
+    away_team_results = ""
+    if request.form.get("home") == "home_team":
+        home_team_results = team_results
+        away_team_results = opp_results
+    elif request.form.get("home") == "away_team":
+        away_team_results = opp_results
+        home_team_results = team_results
+    else:
+        home_team_results = "any team"
+        away_team_results = "any team"
             
+    # Identify start and end seasons
+    season_start = int(request.form.get("start"))
+    season_end = int(request.form.get("end"))
 
-            if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name" \
-                and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" and group2 != "receiver_player_name":
-                return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
-                                        group2=group2, groupings=groupings, searchdesc=searchdesc)
+    # Create season type query
+    if request.form.get("season_type") != "both":
+        season_type_query = " AND season_type='" + request.form.get("season_type") + "' "
+        season_type = request.form.get("season_type")
+    else:
+        season_type_query = ""
+        season_type = "REG or POST"
 
+    # Create quarter query
+    qtr_query = ""
+    for quarter in quarters:
+        if str(request.form.get(quarter)) in quarters:
+            if qtr_query == "":
+                if str(request.form.get(quarter)) == "5":
+                    qtr_query = " AND(qtr=5 OR qtr=6"
+                    qtrs = "OT"
+                else:
+                    qtr_query = " AND(qtr=" + str(request.form.get(quarter))
+                    qtrs = str(request.form.get(quarter))
             else:
-                return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
-                                        group2=group2, groupings=groupings, searchdesc=searchdesc)
+                if str(request.form.get(quarter)) == "5":
+                    qtr_query = qtr_query + " OR qtr=5 OR qtr=6"
+                    qtrs = qtrs + ", OT"
+                else:
+                    qtr_query = qtr_query + " OR qtr=" + str(request.form.get(quarter))
+                    qtrs = qtrs + ", " + str(request.form.get(quarter))
+    if qtr_query != "":
+        qtr_query = qtr_query + ") "
+
+    # Create play type query
+    play_type_query = ""
+    play_type_results = ""
+    for play in play_types:
+        playtype = str(request.form.get(play))
+        if playtype != "rush" and playtype != "pass" and playtype != "two_point_attempt" and playtype in play_types.keys():
+            if play_type_query == "":
+                play_type_query = "AND(play_type='" + str(request.form.get(play)) + "' "
+                play_type_results = " " + str(play_types[playtype])
+            else:
+                play_type_query = play_type_query + "OR play_type='" + playtype + "' "
+                play_type_results = play_type_results + ", " + play_types[playtype]
+        elif (playtype == "pass" or playtype == "rush" or playtype == "two_point_attempt") and playtype in play_types.keys():
+            if play_type_query == "":
+                play_type_query = " AND(" + playtype + "=1 "
+                play_type_results = " "  + play_types[playtype]
+            else:
+                play_type_query = play_type_query + " OR " + play + "=1 "
+                play_type_results = play_type_results + ", " + play_types[playtype]
+
+    if play_type_query != "":
+        play_type_query = play_type_query + ") "
+
+    # Create filter query and dictionary for column titles on results page
+    filter_query = ""
+    filter_dict = {}
+    filter_results = ""
+    select = ""
+    NUMFILTERS = 5
+    for i in range(NUMFILTERS):
+        # Set variables to iterate over filter, inequality, and filter value for all filters
+        filt = "filter"+str(i)
+        inequal = "inequality"+str(i)
+        filtval = "filtervalue"+str(i)
+
+        if request.form.get(filt) != "" and request.form.get(inequal) != "" and request.form.get(filtval) != "":
+            filter_query = filter_query + " AND " + str(request.form.get(filt)) + str(request.form.get(inequal)) \
+                            + str(request.form.get(filtval)) + " AND " + str(request.form.get(filt)) + " IS NOT NULL "
+            select = select + str(request.form.get(filt)) + ", "
+            filter_dict[request.form.get(filt)] = filters[request.form.get(filt)]
+            filter_results = filter_results + ", " + str(filters[request.form.get(filt)]) + str(request.form.get(inequal)) + str(request.form.get(filtval))
+
+    # Set desired sorting mechanism
+    sort = [request.form.get("sort"), filters[request.form.get("sort")]]
+    select = select + request.form.get("sort") + ", "
+    order = request.form.get("order")
+
+    # Create penalty query
+    if request.form.get("penalty") != "either":
+        penaltyindicator = " AND penalty=" + request.form.get("penalty") + " "
+        if request.form.get("penalty") == "1":
+            penaltyresults = "A penalty, "
+        else:
+            penaltyresults = "No penalties, "
+    else:
+        penaltyindicator = ""
+        penaltyresults = "Either penalty or no penalty, "
+
+    # Create turnover query
+    if request.form.get("turnover") == "1":
+        turnoverindicator = " AND (interception=1 OR fumble_lost=1) "
+        turnoverresults = "a turnover, "
+    elif request.form.get("turnover") == "0":
+        turnoverindicator = " AND interception=0 AND fumble_lost=0 "
+        turnoverresults = "no turnover, "
+    else:
+        turnoverindicator = ""
+        turnoverresults = "either turnover or no turnover, "
+
+    # Create score query
+    if request.form.get("score") != "either":
+        scoreindicator = " AND sp=" + request.form.get("score") + " "
+        if request.form.get("score") == "1":
+            scoreresults = "a score"
+        else:
+            scoreresults = "no score"
+    else:
+        scoreindicator = ""
+        scoreresults = "either score or no score"
+
+    # Combine penalty, turnover, and score queries for single indicator query
+    indicators = penaltyindicator + turnoverindicator + scoreindicator
+    indicator_results = penaltyresults + turnoverresults + scoreresults
+
+    # Set groupings
+    grouping = ""
+    grouping_null = ""
+    group = request.form.get("grouping")
+    group2 = request.form.get("grouping2")
+
+    if group == "name":
+        grouping = group + ", id"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    elif group == "kicker_player_name":
+        grouping = group + ", kicker_player_id"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    elif group == "punter_player_name":
+        grouping = group + ", punter_player_id"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    elif group == "receiver_player_name":
+        grouping = group + ", receiver_player_id"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    elif group != "":
+        grouping = group
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    
+    if group != "" and group2 != "":
+        grouping = grouping + ", "
+
+    if group2 == "name":
+        grouping = grouping + group2 + ", id "
+        grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
+    elif group2 == "kicker_player_name":
+        grouping = grouping + group2 + ", kicker_player_id"
+        grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
+    elif group2 == "punter_player_name":
+        grouping = grouping + group2 + ", punter_player_id"
+        grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
+    elif group2 == "receiver_player_name":
+        grouping = grouping + group2 + ", receiver_player_id"
+        grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
+    elif group2 != "":
+        grouping = grouping + group2
+        grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
+
+    if group != "":
+        grouping_results = "Grouped by " + groupings[group]
+        if group2 != "":
+            grouping_results = grouping_results + ", " + groupings[group2]
+    elif group2 != "":
+        grouping_results = "Grouped by " + groupings[group2]
+    else:    
+        grouping_results = ""
+
+    # Create minimum description
+    if request.form.get("minimum") != "":
+        minplays = int(request.form.get("minimum"))
+        minplay_query = " HAVING COUNT(*) >=" + str(request.form.get("minimum")) + " "
+    else:
+        minplays = 0
+        minplay_query = ""
+
+    if minplay_query != "" and grouping != "":
+        minplay_results = " Min. " + str(minplays) + " plays."
+    else:
+        minplay_results = ""
+
+    total = request.form.get("total")
+
+    # Create description of search for results page
+    searchdesc = str(season_start) + "-" + str(season_end) + ", " + season_type + " season, " + team_results \
+                + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
+                + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
+                + play_type_results + ". " + indicator_results + filter_results + ". " + grouping_results + ". "  + minplay_results
+
+    select = select + ' season_type, season, home_team, away_team, posteam, defteam, week, game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
+
+    # If no grouping, pass list of plays to plays.html
+    if grouping == "":    
+        plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
+                            season>=? AND season<=?"
+                            + team_query + filter_query + indicators \
+                            + play_type_query + qtr_query + season_type_query \
+                            + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
+                            + order + " LIMIT 1000",
+                            season_start, season_end)
+
+        return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
+
+
+    else:
+        plays = db.execute("SELECT " + grouping + ", COUNT(*) AS total, \
+                            AVG(epa) AS epa, \
+                            AVG(success) AS success, " \
+                            + total + "(" + sort[0] + ") AS total_" + sort[0]  \
+                            + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
+                            + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
+                            + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
+                            and epa IS NOT NULL" + grouping_null \
+                            + team_query + filter_query + indicators \
+                            + play_type_query + qtr_query + season_type_query \
+                            + "GROUP BY " + grouping + minplay_query \
+                            + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
+                            season_start, season_end)
+        
+
+        if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name" \
+            and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" and group2 != "receiver_player_name":
+            return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
+                                    group2=group2, groupings=groupings, searchdesc=searchdesc)
+
+        else:
+            return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
+                                    group2=group2, groupings=groupings, searchdesc=searchdesc)
 
 # Render about page
 @app.route("/about", methods=["GET"])
