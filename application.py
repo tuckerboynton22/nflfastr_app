@@ -156,10 +156,10 @@ def results():
     team_results = ""
     opp_results = ""
 
-    team = request.form.get("team")
-    opp = request.form.get("opp")
-    home = request.form.get("home")
-    offense = request.form.get("offense")
+    team = request.args.get("team")
+    opp = request.args.get("opp")
+    home = request.args.get("home")
+    offense = request.args.get("offense")
 
     if team != "" and opp == "":
         team_results = team
@@ -180,7 +180,7 @@ def results():
         if offense != "":
             team_query = team_query + " AND " + offense + "!='" + opp + "' "
 
-    elif request.form.get("team") != "" and request.form.get("opp") != "":
+    elif request.args.get("team") != "" and request.args.get("opp") != "":
         team_results = team
         opp_results = opp
         team_query = team_query + " AND((posteam='" + opp + "' AND defteam='" + team + "') OR (posteam='" + team + "' AND defteam='" + opp + "')) "
@@ -196,10 +196,10 @@ def results():
     # Set offense/defense results
     posteam_results = ""
     defteam_results = ""
-    if request.form.get("offense") == "posteam":
+    if request.args.get("offense") == "posteam":
         posteam_results = team_results
         defteam_results = opp_results
-    elif request.form.get("offense") == "defteam":
+    elif request.args.get("offense") == "defteam":
         posteam_results = opp_results
         defteam_results = team_results
     else:
@@ -209,10 +209,10 @@ def results():
     # Set home/away results
     home_team_results = ""
     away_team_results = ""
-    if request.form.get("home") == "home_team":
+    if request.args.get("home") == "home_team":
         home_team_results = team_results
         away_team_results = opp_results
-    elif request.form.get("home") == "away_team":
+    elif request.args.get("home") == "away_team":
         away_team_results = opp_results
         home_team_results = team_results
     else:
@@ -220,13 +220,13 @@ def results():
         away_team_results = "any team"
             
     # Identify start and end seasons
-    season_start = int(request.form.get("start"))
-    season_end = int(request.form.get("end"))
+    season_start = int(request.args.get("start"))
+    season_end = int(request.args.get("end"))
 
     # Create season type query
-    if request.form.get("season_type") != "both":
-        season_type_query = " AND season_type='" + request.form.get("season_type") + "' "
-        season_type = request.form.get("season_type")
+    if request.args.get("season_type") != "both":
+        season_type_query = " AND season_type='" + request.args.get("season_type") + "' "
+        season_type = request.args.get("season_type")
     else:
         season_type_query = ""
         season_type = "REG or POST"
@@ -234,21 +234,21 @@ def results():
     # Create quarter query
     qtr_query = ""
     for quarter in quarters:
-        if str(request.form.get(quarter)) in quarters:
+        if str(request.args.get(quarter)) in quarters:
             if qtr_query == "":
-                if str(request.form.get(quarter)) == "5":
+                if str(request.args.get(quarter)) == "5":
                     qtr_query = " AND(qtr=5 OR qtr=6"
                     qtrs = "OT"
                 else:
-                    qtr_query = " AND(qtr=" + str(request.form.get(quarter))
-                    qtrs = str(request.form.get(quarter))
+                    qtr_query = " AND(qtr=" + str(request.args.get(quarter))
+                    qtrs = str(request.args.get(quarter))
             else:
-                if str(request.form.get(quarter)) == "5":
+                if str(request.args.get(quarter)) == "5":
                     qtr_query = qtr_query + " OR qtr=5 OR qtr=6"
                     qtrs = qtrs + ", OT"
                 else:
-                    qtr_query = qtr_query + " OR qtr=" + str(request.form.get(quarter))
-                    qtrs = qtrs + ", " + str(request.form.get(quarter))
+                    qtr_query = qtr_query + " OR qtr=" + str(request.args.get(quarter))
+                    qtrs = qtrs + ", " + str(request.args.get(quarter))
     if qtr_query != "":
         qtr_query = qtr_query + ") "
 
@@ -256,10 +256,10 @@ def results():
     play_type_query = ""
     play_type_results = ""
     for play in play_types:
-        playtype = str(request.form.get(play))
+        playtype = str(request.args.get(play))
         if playtype != "rush" and playtype != "pass" and playtype != "two_point_attempt" and playtype in play_types.keys():
             if play_type_query == "":
-                play_type_query = "AND(play_type='" + str(request.form.get(play)) + "' "
+                play_type_query = "AND(play_type='" + str(request.args.get(play)) + "' "
                 play_type_results = " " + str(play_types[playtype])
             else:
                 play_type_query = play_type_query + "OR play_type='" + playtype + "' "
@@ -287,22 +287,22 @@ def results():
         inequal = "inequality"+str(i)
         filtval = "filtervalue"+str(i)
 
-        if request.form.get(filt) != "" and request.form.get(inequal) != "" and request.form.get(filtval) != "":
-            filter_query = filter_query + " AND " + str(request.form.get(filt)) + str(request.form.get(inequal)) \
-                            + str(request.form.get(filtval)) + " AND " + str(request.form.get(filt)) + " IS NOT NULL "
-            select = select + str(request.form.get(filt)) + ", "
-            filter_dict[request.form.get(filt)] = filters[request.form.get(filt)]
-            filter_results = filter_results + ", " + str(filters[request.form.get(filt)]) + str(request.form.get(inequal)) + str(request.form.get(filtval))
+        if request.args.get(filt) != "" and request.args.get(inequal) != "" and request.args.get(filtval) != "":
+            filter_query = filter_query + " AND " + str(request.args.get(filt)) + str(request.args.get(inequal)) \
+                            + str(request.args.get(filtval)) + " AND " + str(request.args.get(filt)) + " IS NOT NULL "
+            select = select + str(request.args.get(filt)) + ", "
+            filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
+            filter_results = filter_results + ", " + str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
 
     # Set desired sorting mechanism
-    sort = [request.form.get("sort"), filters[request.form.get("sort")]]
-    select = select + request.form.get("sort") + ", "
-    order = request.form.get("order")
+    sort = [request.args.get("sort"), filters[request.args.get("sort")]]
+    select = select + request.args.get("sort") + ", "
+    order = request.args.get("order")
 
     # Create penalty query
-    if request.form.get("penalty") != "either":
-        penaltyindicator = " AND penalty=" + request.form.get("penalty") + " "
-        if request.form.get("penalty") == "1":
+    if request.args.get("penalty") != "either":
+        penaltyindicator = " AND penalty=" + request.args.get("penalty") + " "
+        if request.args.get("penalty") == "1":
             penaltyresults = "A penalty, "
         else:
             penaltyresults = "No penalties, "
@@ -311,10 +311,10 @@ def results():
         penaltyresults = "Either penalty or no penalty, "
 
     # Create turnover query
-    if request.form.get("turnover") == "1":
+    if request.args.get("turnover") == "1":
         turnoverindicator = " AND (interception=1 OR fumble_lost=1) "
         turnoverresults = "a turnover, "
-    elif request.form.get("turnover") == "0":
+    elif request.args.get("turnover") == "0":
         turnoverindicator = " AND interception=0 AND fumble_lost=0 "
         turnoverresults = "no turnover, "
     else:
@@ -322,9 +322,9 @@ def results():
         turnoverresults = "either turnover or no turnover, "
 
     # Create score query
-    if request.form.get("score") != "either":
-        scoreindicator = " AND sp=" + request.form.get("score") + " "
-        if request.form.get("score") == "1":
+    if request.args.get("score") != "either":
+        scoreindicator = " AND sp=" + request.args.get("score") + " "
+        if request.args.get("score") == "1":
             scoreresults = "a score"
         else:
             scoreresults = "no score"
@@ -339,8 +339,8 @@ def results():
     # Set groupings
     grouping = ""
     grouping_null = ""
-    group = request.form.get("grouping")
-    group2 = request.form.get("grouping2")
+    group = request.args.get("grouping")
+    group2 = request.args.get("grouping2")
 
     if group == "name":
         grouping = group + ", id"
@@ -387,9 +387,9 @@ def results():
         grouping_results = ""
 
     # Create minimum description
-    if request.form.get("minimum") != "":
-        minplays = int(request.form.get("minimum"))
-        minplay_query = " HAVING COUNT(*) >=" + str(request.form.get("minimum")) + " "
+    if request.args.get("minimum") != "":
+        minplays = int(request.args.get("minimum"))
+        minplay_query = " HAVING COUNT(*) >=" + str(request.args.get("minimum")) + " "
     else:
         minplays = 0
         minplay_query = ""
@@ -399,7 +399,7 @@ def results():
     else:
         minplay_results = ""
 
-    total = request.form.get("total")
+    total = request.args.get("total")
 
     # Create description of search for results page
     searchdesc = str(season_start) + "-" + str(season_end) + ", " + season_type + " season, " + team_results \
