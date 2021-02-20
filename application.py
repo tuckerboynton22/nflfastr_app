@@ -142,7 +142,7 @@ def index():
                             quarters=quarters, NUMFILTERS=5)
 
     # Provide search results
-@app.route("/results", methods=["GET"])
+@app.route("/results", methods=["GET", "POST"])
 def results():
     """
 
