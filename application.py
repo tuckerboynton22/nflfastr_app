@@ -457,6 +457,10 @@ def about():
 def glossary():
     return render_template("glossary.html")
 
+@app.route("/viz", methods=["GET"])
+def viz():
+    return render_template("viz.html")
+
 # Handle error
 def errorhandler(e):
     if not isinstance(e, HTTPException):
