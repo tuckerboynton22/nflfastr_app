@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <img alt="logo" src="/static/nflfastr.png">
+    Seamlessly query over two decades of play-by-play data in the nflfastR database. Enter filters, click submit, and get all matching plays.
+    <hr>
+    <form action="/index" method="get">
+        <button class="btn btn-primary" type="submit">Go to Play Index</button>
+    </form>
+{% endblock %}
