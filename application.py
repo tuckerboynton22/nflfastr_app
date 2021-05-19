@@ -463,6 +463,10 @@ def glossary():
 def viz():
     return render_template("viz.html")
 
+@app.route("/yellowpages", methods=["GET"])
+def yellowpages():
+    return render_template("yellowpages.html")
+
 # Handle error
 def errorhandler(e):
     if not isinstance(e, HTTPException):
