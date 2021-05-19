@@ -380,9 +380,11 @@ def results():
     if group != "":
         grouping_results = "Grouped by " + groupings[group]
         if group2 != "":
-            grouping_results = grouping_results + ", " + groupings[group2]
+            grouping_results = grouping_results + ", " + groupings[group2] + "."
+        else:
+            grouping_results = grouping_results + "."
     elif group2 != "":
-        grouping_results = "Grouped by " + groupings[group2]
+        grouping_results = "Grouped by " + groupings[group2] + "."
     else:    
         grouping_results = ""
 
@@ -405,7 +407,7 @@ def results():
     searchdesc = str(season_start) + "-" + str(season_end) + ", " + season_type + " season, " + team_results \
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
                 + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
-                + play_type_results + ". " + indicator_results + filter_results + ". " + grouping_results + ". "  + minplay_results
+                + play_type_results + ". " + indicator_results + filter_results + ". " + grouping_results + " "  + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, week, game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
