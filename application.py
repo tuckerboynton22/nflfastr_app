@@ -28,6 +28,7 @@ filters = {
     "kick_distance": "Kick Distance",
     "quarter_seconds_remaining": "Seconds Remaining in Quarter",
     "ep": "Expected Points",
+    "temp": "Temperature (outdoor/open only)"
     "comp_air_epa": "Completed Air EPA",
     "air_epa": "Air EPA",
     "comp_yac_epa": "Completed YAC EPA",
@@ -328,16 +329,31 @@ def results():
     if request.args.get("score") != "either":
         scoreindicator = " AND sp=" + request.args.get("score") + " "
         if request.args.get("score") == "1":
-            scoreresults = "a score"
+            scoreresults = "a score, "
         else:
-            scoreresults = "no score"
+            scoreresults = "no score, "
     else:
         scoreindicator = ""
-        scoreresults = "either score or no score"
+        scoreresults = "either score or no score, "
+
+    # Create score query
+    if request.args.get("roof") != "any":
+        roofindicator = " AND roof=" + request.args.get("score") + " "
+        if request.args.get("roof") == "dome":
+            roofresults = "game in dome"
+        elif request.args.get("roof") == "outdoors":
+            roofresults = "game outdoors"
+        elif request.args.get("roof") == "closed":
+            roofresults = "game in closed retroof"
+        else:
+            roofresults = "game in open retroof"
+    else:
+        roofindicator = ""
+        roofresults = "game in any stadium"
 
     # Combine penalty, turnover, and score queries for single indicator query
-    indicators = penaltyindicator + turnoverindicator + scoreindicator
-    indicator_results = penaltyresults + turnoverresults + scoreresults
+    indicators = penaltyindicator + turnoverindicator + scoreindicator + roofindicator
+    indicator_results = penaltyresults + turnoverresults + scoreresults + roofresults
 
     # Set groupings
     grouping = ""
