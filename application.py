@@ -42,7 +42,9 @@ filters = {
 # Create global groupings
 groupings = {
     "name": "Passer/Rusher",
-    "receiver_player_name": "Receiver",
+    "passer": "Passer",
+    "rusher": "Rusher",
+    "receiver": "Receiver",
     "kicker_player_name": "Kicker",
     "punter_player_name": "Punter",
     "posteam": "Offense",
@@ -345,14 +347,20 @@ def results():
     if group == "name":
         grouping = group + ", id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    elif group == "passer":
+        grouping = group + ", passer_id"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    elif group == "rusher":
+        grouping = group + ", rusher_id"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "kicker_player_name":
         grouping = group + ", kicker_player_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "punter_player_name":
         grouping = group + ", punter_player_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
-    elif group == "receiver_player_name":
-        grouping = group + ", receiver_player_id"
+    elif group == "receiver":
+        grouping = group + ", receiver_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group != "":
         grouping = group
@@ -364,14 +372,20 @@ def results():
     if group2 == "name":
         grouping = grouping + group2 + ", id "
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
+    elif group == "passer":
+        grouping = grouping + group2 + ", passer_id"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    elif group == "rusher":
+        grouping = grouping + group2 + ", rusher_id"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group2 == "kicker_player_name":
         grouping = grouping + group2 + ", kicker_player_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "punter_player_name":
         grouping = grouping + group2 + ", punter_player_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
-    elif group2 == "receiver_player_name":
-        grouping = grouping + group2 + ", receiver_player_id"
+    elif group2 == "receiver":
+        grouping = grouping + group2 + ", receiver_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 != "":
         grouping = grouping + group2
