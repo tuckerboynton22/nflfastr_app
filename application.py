@@ -454,7 +454,8 @@ def results():
                             season_start, season_end)
         
 
-        if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver_player_name" \
+        if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver" \
+            and group != "passer" and group != "rusher" and group2 != "passer" and group2 != "rusher" \
             and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" and group2 != "receiver_player_name":
             return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
                                     group2=group2, groupings=groupings, searchdesc=searchdesc)
