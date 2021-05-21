@@ -28,7 +28,6 @@ filters = {
     "kick_distance": "Kick Distance",
     "quarter_seconds_remaining": "Seconds Remaining in Quarter",
     "ep": "Expected Points",
-    "temp": "Temperature (outdoor/open only)",
     "comp_air_epa": "Completed Air EPA",
     "air_epa": "Air EPA",
     "comp_yac_epa": "Completed YAC EPA",
