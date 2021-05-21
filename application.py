@@ -337,7 +337,7 @@ def results():
 
     # Create score query
     if request.args.get("roof") != "any":
-        roofindicator = " AND roof=" + request.args.get("roof") + " "
+        roofindicator = " AND roof='" + request.args.get("roof") + "' "
         if request.args.get("roof") == "dome":
             roofresults = "game in dome"
         elif request.args.get("roof") == "outdoors":
