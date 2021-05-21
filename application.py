@@ -20,6 +20,7 @@ filters = {
     "yards_after_catch": "Yards After Catch (YAC)",
     "qb_epa": "QB EPA",
     "cp": "Completion Probability",
+    "xpass": "Dropback Probability",
     "week": "Week",
     "play_clock": "Seconds on Play Clock",
     "yardline_100": "Yard Line (Distance from Off. EZ)",
