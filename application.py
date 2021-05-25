@@ -460,7 +460,7 @@ def results():
     if grouping == "":    
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
-                            + team_query + filter_query + indicators \
+                            + team_query + filter_query + indicators + win_query \
                             + play_type_query + qtr_query + season_type_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
@@ -478,7 +478,7 @@ def results():
                             + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
-                            + team_query + filter_query + indicators \
+                            + team_query + filter_query + indicators + win_query \
                             + play_type_query + qtr_query + season_type_query \
                             + "GROUP BY " + grouping + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
