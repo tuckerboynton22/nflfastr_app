@@ -144,7 +144,7 @@ def index():
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
                             quarters=quarters, NUMFILTERS=5)
 
-    # Provide search results
+# Provide search results
 @app.route("/results", methods=["GET", "POST"])
 def results():
     """
@@ -353,6 +353,23 @@ def results():
     # Combine penalty, turnover, and score queries for single indicator query
     indicators = penaltyindicator + turnoverindicator + scoreindicator + roofindicator
     indicator_results = penaltyresults + turnoverresults + scoreresults + roofresults
+
+    # Create game-winner query
+    winner = request.args.get("win")
+    win_query = ""
+    win_results = ""
+
+    if winner == "won":
+        win_query = " AND ((posteam = home_team AND home_score > away_score) OR (posteam = away_team AND home_score < away_score)) "
+        win_results = " possession team won "
+    elif winner == "lost":
+        win_query = " AND ((posteam = home_team AND home_score < away_score) OR (posteam = away_team AND home_score > away_score)) "
+        win_results = " possession team lost "
+    elif winner == "tied":
+        win_query = " AND home_score = away_score "
+        win_results = " game was a tie "
+    
+
 
     # Set groupings
     grouping = ""
