@@ -513,6 +513,10 @@ def viz():
 def yellowpages():
     return render_template("yellowpages.html")
 
+@app.route("/cards", methods=["GET"])
+def cards():
+    return render_template("cards.html")
+
 # Handle error
 def errorhandler(e):
     if not isinstance(e, HTTPException):
