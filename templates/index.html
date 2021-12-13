@@ -38,12 +38,12 @@
             {% endfor %}
         </select>
         to
-        <hr>
         <select name="end">
             {% for season in seasons %}
                 <option value="{{ season }}">{{ season }}</option>
             {% endfor %}
         </select>
+        <hr>
         REG weeks
         <select name="start_reg_week">
             {% for reg_week in reg_weeks %}
