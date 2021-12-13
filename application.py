@@ -229,13 +229,44 @@ def results():
     season_start = int(request.args.get("start"))
     season_end = int(request.args.get("end"))
 
-    # Create season type query
-    if request.args.get("season_type") != "both":
-        season_type_query = " AND season_type='" + request.args.get("season_type") + "' "
-        season_type = request.args.get("season_type")
+    # Create week query
+    if request.args.get("start_reg_week") != "Any":
+        start_reg_week = request.args.get("start_reg_week")
     else:
-        season_type_query = ""
-        season_type = "REG or POST"
+        start_reg_week = 1
+
+    if request.args.get("end_reg_week") != "Any":
+        end_reg_week = request.args.get("end_reg_week")
+    else:
+        end_reg_week = 18
+    
+    if request.args.get("start_post_week") != "Any":
+        start_post_week = request.args.get("start_post_week")
+    else:
+        start_post_week = 18
+
+    if request.args.get("end_post_week") != "Any":
+        end_post_week = request.args.get("end_post_week")
+    else:
+        end_post_week = 22
+    
+    if start_reg_week != "None" and end_reg_week != "None":
+        reg_week_query = " (season_type = 'REG' AND 'week' <= " + end_reg_week + " AND 'week' >= " + start_reg_week + ") "
+    else:
+        reg_week_query = ""
+    if start_post_week != "None" and end_post_week != "None":
+        post_week_query = " (season_type = 'POST' AND 'week' <= " + end_post_week + " AND 'week' >= " + start_post_week + ") "
+    else:
+        post_week_query = ""
+    
+    if reg_week_query != "" and post_week_query != "":
+        week_query = " AND(" + reg_week_query + " OR " + post_week_query + ") "
+    elif reg_week_query != "":
+        week_query = " AND" + reg_week_query
+    elif post_week_query != "":
+        week_query = " AND" + post_week_query
+    else:
+        week_query = ""
 
     # Create quarter query
     qtr_query = ""
@@ -505,7 +536,7 @@ def results():
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
                             + team_query + filter_query + indicators + win_query \
-                            + play_type_query + qtr_query + season_type_query \
+                            + play_type_query + qtr_query + week_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -523,7 +554,7 @@ def results():
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query \
-                            + play_type_query + qtr_query + season_type_query \
+                            + play_type_query + qtr_query + week_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
