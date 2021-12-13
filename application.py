@@ -322,6 +322,17 @@ def results():
     else:
         turnoverindicator = ""
         turnoverresults = "either turnover or no turnover, "
+    
+    # Create completion query
+    if request.args.get("complete_pass") == "1":
+        completionindicator = " AND complete_pass = 1 "
+        completionresults = "a complete pass, "
+    elif request.args.get("turnover") == "0":
+        completionindicator = " AND complete_pass = 1 "
+        completionresults = "no complete pass, "
+    else:
+        completionindicator = ""
+        completionresults = "either complete pass or not, "
 
     # Create score query
     if request.args.get("score") != "either":
@@ -350,8 +361,8 @@ def results():
         roofresults = "game in any stadium"
 
     # Combine penalty, turnover, and score queries for single indicator query
-    indicators = penaltyindicator + turnoverindicator + scoreindicator + roofindicator
-    indicator_results = penaltyresults + turnoverresults + scoreresults + roofresults
+    indicators = penaltyindicator + turnoverindicator + scoreindicator + roofindicator + completionindicator
+    indicator_results = penaltyresults + turnoverresults + scoreresults + roofresults + completionresults
 
     # Create game-winner query
     winner = request.args.get("win")
@@ -480,7 +491,8 @@ def results():
     searchdesc = str(season_start) + "-" + str(season_end) + ", " + season_type + " season, " + team_results \
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
                 + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
-                + play_type_results + ". " + indicator_results + filter_results + win_results + ". " + grouping_results + minplay_results
+                + play_type_results + ". " + indicator_results + filter_results + win_results + ". " \
+                + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
