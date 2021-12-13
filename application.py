@@ -328,7 +328,7 @@ def results():
         completionindicator = " AND complete_pass = 1 "
         completionresults = "a complete pass, "
     elif request.args.get("turnover") == "0":
-        completionindicator = " AND complete_pass = 1 "
+        completionindicator = " AND complete_pass = 0 "
         completionresults = "no complete pass, "
     else:
         completionindicator = ""
