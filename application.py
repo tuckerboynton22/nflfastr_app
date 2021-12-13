@@ -137,7 +137,7 @@ def index():
 
     inequalities = ["=", ">", "<"]
 
-    seasons = [x for x in range(2021, 1998, 1)]
+    seasons = [x for x in range(2021, 1998, -1)]
 
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
