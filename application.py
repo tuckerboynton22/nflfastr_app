@@ -231,24 +231,24 @@ def results():
 
     # Create week query
     if request.args.get("start_reg_week") != "Any":
-        start_reg_week = request.args.get("start_reg_week")
+        start_reg_week = str(request.args.get("start_reg_week"))
     else:
-        start_reg_week = 1
+        start_reg_week = "1"
 
     if request.args.get("end_reg_week") != "Any":
-        end_reg_week = request.args.get("end_reg_week")
+        end_reg_week = str(request.args.get("end_reg_week"))
     else:
-        end_reg_week = 18
+        end_reg_week = "18"
     
     if request.args.get("start_post_week") != "Any":
-        start_post_week = request.args.get("start_post_week")
+        start_post_week = str(request.args.get("start_post_week"))
     else:
-        start_post_week = 18
+        start_post_week = "18"
 
     if request.args.get("end_post_week") != "Any":
-        end_post_week = request.args.get("end_post_week")
+        end_post_week = str(request.args.get("end_post_week"))
     else:
-        end_post_week = 22
+        end_post_week = "22"
     
     if start_reg_week != "None" and end_reg_week != "None":
         reg_week_query = " (season_type = 'REG' AND 'week' <= " + end_reg_week + " AND 'week' >= " + start_reg_week + ") "
@@ -523,7 +523,7 @@ def results():
     total = request.args.get("total")
 
     # Create description of search for results page
-    searchdesc = str(season_start) + "-" + str(season_end) + ", " + season_type + " season, " + team_results \
+    searchdesc = str(season_start) + "-" + str(season_end) + ", " + week_query + " season, " + team_results \
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
                 + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
                 + play_type_results + ". " + indicator_results + filter_results + win_results + ". " \
