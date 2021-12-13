@@ -482,7 +482,7 @@ def results():
 
     else:
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
-                            AVG(epa) AS epa, FIRST_VALUE(" + group + ") AS " \
+                            AVG(epa) AS epa, " + group + " AS " \
                             + group + ", AVG(success) AS success, " \
                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                             + ", STRING_AGG(DISTINCT posteam, ', ') as posteam"
