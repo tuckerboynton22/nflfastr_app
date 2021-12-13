@@ -371,6 +371,7 @@ def results():
 
     # Set groupings
     grouping = ""
+    grouping_id = ""
     grouping_null = ""
     group = request.args.get("grouping")
     group2 = request.args.get("grouping2")
@@ -491,8 +492,8 @@ def results():
 
     else:
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
-                            AVG(epa) AS epa, STRING_AGG(DISTINCT '" + group + "', ', ') AS '" \
-                            + group + "', AVG(success) AS success, " \
+                            AVG(epa) AS epa, STRING_AGG(DISTINCT " + group + ", ', ') AS " \
+                            + group + ", AVG(success) AS success, " \
                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                             + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
                             + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
