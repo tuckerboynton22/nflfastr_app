@@ -51,7 +51,8 @@ groupings = {
     "posteam": "Offense",
     "defteam": "Defense",
     "game_id": "Game",
-    "season": "Season"
+    "season": "Season",
+    "week": "Week"
 }
 
 # Create global play types
@@ -334,7 +335,7 @@ def results():
         scoreindicator = ""
         scoreresults = "either score or no score, "
 
-    # Create score query
+    # Create roof query
     if request.args.get("roof") != "any":
         roofindicator = " AND roof='" + request.args.get("roof") + "' "
         if request.args.get("roof") == "dome":
@@ -397,6 +398,10 @@ def results():
         grouping = group + ", receiver_id"
         grouping_id = "receiver_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+    elif group == "week":
+        grouping = group + ", week"
+        grouping_id = "week"
+        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group != "":
         grouping = group
         grouping_id = ""
@@ -428,6 +433,10 @@ def results():
     elif group2 == "receiver":
         grouping = grouping + group2 + ", receiver_id"
         grouping_id = grouping_id + ", receiver_id"
+        grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
+    elif group2 == "week":
+        grouping = grouping + group2 + ", week"
+        grouping_id = grouping_id + ", week"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 != "":
         grouping = grouping + group2
@@ -498,7 +507,8 @@ def results():
 
         if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver" \
             and group != "passer" and group != "rusher" and group2 != "passer" and group2 != "rusher" \
-            and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" and group2 != "receiver_player_name":
+            and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" \
+            and group2 != "receiver_player_name" and group2 != "week" and group != "week":
             return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
                                     group2=group2, groupings=groupings, searchdesc=searchdesc)
 
