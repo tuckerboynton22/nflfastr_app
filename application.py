@@ -401,7 +401,7 @@ def results():
     elif group == "week":
         grouping = group + ", 'week'"
         grouping_id = "'week'"
-        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
+        grouping_null = " AND '" + group + "' IS NOT NULL " + " AND LENGTH(CAST('" + group + "' AS TEXT))>0 "
     elif group != "":
         grouping = group
         grouping_id = ""
@@ -437,7 +437,7 @@ def results():
     elif group2 == "week":
         grouping = grouping + group2 + ", 'week'"
         grouping_id = grouping_id + ", 'week'"
-        grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
+        grouping_null = grouping_null + " AND '" + group2 + "' IS NOT NULL " + " AND LENGTH(CAST('" + group2 + "' AS TEXT))>0 "
     elif group2 != "":
         grouping = grouping + group2
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
