@@ -362,7 +362,7 @@ def results():
 
     # Combine penalty, turnover, and score queries for single indicator query
     indicators = penaltyindicator + turnoverindicator + scoreindicator + completionindicator + roofindicator
-    indicator_results = penaltyresults + turnoverresults + scoreresults + roofresults + completionresults
+    indicator_results = penaltyresults + turnoverresults + scoreresults + completionresults + roofresults
 
     # Create game-winner query
     winner = request.args.get("win")
