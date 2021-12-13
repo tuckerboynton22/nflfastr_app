@@ -137,8 +137,7 @@ def index():
 
     inequalities = ["=", ">", "<"]
 
-    seasons = [1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011,
-                2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021]
+    seasons = [x for x in range(2021, 1998, 1)]
 
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
@@ -377,46 +376,58 @@ def results():
 
     if group == "name":
         grouping = group + ", id"
+        grouping_id = "id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "passer":
         grouping = group + ", passer_id"
+        grouping_id = "passer id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "rusher":
         grouping = group + ", rusher_id"
+        grouping_id = "rusher_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "kicker_player_name":
         grouping = group + ", kicker_player_id"
+        grouping_id = "kicker_player_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "punter_player_name":
         grouping = group + ", punter_player_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "receiver":
         grouping = group + ", receiver_id"
+        grouping_id = "receiver_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group != "":
         grouping = group
+        grouping_id = ""
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     
     if group != "" and group2 != "":
         grouping = grouping + ", "
 
     if group2 == "name":
-        grouping = grouping + group2 + ", id "
+        grouping = grouping + group2 + ", id"
+        grouping_id = grouping_id + ", id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group == "passer":
         grouping = grouping + group2 + ", passer_id"
+        grouping_id = grouping_id + ", passer_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "rusher":
         grouping = grouping + group2 + ", rusher_id"
+        grouping_id = grouping_id + ", rusher_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group2 == "kicker_player_name":
         grouping = grouping + group2 + ", kicker_player_id"
+        grouping_id = grouping_id + ", kicker_player_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "punter_player_name":
         grouping = grouping + group2 + ", punter_player_id"
+        grouping_id = grouping_id + ", punter_player)id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "receiver":
         grouping = grouping + group2 + ", receiver_id"
+        grouping_id = grouping_id + ", receiver_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 != "":
         grouping = grouping + group2
@@ -480,7 +491,7 @@ def results():
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query \
                             + play_type_query + qtr_query + season_type_query \
-                            + "GROUP BY " + grouping + minplay_query \
+                            + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
         
