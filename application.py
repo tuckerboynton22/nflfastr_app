@@ -441,6 +441,7 @@ def results():
         grouping_null = grouping_null + " AND '" + group2 + "' IS NOT NULL " + " AND LENGTH(CAST('" + group2 + "' AS TEXT))>0 "
     elif group2 != "":
         grouping = grouping + group2
+        grouping_id = grouping_id + group2
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
 
     if group != "":
