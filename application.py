@@ -361,7 +361,7 @@ def results():
         roofresults = "game in any stadium"
 
     # Combine penalty, turnover, and score queries for single indicator query
-    indicators = penaltyindicator + turnoverindicator + scoreindicator + roofindicator + completionindicator
+    indicators = penaltyindicator + turnoverindicator + scoreindicator + completionindicator + roofindicator
     indicator_results = penaltyresults + turnoverresults + scoreresults + roofresults + completionresults
 
     # Create game-winner query
