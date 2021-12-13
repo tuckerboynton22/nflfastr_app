@@ -38,6 +38,7 @@
             {% endfor %}
         </select>
         to
+        <hr>
         <select name="end">
             {% for season in seasons %}
                 <option value="{{ season }}">{{ season }}</option>
@@ -45,28 +46,24 @@
         </select>
         REG weeks
         <select name="start_reg_week">
-            <option selected value="1">1</option>
             {% for reg_week in reg_weeks %}
                 <option value="{{ reg_week }}">{{ reg_week }}</option>
             {% endfor %}
         </select>
         -
         <select name="end_reg_week">
-            <option selected value="18">18</option>
             {% for reg_week in reg_weeks %}
                 <option value="{{ reg_week }}">{{ reg_week }}</option>
             {% endfor %}
         </select>
         POST weeks
         <select name="start_post_week">
-            <option selected value="None">None</option>
             {% for post_week in post_weeks %}
                 <option value="{{ post_week }}">{{ post_week }}</option>
             {% endfor %}
         </select>
         -
         <select name="end_post_week">
-            <option selected value="None">None</option>
             {% for post_week in post_weeks %}
                 <option value="{{ post_week }}">{{ post_week }}</option>
             {% endfor %}
