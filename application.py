@@ -251,11 +251,11 @@ def results():
         end_post_week = "22"
     
     if start_reg_week != "None" and end_reg_week != "None":
-        reg_week_query = " (season_type = 'REG' AND 'week' <= " + end_reg_week + " AND 'week' >= " + start_reg_week + ") "
+        reg_week_query = " (season_type = 'REG' AND week <= " + end_reg_week + " AND week >= " + start_reg_week + ") "
     else:
         reg_week_query = ""
     if start_post_week != "None" and end_post_week != "None":
-        post_week_query = " (season_type = 'POST' AND 'week' <= " + end_post_week + " AND 'week' >= " + start_post_week + ") "
+        post_week_query = " (season_type = 'POST' AND week <= " + end_post_week + " AND week >= " + start_post_week + ") "
     else:
         post_week_query = ""
     
