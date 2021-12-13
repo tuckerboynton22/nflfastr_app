@@ -380,7 +380,7 @@ def results():
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "passer":
         grouping = group + ", passer_id"
-        grouping_id = "passer id"
+        grouping_id = "passer_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "rusher":
         grouping = group + ", rusher_id"
@@ -409,7 +409,7 @@ def results():
         grouping = grouping + group2 + ", id"
         grouping_id = grouping_id + ", id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
-    elif group == "passer":
+    elif group2 == "passer":
         grouping = grouping + group2 + ", passer_id"
         grouping_id = grouping_id + ", passer_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
