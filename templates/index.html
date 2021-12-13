@@ -68,9 +68,7 @@
         <select name="end_post_week">
             <option selected value="None">None</option>
             {% for post_week in post_weeks %}
-                {% if post_week == "None"}
-                    <option value="{{ post_week }}">{{ post_week }}</option>
-                {% endif %}
+                <option value="{{ post_week }}">{{ post_week }}</option>
             {% endfor %}
         </select>
         <hr>

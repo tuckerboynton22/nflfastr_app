@@ -139,9 +139,9 @@ def index():
 
     seasons = [x for x in range(2021, 1998, -1)]
 
-    reg_weeks = ["None", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+    reg_weeks = ["Any", "None", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
-    post_weeks = ["None", "Wild Card", "Divisional", "Conf Champ", "Super Bowl"]
+    post_weeks = ["Any", "None", "Wild Card", "Divisional", "Conf Champ", "Super Bowl"]
 
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
