@@ -375,6 +375,7 @@ def results():
     grouping_null = ""
     group = request.args.get("grouping")
     group2 = request.args.get("grouping2")
+    grouping_aggregator = ""
 
     if group == "name":
         grouping = group + ", id"
@@ -411,6 +412,11 @@ def results():
     if group != "" and group2 != "":
         grouping = grouping + ", "
         grouping_id = grouping_id + ", "
+        grouping_aggregator =  "STRING_AGG(DISTINCT " + group + ", ', ') AS " + group + ", STRING_AGG(DISTINCT " + group2 + ", ', ') AS " + group2
+    elif group != "" and group2 == "":
+        grouping_aggregator =  "STRING_AGG(DISTINCT " + group + ", ', ') AS " + group
+    elif group == "" and group2 != "":
+        grouping_aggregator =  "STRING_AGG(DISTINCT " + group2 + ", ', ') AS " + group2
 
     if group2 == "name":
         grouping = grouping + group2 + ", id"
@@ -494,8 +500,8 @@ def results():
 
     else:
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
-                            AVG(epa) AS epa, STRING_AGG(DISTINCT " + group + ", ', ') AS " \
-                            + group + ", AVG(success) AS success, " \
+                            AVG(epa) AS epa, " + grouping_aggregator \
+                            + ", AVG(success) AS success, " \
                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                             + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
                             + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
