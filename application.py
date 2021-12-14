@@ -272,13 +272,13 @@ def results():
     if reg_week_query != "" and post_week_query != "":
         week_query = " AND(" + reg_week_query + " OR " + post_week_query + ") "
         week_results = "REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: " \
-                         + str(start_post_week-17) + "-" + str(end_post_week-17)
+                         + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17)
     elif reg_week_query != "":
         week_query = " AND" + reg_week_query
         week_results = "REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: None. "
     elif post_week_query != "":
         week_query = " AND" + post_week_query
-        week_results = "REG Wks: None, POST Wks: " + str(start_post_week-17) + "-" + str(end_post_week-17)
+        week_results = "REG Wks: None, POST Wks: " + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17)
     else:
         week_query = ""
         week_results = "REG Wks: None, POST Wks: None. "
