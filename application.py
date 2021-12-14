@@ -538,7 +538,7 @@ def results():
     total = request.args.get("total")
 
     # Create description of search for results page
-    searchdesc = str(season_start) + "-" + str(season_end) + ", " + week_query + " season, " + team_results \
+    searchdesc = str(season_start) + "-" + str(season_end) + ", " + team_results \
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
                 + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
                 + play_type_results + ". " + indicator_results + filter_results + win_results + ". " \
