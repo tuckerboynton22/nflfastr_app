@@ -75,6 +75,16 @@ quarters = {
     "5": "OT"
 }
 
+post_weeks = {
+    "None": "None",
+    "Any": "Any",
+    "Wild Card": 18,
+    "Divisional": 19,
+    "Conf Champ": 20,
+    "Super Bowl": 21
+}
+
+
 # indicators = {
 #     "penalty": "Penalty",
 #     "turnover": "Turnover",
@@ -140,8 +150,6 @@ def index():
     seasons = [x for x in range(2021, 1998, -1)]
 
     reg_weeks = ["Any", "None", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-
-    post_weeks = ["None", "Any", "Wild Card", "Divisional", "Conf Champ", "Super Bowl"]
 
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
@@ -254,6 +262,7 @@ def results():
         reg_week_query = " (season_type = 'REG' AND week <= " + end_reg_week + " AND week >= " + start_reg_week + ") "
     else:
         reg_week_query = ""
+
     if start_post_week != "None" and end_post_week != "None":
         post_week_query = " (season_type = 'POST' AND week <= " + end_post_week + " AND week >= " + start_post_week + ") "
     else:

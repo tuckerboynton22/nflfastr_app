@@ -60,13 +60,13 @@
         POST weeks
         <select name="start_post_week">
             {% for post_week in post_weeks %}
-                <option value="{{ post_week }}">{{ post_week }}</option>
+                <option value="{{ post_week }}">{{ post_weeks[post_week] }}</option>
             {% endfor %}
         </select>
         -
         <select name="end_post_week">
             {% for post_week in post_weeks %}
-                <option value="{{ post_week }}">{{ post_week }}</option>
+                <option value="{{ post_week }}">{{ post_weeks[post_week] }}</option>
             {% endfor %}
         </select>
         <hr>
