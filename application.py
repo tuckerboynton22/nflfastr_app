@@ -271,12 +271,20 @@ def results():
     
     if reg_week_query != "" and post_week_query != "":
         week_query = " AND(" + reg_week_query + " OR " + post_week_query + ") "
+        week_results = "REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: " \
+                         + post_weeks.keys()[post_weeks.values().index(start_post_week)] + "-" \
+                              + post_weeks.keys()[post_weeks.values().index(end_post_week)]
     elif reg_week_query != "":
         week_query = " AND" + reg_week_query
+        week_results = "REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: None. "
     elif post_week_query != "":
         week_query = " AND" + post_week_query
+        week_results = "REG Wks: None, POST Wks: " \
+                         + post_weeks.keys()[post_weeks.values().index(start_post_week)] + "-" \
+                              + post_weeks.keys()[post_weeks.values().index(end_post_week)] + ". "
     else:
         week_query = ""
+        week_results = "REG Wks: None, POST Wks: None. "
 
     # Create quarter query
     qtr_query = ""
@@ -537,7 +545,7 @@ def results():
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
                 + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
                 + play_type_results + ". " + indicator_results + filter_results + win_results + ". " \
-                + grouping_results + minplay_results
+                + week_results + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
