@@ -486,7 +486,7 @@ def results():
         grouping = grouping + group2 + ", passer_id"
         grouping_id = grouping_id + "passer_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
-    elif group == "rusher":
+    elif group2 == "rusher":
         grouping = grouping + group2 + ", rusher_id"
         grouping_id = grouping_id + "rusher_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
