@@ -472,11 +472,11 @@ def results():
     if group != "" and group2 != "":
         grouping = grouping + ", "
         grouping_id = grouping_id + ", "
-        grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group + ", STRING_AGG(DISTINCT " + group2 + ", ', ') AS " + group2
+        grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group + ", STRING_AGG(DISTINCT CAST(" + group2 + " AS TEXT), ', ') AS " + group2
     elif group != "" and group2 == "":
-        grouping_aggregator =  "STRING_AGG(DISTINCT " + group + ", ', ') AS " + group
+        grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group
     elif group == "" and group2 != "":
-        grouping_aggregator =  "STRING_AGG(DISTINCT " + group2 + ", ', ') AS " + group2
+        grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group2 + " AS TEXT), ', ') AS " + group2
 
     if group2 == "name":
         grouping = grouping + group2 + ", id"
