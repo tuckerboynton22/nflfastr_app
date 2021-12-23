@@ -51,7 +51,8 @@ groupings = {
     "posteam": "Offense",
     "defteam": "Defense",
     "game_id": "Game",
-    "season": "Season"
+    "season": "Season",
+    "week": "Week"
 }
 
 # Create global play types
