@@ -602,16 +602,16 @@ def results():
                                 + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
                                 + " FROM nflfastR_pbp" \
                                 + + " WHERE season>=? AND season<=?" \
-                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
-                                and epa IS NOT NULL" + grouping_null \
+                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL" \
+                                + " AND epa IS NOT NULL" + grouping_null \
                                 + team_query + filter_query + indicators + win_query \
                                 + play_type_query + qtr_query + week_query \
                                 + "GROUP BY " + grouping_id + minplay_query \
                                 + ") q "
                                 + " WHERE season>=? AND season<=?" \
                                 + " AND rownum <= 100 " \
-                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
-                                and epa IS NOT NULL" + grouping_null \
+                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL" \
+                                + " AND epa IS NOT NULL" + grouping_null \
                                 + team_query + filter_query + indicators + win_query \
                                 + play_type_query + qtr_query + week_query \
                                 + "GROUP BY " + grouping_id + minplay_query \
