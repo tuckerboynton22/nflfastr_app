@@ -607,7 +607,7 @@ def results():
                                 + team_query + filter_query + indicators + win_query \
                                 + play_type_query + qtr_query + week_query \
                                 + "GROUP BY " + grouping_id + minplay_query \
-                                + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000) q "
+                                + ") q "
                                 + " WHERE season>=? AND season<=?" \
                                 + " AND rownum <= 100 " \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
