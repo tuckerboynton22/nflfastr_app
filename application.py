@@ -591,7 +591,7 @@ def results():
     elif limit == "Yes":
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
                                 AVG(epa) AS epa, " + grouping_aggregator \
-                                + ", AVG(success) AS success, " \
+                                + ", AVG(success) AS success, season, " \
                                 + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam" \
                                 + " FROM (" + "SELECT " + grouping_id + ", COUNT(*) AS total, \
