@@ -591,11 +591,17 @@ def results():
     elif limit == "Yes":
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
                                 AVG(epa) AS epa, " + grouping_aggregator \
+                                + ", AVG(success) AS success, " \
+                                + total + "(" + sort[0] + ") AS total_" + sort[0]  \
+                                + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
+                                + " FROM (" + "SELECT " + grouping_id + ", COUNT(*) AS total, \
+                                AVG(epa) AS epa, " + grouping_aggregator \
                                 + ", ROW_NUMBER() OVER(PARTITION BY " + grouping_id \
                                 + ") as rownum, AVG(success) AS success, " \
                                 + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
-                                + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
+                                + " FROM nflfastR_pbp)" \
+                                + " WHERE season>=? AND season<=?" \
                                 + " AND rownum <= 100 " \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                                 and epa IS NOT NULL" + grouping_null \
