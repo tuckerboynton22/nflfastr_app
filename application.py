@@ -597,7 +597,7 @@ def results():
                                 + " FROM (" + "SELECT " + grouping_id + ", COUNT(*) AS total, \
                                 AVG(epa) AS epa, " + grouping_aggregator \
                                 + ", ROW_NUMBER() OVER(PARTITION BY " + grouping_id \
-                                + ") as rownum, AVG(success) AS success, season, " \
+                                + ") as rownum, AVG(success) AS success, " \
                                 + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam" \
                                 + " FROM nflfastR_pbp" \
