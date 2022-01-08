@@ -593,13 +593,13 @@ def results():
                                 AVG(epa) AS epa, " + grouping_aggregator \
                                 + ", AVG(success) AS success, " \
                                 + total + "(" + sort[0] + ") AS total_" + sort[0]  \
-                                + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
+                                + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam" \
                                 + " FROM (" + "SELECT " + grouping_id + ", COUNT(*) AS total, \
                                 AVG(epa) AS epa, " + grouping_aggregator \
                                 + ", ROW_NUMBER() OVER(PARTITION BY " + grouping_id \
                                 + ") as rownum, AVG(success) AS success, " \
                                 + total + "(" + sort[0] + ") AS total_" + sort[0]  \
-                                + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
+                                + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam" \
                                 + " FROM nflfastR_pbp" \
                                 + + " WHERE season>=? AND season<=?" \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL" \
@@ -607,7 +607,7 @@ def results():
                                 + team_query + filter_query + indicators + win_query \
                                 + play_type_query + qtr_query + week_query \
                                 + "GROUP BY " + grouping_id + minplay_query \
-                                + ") q "
+                                + ") q " \
                                 + " WHERE season>=? AND season<=?" \
                                 + " AND rownum <= 100 " \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL" \
