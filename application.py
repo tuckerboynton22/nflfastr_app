@@ -547,8 +547,10 @@ def results():
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
+    limit = request.args.get("limit")
+
     # If no grouping, pass list of plays to plays.html
-    if grouping == "":    
+    if grouping == "" and limit == "No":    
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
                             + team_query + filter_query + indicators + win_query \
@@ -560,7 +562,7 @@ def results():
         return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
 
 
-    else:
+    elif limit == "No":
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
                             AVG(epa) AS epa, " + grouping_aggregator \
                             + ", AVG(success) AS success, " \
@@ -586,7 +588,34 @@ def results():
         else:
             return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
                                     group2=group2, groupings=groupings, searchdesc=searchdesc)
+    elif limit == "Yes":
+        plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
+                                AVG(epa) AS epa, " + grouping_aggregator \
+                                + " ROW_NUMBER() OVER PARTITION BY " + grouping_id \
+                                + ", AVG(success) AS success, " \
+                                + total + "(" + sort[0] + ") AS total_" + sort[0]  \
+                                + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
+                                + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
+                                + " AND ROW_NUMBER <= 100 " \
+                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
+                                and epa IS NOT NULL" + grouping_null \
+                                + team_query + filter_query + indicators + win_query \
+                                + play_type_query + qtr_query + week_query \
+                                + "GROUP BY " + grouping_id + minplay_query \
+                                + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
+                                season_start, season_end)
+                                    
+        if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver" \
+            and group != "passer" and group != "rusher" and group2 != "passer" and group2 != "rusher" \
+            and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" \
+            and group2 != "receiver_player_name" and group2 != "week" and group != "week":
+            return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
+                                    group2=group2, groupings=groupings, searchdesc=searchdesc)
 
+        else:
+            return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
+                                    group2=group2, groupings=groupings, searchdesc=searchdesc)
+                                    
 # Render about page
 @app.route("/about", methods=["GET"])
 def about():
