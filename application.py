@@ -600,7 +600,14 @@ def results():
                                 + ") as rownum, AVG(success) AS success, " \
                                 + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                                 + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
-                                + " FROM nflfastR_pbp) q " \
+                                + " FROM nflfastR_pbp" \
+                                + + " WHERE season>=? AND season<=?" \
+                                + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
+                                and epa IS NOT NULL" + grouping_null \
+                                + team_query + filter_query + indicators + win_query \
+                                + play_type_query + qtr_query + week_query \
+                                + "GROUP BY " + grouping_id + minplay_query \
+                                + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000) q "
                                 + " WHERE season>=? AND season<=?" \
                                 + " AND rownum <= 100 " \
                                 + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
@@ -609,7 +616,7 @@ def results():
                                 + play_type_query + qtr_query + week_query \
                                 + "GROUP BY " + grouping_id + minplay_query \
                                 + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
-                                season_start, season_end)
+                                season_start, season_end, season_start, season_end)
                                     
         if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver" \
             and group != "passer" and group != "rusher" and group2 != "passer" and group2 != "rusher" \
