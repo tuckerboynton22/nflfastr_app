@@ -14,6 +14,7 @@ jobs:
       DB_HOST: ${{ secrets.DB_HOST }}
       DB_PORT: ${{ secrets.DB_PORT }}
       DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     
     steps:
       - uses: actions/checkout@v2
@@ -42,7 +43,7 @@ jobs:
           pak::local_install_dev_deps(upgrade = TRUE)
         shell: Rscript {0}
         
-      - name: Create and post tweet
+      - name: Update database
         run: Rscript nflfastr_database.R
         
         
