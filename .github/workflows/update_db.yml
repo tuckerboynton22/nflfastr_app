@@ -1,6 +1,9 @@
 name: database_update
 
 on:
+  push:
+  schedule:
+    - cron: 00 05 * * *
 
 jobs:
   nflwinbot-post:
