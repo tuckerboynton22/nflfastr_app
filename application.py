@@ -266,7 +266,7 @@ def results():
 
     if start_post_week != "None" and end_post_week != "None":
         post_week_query = " ((season_type = 'POST' AND week <= " + end_post_week + " AND week >= " + start_post_week + " AND season <= 2020) OR " \
-                            "(season_type = 'POST' AND week <= " + end_post_week + " AND week >= " + start_post_week + " AND season >= 2021))"
+                            "(season_type = 'POST' AND week <= " + str(int(end_post_week)+1) + " AND week >= " + str(int(start_post_week)+1) + " AND season >= 2021))"
     else:
         post_week_query = ""
     
