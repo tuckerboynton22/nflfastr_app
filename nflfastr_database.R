@@ -1,6 +1,8 @@
+install.packages("gsisdecoder")
 library(DBI)
 library(RPostgres)
 library(nflfastR)
+library(gsisdecoder)
 
 future::plan("multisession")
 
