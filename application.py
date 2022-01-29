@@ -456,6 +456,7 @@ def results():
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "punter_player_name":
         grouping = group + ", punter_player_id"
+        grouping_id = "punter_player_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "receiver":
         grouping = group + ", receiver_id"
