@@ -205,12 +205,13 @@
             {% endfor %}
         </select>
         Test:
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <input list="receiver2">
         <datalist id="receiver2">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
                 {% set player_name = receiver.receiver.split(',') %}
-                <option value="{{ receiver.receiver_id }}">{{ player_name[0]|replace(" ","") }}</option>
+                <option data-value="{{ receiver.receiver_id }}", value="{{ player_name[0]|replace(' '','') }}"></option>
             {% endfor %}
         </datalist>
         <hr>
