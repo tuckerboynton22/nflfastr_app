@@ -85,7 +85,6 @@ post_weeks = {
     "Super Bowl": 21
 }
 
-
 # indicators = {
 #     "penalty": "Penalty",
 #     "turnover": "Turnover",
@@ -99,6 +98,8 @@ app = Flask(__name__)
 db = SQL(os.getenv("DATABASE_URL"))
 # db = SQL("sqlite:///cleaned_pbp.db")
 # db = SQL("sqlite:///pbp.db")
+
+passers = db.execute("SELECT DISTINCT passer_id, STRING_AGG(DISTINCT CAST(passer AS TEXT), ', ') AS passer FROM nflfastR_pbp WHERE passer_id !='' ORDER BY passer")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -151,8 +152,6 @@ def index():
     seasons = [x for x in range(2021, 1998, -1)]
 
     reg_weeks = ["Any", "None", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-
-    passers = db.execute("SELECT DISTINCT passer_id FROM nflfastR_pbp WHERE passer_id !='' ORDER BY passer_id")
 
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
