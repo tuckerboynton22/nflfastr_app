@@ -99,7 +99,7 @@ db = SQL(os.getenv("DATABASE_URL"))
 # db = SQL("sqlite:///cleaned_pbp.db")
 # db = SQL("sqlite:///pbp.db")
 
-passers = db.execute("SELECT DISTINCT passer_id, STRING_AGG(DISTINCT CAST(passer AS TEXT), ', ') AS passer FROM nflfastR_pbp WHERE passer_id !='' ORDER BY passer")
+passers = db.execute("SELECT DISTINCT passer_id, STRING_AGG(DISTINCT CAST(passer AS TEXT), ', ') AS passer FROM nflfastR_pbp WHERE passer_id !='' GROUP BY passer_id ORDER BY passer")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
