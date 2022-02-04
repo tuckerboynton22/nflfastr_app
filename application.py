@@ -177,7 +177,7 @@ def results():
     player_results = ""
 
     passer = request.args.get("passer")
-    receiver = request.args.get("receiver")
+    receiver = str(request.args.get("receiver"))
     rusher = request.args.get("rusher")
     name = request.args.get("name")
 
