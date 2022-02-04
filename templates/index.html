@@ -185,6 +185,20 @@
                 <option value="{{ passer.passer_id }}">{{ passer.passer }}</option>
             {% endfor %}
         </select>
+        Rusher:
+        <select name="rusher">
+            <option selected value="">Choose</option>
+            {% for rusher in rushers %}
+                <option value="{{ rusher.rusher_id }}">{{ rusher.rusher }}</option>
+            {% endfor %}
+        </select>
+        Receiver:
+        <select name="receiver">
+            <option selected value="">Choose</option>
+            {% for receiver in receivers %}
+                <option value="{{ receiver.receiver_id }}">{{ receiver.receiver }}</option>
+            {% endfor %}
+        </select>
         <hr>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Submit</button>
