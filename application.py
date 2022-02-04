@@ -172,6 +172,24 @@ def results():
 
     """
 
+    # Create player query
+    player_query = ""
+    player_results = ""
+
+    passer = request.args.get("passer")
+    receiver = request.args.get("receiver")
+    rusher = request.args.get("rusher")
+    name = request.args.get("name")
+
+    if passer != "":
+        player_query = " AND passer_id = " + passer
+    if receiver != "":
+        player_query = player_query + " AND receiver_id = " + receiver
+    if rusher != "":
+        player_query = player_query + " AND rusher_id = " + rusher
+    if name != "":
+        player_query = player_query + " AND id = " + name
+
     # Create team query
     team_query = ""
     team_results = ""
@@ -561,7 +579,7 @@ def results():
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
                             + team_query + filter_query + indicators + win_query \
-                            + play_type_query + qtr_query + week_query \
+                            + play_type_query + qtr_query + week_query + player_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -579,7 +597,7 @@ def results():
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query \
-                            + play_type_query + qtr_query + week_query \
+                            + play_type_query + qtr_query + week_query + player_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
