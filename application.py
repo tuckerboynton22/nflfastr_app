@@ -100,6 +100,7 @@ db = SQL(os.getenv("DATABASE_URL"))
 # db = SQL("sqlite:///pbp.db")
 
 passers = db.execute("SELECT DISTINCT passer_id, STRING_AGG(DISTINCT CAST(passer AS TEXT), ', ') AS passer FROM nflfastR_pbp WHERE passer_id !='' GROUP BY passer_id ORDER BY passer")
+names = db.execute("SELECT DISTINCT id, STRING_AGG(DISTINCT CAST(name AS TEXT), ', ') AS name FROM nflfastR_pbp WHERE id !='' GROUP BY id ORDER BY name")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -156,7 +157,7 @@ def index():
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
                             quarters=quarters, reg_weeks=reg_weeks, post_weeks=post_weeks, 
-                            passers=passers, NUMFILTERS=5)
+                            passers=passers, names=names, NUMFILTERS=5)
 
 # Provide search results
 @app.route("/results", methods=["GET", "POST"])

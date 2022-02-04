@@ -171,7 +171,14 @@
         Minimum plays (for grouped searches):
         <input name="minimum" placeholder=1 value=1 type="number" min="1">
         <hr>
-        Passes by:
+        Passer/Rusher:
+        <select name="name">
+            <option selected value="">Choose</option>
+            {% for name in names %}
+                <option value="{{ name.id }}">{{ name.name }}</option>
+            {% endfor %}
+        </select>
+        Passer:
         <select name="passer">
             <option selected value="">Choose</option>
             {% for passer in passers %}
