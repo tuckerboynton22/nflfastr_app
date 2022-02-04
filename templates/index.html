@@ -175,8 +175,8 @@
         <select name="name">
             <option selected value="">Choose</option>
             {% for name in names %}
-                {% set name.name = name.name.split(',') %}
-                <option value="{{ name.id }}">{{ name.name }}</option>
+                {% set player_name = name.name.split(',') %}
+                <option value="{{ name.id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
         Passer:
