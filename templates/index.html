@@ -176,7 +176,7 @@
             <option selected value="">Choose</option>
             {% for name in names %}
                 {% set player_name = name.name.split(',') %}
-                <option value="{{ name.id }}">{{ player_name[0] }}</option>
+                <option value="{{ name.id }}">{{ player_name[0]|replace(" ","") }}</option>
             {% endfor %}
         </select>
         Passer:
@@ -184,7 +184,7 @@
             <option selected value="">Choose</option>
             {% for passer in passers %}
                 {% set player_name = passer.passer.split(',') %}
-                <option value="{{ passer.passer_id }}">{{ player_name[0] }}</option>
+                <option value="{{ passer.passer_id }}">{{ player_name[0]|replace(" ","") }}</option>
             {% endfor %}
         </select>
         Rusher:
@@ -192,7 +192,7 @@
             <option selected value="">Choose</option>
             {% for rusher in rushers %}
                 {% set player_name = rusher.rusher.split(',') %}
-                <option value="{{ rusher.rusher_id }}">{{ player_name[0] }}</option>
+                <option value="{{ rusher.rusher_id }}">{{ player_name[0]|replace(" ","") }}</option>
             {% endfor %}
         </select>
         Receiver:
@@ -200,7 +200,7 @@
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
                 {% set player_name = receiver.receiver.split(',') %}
-                <option value="{{ receiver.receiver_id }}">{{ player_name[0] }}</option>
+                <option value="{{ receiver.receiver_id }}">{{ player_name[0]|replace(" ","") }}</option>
             {% endfor %}
         </select>
         <hr>
