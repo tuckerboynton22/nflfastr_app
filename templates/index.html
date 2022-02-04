@@ -2,16 +2,16 @@
 
 {% block main %}
 
-    $(document).ready(function() {
-
-        $('#submit').click(function()
-        {
-            var value = $('#selected').val();
-            alert($('#browsers [value="' + value + '"]').data('value'));
-        });
-    });
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#submit').click(function()
+            {
+                var value = $('#selected').val();
+                alert($('#browsers [value="' + value + '"]').data('value'));
+            });
+        });
+    </script>
     <h5>Find plays with...</h5>
     <hr>
     <form action="/results" method="get">
