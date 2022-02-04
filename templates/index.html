@@ -174,6 +174,7 @@
         Passer/Rusher:
         <select name="name">
             <option selected value="">Choose</option>
+            {% set names = names.split(',') %}
             {% for name in names %}
                 <option value="{{ name.id }}">{{ name.name }}</option>
             {% endfor %}
@@ -196,7 +197,7 @@
         <select name="receiver">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
-                <option value="{{ receiver.receiver_id }}">{{ receiver.receiver }}</option>
+                <option value="{{ receiver.receiver_id }}">{{ receiver.receiver|truncate() }}</option>
             {% endfor %}
         </select>
         <hr>
