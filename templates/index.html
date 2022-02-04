@@ -204,6 +204,14 @@
                 <option value="{{ receiver.receiver_id }}">{{ player_name[0]|replace(" ","") }}</option>
             {% endfor %}
         </select>
+        Test:
+        <datalist name="receiver">
+            <option selected value="">Choose</option>
+            {% for receiver in receivers %}
+                {% set player_name = receiver.receiver.split(',') %}
+                <option value="{{ receiver.receiver_id }}">{{ player_name[0]|replace(" ","") }}</option>
+            {% endfor %}
+        </datalist>
         <hr>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Submit</button>
