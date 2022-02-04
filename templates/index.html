@@ -211,7 +211,7 @@
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
                 {% set player_name = receiver.receiver.split(',') %}
-                <option data-value="{{ receiver.receiver_id }}", value="{{ player_name[0]|replace(' '','') }}"></option>
+                <option data-value="{{ receiver.receiver_id }}", value="{{ player_name[0]|replace(' ','') }}"></option>
             {% endfor %}
         </datalist>
         <hr>
