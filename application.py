@@ -182,13 +182,13 @@ def results():
     name = request.args.get("name")
 
     if passer != "":
-        player_query = " AND passer_id = " + passer
+        player_query = " AND passer_id = '" + passer + "' "
     if receiver != "":
-        player_query = player_query + " AND receiver_id = " + receiver
+        player_query = player_query + " AND receiver_id = '" + receiver + "' "
     if rusher != "":
-        player_query = player_query + " AND rusher_id = " + rusher
+        player_query = player_query + " AND rusher_id = '" + rusher + "' "
     if name != "":
-        player_query = player_query + " AND id = " + name
+        player_query = player_query + " AND id = '" + name + "' "
 
     # Create team query
     team_query = ""
