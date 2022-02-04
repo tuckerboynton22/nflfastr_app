@@ -171,6 +171,14 @@
         Minimum plays (for grouped searches):
         <input name="minimum" placeholder=1 value=1 type="number" min="1">
         <hr>
+        Passes by:
+        <select name="passer">
+            <option selected value="">Choose</option>
+            {% for passer in passers %}
+                <option value="{{ passer }}">{{ passers[passer] }}</option>
+            {% endfor %}
+        </select>
+        <hr>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Submit</button>
         </div>
