@@ -174,8 +174,8 @@
         Passer/Rusher:
         <select name="name">
             <option selected value="">Choose</option>
-            {% set names = names.split(',') %}
             {% for name in names %}
+                {% set name.name = name.name.split(',') %}
                 <option value="{{ name.id }}">{{ name.name }}</option>
             {% endfor %}
         </select>
