@@ -205,7 +205,8 @@
             {% endfor %}
         </select>
         Test:
-        <datalist name="receiver">
+        <input list="receiver2">
+        <datalist name="receiver2">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
                 {% set player_name = receiver.receiver.split(',') %}
