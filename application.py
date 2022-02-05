@@ -13,7 +13,7 @@ filters = {
     "epa":"Expected Points Added (EPA)",
     "cpoe": "Completion % Over Expected (CPOE)",
     "wpa": "Win Probability Added (WPA)",
-    "down": "Down",
+    "success": "Success",
     "ydstogo": "Yards to Go",
     "yards_gained": "Yards Gained",
     "air_yards": "Air Yards",
