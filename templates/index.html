@@ -202,7 +202,7 @@
         <datalist id="receivers">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
-                {% set player_name = receiver.receiver.split(',')[0].replace(' ','') + '(' + str(receiver.receiver_id) + ')' %}
+                {% set player_name = receiver.receiver.split(',')[0].replace(' ','') + '(' + receiver.receiver_id|string + ')' %}
                 <option value="{{ player_name }}"></option>
             {% endfor %}
         </datalist>
