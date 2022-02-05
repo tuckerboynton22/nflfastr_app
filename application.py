@@ -405,7 +405,7 @@ def results():
         turnoverresults = "no turnover, "
     else:
         turnoverindicator = ""
-        turnoverresults = "either turnover or no turnover, "
+        turnoverresults = ""
     
     # Create completion query
     if request.args.get("complete_pass") == "1":
@@ -416,7 +416,7 @@ def results():
         completionresults = "no complete pass, "
     else:
         completionindicator = ""
-        completionresults = "either complete pass or not, "
+        completionresults = ""
 
     # Create score query
     if request.args.get("score") != "either":
@@ -427,7 +427,40 @@ def results():
             scoreresults = "no score, "
     else:
         scoreindicator = ""
-        scoreresults = "either score or no score, "
+        scoreresults = ""
+
+    # Create sack query
+    if request.args.get("sack") != "either":
+        sackindicator = " AND sack=" + request.args.get("score") + " "
+        if request.args.get("sack") == "1":
+            sackresults = "a sack, "
+        else:
+            sackresults = "no sack, "
+    else:
+        sackindicator = ""
+        sackresults = ""
+    
+    # Create interception query
+    if request.args.get("interception") != "either":
+        intindicator = " AND interception=" + request.args.get("interception") + " "
+        if request.args.get("interception") == "1":
+            intresults = "an interception, "
+        else:
+            intresults = "not an interception, "
+    else:
+        intindicator = ""
+        intresults = ""
+
+    # Create no-huddle query
+    if request.args.get("no_huddle") != "either":
+        nohuddleindicator = " AND no_huddle=" + request.args.get("no_huddle") + " "
+        if request.args.get("no_huddle") == "1":
+            nohuddleresults = "offense in no-huddle, "
+        else:
+            nohuddleresults = "offense huddled, "
+    else:
+        nohuddleindicator = ""
+        nohuddleresults = ""
 
     # Create roof query
     if request.args.get("roof") != "any":
@@ -444,9 +477,9 @@ def results():
         roofindicator = ""
         roofresults = "game in any stadium"
 
-    # Combine penalty, turnover, and score queries for single indicator query
-    indicators = penaltyindicator + turnoverindicator + scoreindicator + completionindicator + roofindicator
-    indicator_results = penaltyresults + turnoverresults + scoreresults + completionresults + roofresults
+    # Combine penalty, turnover, score, sack, interception, and roof queries for single indicator query
+    indicators = penaltyindicator + turnoverindicator + scoreindicator + completionindicator + intindicator + sackindicator + nohuddleindicator + roofindicator
+    indicator_results = penaltyresults + turnoverresults + scoreresults + completionresults + intresults + sackresults + nohuddleresults + roofresults
 
     # Create game-winner query
     winner = request.args.get("win")
