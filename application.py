@@ -76,6 +76,15 @@ quarters = {
     "5": "OT"
 }
 
+# Create global downs
+downs = {
+    "1": "1st",
+    "2": "2nd",
+    "3": "3rd",
+    "4": "4th",
+    "5": "None"
+}
+
 post_weeks = {
     "None": "None",
     "Any": "Any",
@@ -158,7 +167,7 @@ def index():
 
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
-                            quarters=quarters, reg_weeks=reg_weeks, post_weeks=post_weeks, 
+                            quarters=quarters, reg_weeks=reg_weeks, post_weeks=post_weeks, downs=downs,
                             passers=passers, names=names, rushers=rushers, receivers=receivers,
                             NUMFILTERS=5)
 
@@ -337,6 +346,27 @@ def results():
                     qtrs = qtrs + ", " + str(request.args.get(quarter))
     if qtr_query != "":
         qtr_query = qtr_query + ") "
+    
+    # Create down query
+    down_query = ""
+    for down in downs:
+        if str(request.args.get(down + '_down')) in downs:
+            if down_query == "":
+                if str(request.args.get(down + '_down')) == "5":
+                    down_query = " AND(down IS NULL"
+                    dwns = "None"
+                else:
+                    down_query = " AND(down=" + str(request.args.get(down + '_down'))
+                    dwns = str(request.args.get(quarter))
+            else:
+                if str(request.args.get(down + '_down')) == "5":
+                    down_query = down_query + " OR down IS NULL"
+                    dwns = dwns + ", None"
+                else:
+                    down_query = down_query + " OR down=" + str(request.args.get(quarter + '_down'))
+                    dwns = dwns + ", " + str(request.args.get(quarter + '_down'))
+    if down_query != "":
+        down_query = down_query + ") "
 
     # Create play type query
     play_type_query = ""
@@ -608,7 +638,7 @@ def results():
     # Create description of search for results page
     searchdesc = str(season_start) + "-" + str(season_end) + ", " + team_results \
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
-                + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Play types: " \
+                + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
                 + play_type_results + ". " + indicator_results + filter_results + win_results + ". " \
                 + week_results + grouping_results + minplay_results
 
@@ -621,7 +651,7 @@ def results():
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
                             + team_query + filter_query + indicators + win_query \
-                            + play_type_query + qtr_query + week_query + player_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -639,7 +669,7 @@ def results():
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query \
-                            + play_type_query + qtr_query + week_query + player_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)

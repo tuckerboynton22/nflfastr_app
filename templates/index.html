@@ -78,9 +78,19 @@
             <input name="{{ quarter }}" value="{{ quarter }}" type="checkbox" checked="checked"> {{ quarters[quarter] }}
         {% endfor %}
         <hr>
+        Down:
+        {% for down in downs %}
+            <input name="{{ down + '_down' }}" value="{{ down }}" type="checkbox" checked="checked"> {{ downs[down] }}
+        {% endfor %}
+        <hr>
         Play type:
         {% for play_type in play_types %}
             <input name="{{ play_type }}" value="{{ play_type }}" type="checkbox" checked="checked"> {{ play_types[play_type] }}
+        {% endfor %}
+        <hr>
+        Quarter:
+        {% for quarter in quarters %}
+            <input name="{{ quarter }}" value="{{ quarter }}" type="checkbox" checked="checked"> {{ quarters[quarter] }}
         {% endfor %}
         <hr>
         {% for i in range(NUMFILTERS) %}
@@ -160,39 +170,6 @@
             <option value="open">Open</option>
         </select>
         <hr>
-        Sort by:
-        <select name="order">
-            <option value="DESC">Descending</option>
-            <option value="ASC">Ascending</option>
-        </select>
-        <select name="total">
-            <option value="SUM">Total</option>
-            <option value="AVG">Average</option>
-        </select>
-        <select name="sort">
-            {% for filter in filters %}
-                <option value="{{ filter }}">{{ filters[filter] }}</option>
-            {% endfor %}
-        </select>
-        <hr>
-        Group by:
-        <select name="grouping">
-            <option selected value="">Choose</option>
-            {% for grouping in groupings %}
-                <option value="{{ grouping }}">{{ groupings[grouping] }}</option>
-            {% endfor %}
-        </select>
-        ,
-        <select name="grouping2">
-            <option selected value="">Choose</option>
-            {% for grouping in groupings %}
-                <option value="{{ grouping }}">{{ groupings[grouping] }}</option>
-            {% endfor %}
-        </select>
-        <hr>
-        Minimum plays (for grouped searches):
-        <input name="minimum" placeholder=1 value=1 type="number" min="1">
-        <hr>
         Passer/Rusher:
         <input name="name" list="name" placeholder="Choose"/>
         <datalist id="name">
@@ -232,6 +209,39 @@
                 <option value="{{ player_name }}">
             {% endfor %}
         </datalist>
+        <hr>
+        Sort by:
+        <select name="order">
+            <option value="DESC">Descending</option>
+            <option value="ASC">Ascending</option>
+        </select>
+        <select name="total">
+            <option value="SUM">Total</option>
+            <option value="AVG">Average</option>
+        </select>
+        <select name="sort">
+            {% for filter in filters %}
+                <option value="{{ filter }}">{{ filters[filter] }}</option>
+            {% endfor %}
+        </select>
+        <hr>
+        Group by:
+        <select name="grouping">
+            <option selected value="">Choose</option>
+            {% for grouping in groupings %}
+                <option value="{{ grouping }}">{{ groupings[grouping] }}</option>
+            {% endfor %}
+        </select>
+        ,
+        <select name="grouping2">
+            <option selected value="">Choose</option>
+            {% for grouping in groupings %}
+                <option value="{{ grouping }}">{{ groupings[grouping] }}</option>
+            {% endfor %}
+        </select>
+        <hr>
+        Minimum plays (for grouped searches):
+        <input name="minimum" placeholder=1 value=1 type="number" min="1">
         <hr>
         <div class="form-group">
             <button class="btn btn-primary" id="submit" type="submit">Submit</button>
