@@ -2,17 +2,6 @@
 
 {% block main %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#submit').click(function()
-            {
-                var value = $('#selected_receiver').val();
-                alert($('#receivers [value="' + value + '"]').data('value'));
-            });
-        });
-    </script>
-
     <h5>Find plays with...</h5>
     <hr>
     <form action="/results" method="get">
@@ -213,7 +202,7 @@
         <datalist id="receivers">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
-                {% set player_name = str(receiver.receiver.split(',')[0].replace(' ','')) + '(' + str(receiver.receiver_id) + ')' %}
+                {% set player_name = receiver.receiver.split(',')[0].replace(' ','') + '(' + str(receiver.receiver_id) + ')' %}
                 <option value="{{ player_name }}"></option>
             {% endfor %}
         </datalist>
