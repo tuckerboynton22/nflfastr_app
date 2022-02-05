@@ -176,10 +176,10 @@ def results():
     player_query = ""
     player_results = ""
 
-    passer = request.args.get("passer").split('(')[1][:-1]
+    passer = request.args.get("passer")
     receiver = request.args.get("receiver").split('(')[1][:-1]
-    rusher = request.args.get("rusher").split('(')[1][:-1]
-    name = request.args.get("name").split('(')[1][:-1]
+    rusher = request.args.get("rusher")
+    name = request.args.get("name")
 
     if passer != "":
         player_query = " AND passer_id = '" + passer + "' "
