@@ -176,13 +176,13 @@ def results():
     player_query = ""
     player_results = ""
 
-    if request.args.get("passer") != "Choose":
+    if request.args.get("passer") != "":
         passer = request.args.get("passer").split('(')[1][:-1]
-    if request.args.get("receiver") != "Choose":
+    if request.args.get("receiver") != "":
         receiver = request.args.get("receiver").split('(')[1][:-1]
-    if request.args.get("rusher") != "Choose":
+    if request.args.get("rusher") != "":
         rusher = request.args.get("rusher").split('(')[1][:-1]
-    if request.args.get("name") != "Choose":
+    if request.args.get("name") != "":
         name = request.args.get("name").split('(')[1][:-1]
 
     if passer != "":
