@@ -363,7 +363,7 @@ def results():
                     down_query = down_query + " OR down IS NULL"
                     dwns = dwns + ", None"
                 else:
-                    down_query = down_query + " OR down=" + str(request.args.get(quarter + '_down'))
+                    down_query = down_query + " OR down=" + str(request.args.get(down + '_down'))
                     dwns = dwns + ", " + str(request.args.get(down + '_down'))
     if down_query != "":
         down_query = down_query + ") "
