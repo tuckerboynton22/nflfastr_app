@@ -3,15 +3,6 @@
 {% block main %}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#submit').click(function()
-            {
-                var value = $('#selected_receiver').val();
-                alert($('#receivers [value="' + value + '"]').data('value'));
-            });
-        });
-    </script>
 
     <h5>Find plays with...</h5>
     <hr>
@@ -187,7 +178,7 @@
         <input name="rusher" placeholder=0 type="number" step=0.01>
         <input name="name" placeholder=0 type="number" step=0.01>
         Receiver:
-        <input name="receiver">
+        <input name="receiver" list="receiver" placeholder="Choose"/>
         <datalist id="receiver">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
