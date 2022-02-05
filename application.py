@@ -357,14 +357,14 @@ def results():
                     dwns = "None"
                 else:
                     down_query = " AND(down=" + str(request.args.get(down + '_down'))
-                    dwns = str(request.args.get(quarter))
+                    dwns = str(request.args.get(down + '_down'))
             else:
                 if str(request.args.get(down + '_down')) == "5":
                     down_query = down_query + " OR down IS NULL"
                     dwns = dwns + ", None"
                 else:
                     down_query = down_query + " OR down=" + str(request.args.get(quarter + '_down'))
-                    dwns = dwns + ", " + str(request.args.get(quarter + '_down'))
+                    dwns = dwns + ", " + str(request.args.get(down + '_down'))
     if down_query != "":
         down_query = down_query + ") "
 
