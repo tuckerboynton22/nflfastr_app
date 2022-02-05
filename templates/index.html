@@ -83,9 +83,9 @@
             <input name="{{ down + '_down' }}" value="{{ down }}" type="checkbox" checked="checked"> {{ downs[down] }}
         {% endfor %}
         <hr>
-        Quarter:
-        {% for quarter in quarters %}
-            <input name="{{ quarter }}" value="{{ quarter }}" type="checkbox" checked="checked"> {{ quarters[quarter] }}
+        Play type:
+        {% for play_type in play_types %}
+            <input name="{{ play_type }}" value="{{ play_type }}" type="checkbox" checked="checked"> {{ play_types[play_type] }}
         {% endfor %}
         <hr>
         {% for i in range(NUMFILTERS) %}
