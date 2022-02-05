@@ -173,7 +173,7 @@
         <input name="minimum" placeholder=1 value=1 type="number" min="1">
         <hr>
         Passer/Rusher:
-        <input id="name" name="name" list="name">
+        <input id="selected_name" name="name" list="names">
         <datalist id="name">
             <option selected value="">Choose</option>
             {% for name in names %}
@@ -182,7 +182,7 @@
             {% endfor %}
         </datalist>
         Passer:
-        <input id="passer" name="passer" list="passers">
+        <input id="selected_passer" name="passer" list="passers">
         <datalist id="passer">
             <option selected value="">Choose</option>
             {% for passer in passers %}
@@ -192,7 +192,7 @@
         </datalist>
         <br>
         Rusher:
-        <input id="rusher" name="rusher" list="rushers">
+        <input id="selected_rusher" name="rusher" list="rushers">
         <datalist id="rusher">
             <option selected value="">Choose</option>
             {% for rusher in rushers %}
@@ -201,7 +201,7 @@
             {% endfor %}
         </datalist>
         Receiver:
-        <input id="receiver" name="receiver" list="receivers">
+        <input id="selected_receiver" name="receiver" list="receivers">
         <datalist id="receiver">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
