@@ -2,6 +2,17 @@
 
 {% block main %}
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#submit').click(function()
+            {
+                var value = $('#selected_receiver').val();
+                alert($('#receivers [value="' + value + '"]').data('value'));
+            });
+        });
+    </script>
+
     <h5>Find plays with...</h5>
     <hr>
     <form action="/results" method="get">
@@ -172,7 +183,34 @@
         Minimum plays (for grouped searches):
         <input name="minimum" placeholder=1 value=1 type="number" min="1">
         <hr>
-        
+        Passer/Rusher:
+        <input id="selected_name" name="name" list="names">
+        <datalist id="name">
+            <option selected value="">Choose</option>
+            {% for name in names %}
+                {% set player_name = name.name.split(',')[0].replace(' ','') + ' (' + name.id|string + ')' %}
+                <option value="{{ player_name }}"></option>
+            {% endfor %}
+        </datalist>
+        Passer:
+        <input id="selected_passer" name="passer" list="passers">
+        <datalist id="passer">
+            <option selected value="">Choose</option>
+            {% for passer in passers %}
+                {% set player_name = passer.passer.split(',')[0].replace(' ','') + ' (' + passer.passer_id|string + ')' %}
+                <option value="{{ player_name }}"></option>
+            {% endfor %}
+        </datalist>
+        <br>
+        Rusher:
+        <input id="selected_rusher" name="rusher" list="rushers">
+        <datalist id="rusher">
+            <option selected value="">Choose</option>
+            {% for rusher in rushers %}
+                {% set player_name = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.rusher_id|string + ')' %}
+                <option value="{{ player_name }}"></option>
+            {% endfor %}
+        </datalist>
         Receiver:
         <input id="selected_receiver" name="receiver" list="receivers">
         <datalist id="receiver">
