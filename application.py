@@ -176,6 +176,11 @@ def results():
     player_query = ""
     player_results = ""
 
+    passer = ""
+    receiver = ""
+    rusher = ""
+    name = ""
+
     if request.args.get("passer") != "":
         passer = request.args.get("passer").split('(')[1][:-1]
     if request.args.get("receiver") != "":
