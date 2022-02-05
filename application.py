@@ -461,7 +461,7 @@ def results():
 
     # Create sack query
     if request.args.get("sack") != "either":
-        sackindicator = " AND sack=" + request.args.get("score") + " "
+        sackindicator = " AND sack=" + request.args.get("sack") + " "
         if request.args.get("sack") == "1":
             sackresults = "a sack, "
         else:
