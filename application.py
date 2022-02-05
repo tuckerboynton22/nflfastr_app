@@ -494,7 +494,7 @@ def results():
 
     # Create pass location query
     if request.args.get("pass_location") != "any":
-        passlocquery = " AND pass_location=" + request.args.get("pass_location") + " "
+        passlocquery = " AND pass_location='" + request.args.get("pass_location") + "' "
         if request.args.get("pass_location") == "left":
             passlocresults = "pass to the left, "
         elif request.args.get("pass_location") == "right":
