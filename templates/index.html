@@ -83,11 +83,6 @@
             <input name="{{ down + '_down' }}" value="{{ down }}" type="checkbox" checked="checked"> {{ downs[down] }}
         {% endfor %}
         <hr>
-        Play type:
-        {% for play_type in play_types %}
-            <input name="{{ play_type }}" value="{{ play_type }}" type="checkbox" checked="checked"> {{ play_types[play_type] }}
-        {% endfor %}
-        <hr>
         Quarter:
         {% for quarter in quarters %}
             <input name="{{ quarter }}" value="{{ quarter }}" type="checkbox" checked="checked"> {{ quarters[quarter] }}
@@ -154,12 +149,12 @@
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
-        Possession team:
-        <select name="win">
+        Pass location:
+        <select name="pass_location">
             <option value="any">Any</option>
-            <option value="won">Won</option>
-            <option value="lost">Lost</option>
-            <option value="tied">Tied</option>
+            <option value="left">Left</option>
+            <option value="middle">Middle</option>
+            <option value="right">Right</option>
         </select>
         Roof:
         <select name="roof">
@@ -168,6 +163,14 @@
             <option value="outdoors">Outdoors</option>
             <option value="closed">Closed</option>
             <option value="open">Open</option>
+        </select>
+        <hr>
+        Game result (for possession team):
+        <select name="win">
+            <option value="any">Any</option>
+            <option value="won">Won</option>
+            <option value="lost">Lost</option>
+            <option value="tied">Tied</option>
         </select>
         <hr>
         Passer/Rusher:

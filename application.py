@@ -492,6 +492,19 @@ def results():
         nohuddleindicator = ""
         nohuddleresults = ""
 
+    # Create pass location query
+    if request.args.get("pass_location") != "any":
+        passlocquery = " AND pass_location=" + request.args.get("pass_location") + " "
+        if request.args.get("pass_location") == "left":
+            passlocresults = "pass to the left, "
+        elif request.args.get("pass_location") == "right":
+            passlocresults = "pass to the right, "
+        else:
+            passlocresults = "pass to the middle, "
+    else:
+        passlocquery = ""
+        passlocresults = ""
+
     # Create roof query
     if request.args.get("roof") != "any":
         roofindicator = " AND roof='" + request.args.get("roof") + "' "
@@ -508,8 +521,8 @@ def results():
         roofresults = "game in any stadium"
 
     # Combine penalty, turnover, score, sack, interception, and roof queries for single indicator query
-    indicators = penaltyindicator + turnoverindicator + scoreindicator + completionindicator + intindicator + sackindicator + nohuddleindicator + roofindicator
-    indicator_results = penaltyresults + turnoverresults + scoreresults + completionresults + intresults + sackresults + nohuddleresults + roofresults
+    indicators = penaltyindicator + passlocquery + turnoverindicator + scoreindicator + completionindicator + intindicator + sackindicator + nohuddleindicator + roofindicator
+    indicator_results = penaltyresults + passlocresults + turnoverresults + scoreresults + completionresults + intresults + sackresults + nohuddleresults + roofresults
 
     # Create game-winner query
     winner = request.args.get("win")
