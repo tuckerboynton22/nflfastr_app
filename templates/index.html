@@ -173,46 +173,6 @@
             <option value="tied">Tied</option>
         </select>
         <hr>
-        Passer/Rusher:
-        <input name="name" list="name" placeholder="Choose"/>
-        <datalist id="name">
-            <option selected value="">Choose</option>
-            {% for name in names %}
-                {% set player_name = name.name.split(',')[0].replace(' ','') + ' (' + name.id|string + ')' %}
-                <option value="{{ player_name }}">
-            {% endfor %}
-        </datalist>
-        <br>
-        Passer:
-        <input name="passer" list="passer" placeholder="Choose"/>
-        <datalist id="passer">
-            <option selected value="">Choose</option>
-            {% for passer in passers %}
-                {% set player_name = passer.passer.split(',')[0].replace(' ','') + ' (' + passer.passer_id|string + ')' %}
-                <option value="{{ player_name }}">
-            {% endfor %}
-        </datalist>
-        <br>
-        Rusher:
-        <input name="rusher" list="rusher" placeholder="Choose"/>
-        <datalist id="rusher">
-            <option selected value="">Choose</option>
-            {% for rusher in rushers %}
-                {% set player_name = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.rusher_id|string + ')' %}
-                <option value="{{ player_name }}">
-            {% endfor %}
-        </datalist>
-        <br>
-        Receiver:
-        <input name="receiver" list="receiver" placeholder="Choose"/>
-        <datalist id="receiver">
-            <option selected value="">Choose</option>
-            {% for receiver in receivers %}
-                {% set player_name = receiver.receiver.split(',')[0].replace(' ','') + ' (' + receiver.receiver_id|string + ')' %}
-                <option value="{{ player_name }}">
-            {% endfor %}
-        </datalist>
-        <hr>
         Sort by:
         <select name="order">
             <option value="DESC">Descending</option>
