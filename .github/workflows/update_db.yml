@@ -6,7 +6,7 @@ on:
     - cron: 00 05 * * *
 
 jobs:
-  nflwinbot-post:
+  database_update:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
