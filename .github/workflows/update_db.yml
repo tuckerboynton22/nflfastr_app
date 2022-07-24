@@ -7,7 +7,7 @@ on:
 
 jobs:
   database_update:
-    runs-on: macOS-latest
+    runs-on: ubuntu-20.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       DB_NAME: ${{ secrets.DB_NAME }}
