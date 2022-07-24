@@ -18,3 +18,4 @@ Imports:
     nflfastR (>= 4.3.0),
     RPostgres (>= 1.4.4),
     future (>= 1.27.0)
+    dbplyr(>= 2.2.1)
