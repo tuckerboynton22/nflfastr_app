@@ -17,5 +17,5 @@ Imports:
     DBI (>= 1.1.2),
     nflfastR (>= 4.3.0),
     RPostgres (>= 1.4.4),
-    future
-    dbplyr(>= 2.2.1)
+    future (>= 1.27.0),
+    dbplyr (>= 2.2.1)
