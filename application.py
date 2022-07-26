@@ -53,7 +53,8 @@ groupings = {
     "defteam": "Defense",
     "game_id": "Game",
     "season": "Season",
-    "week": "Week"
+    "week": "Week",
+    "drive": "Drive Number"
 }
 
 # Create global play types
