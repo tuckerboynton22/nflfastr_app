@@ -1,5 +1,6 @@
 import os
 import datetime
+import re
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
@@ -186,8 +187,6 @@ def results():
     along with search results.
 
     """
-
-    url = request.url
 
     # Create player query
     player_query = ""
@@ -707,13 +706,18 @@ def results():
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
         
+        url = request.url
 
         if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver" \
             and group != "passer" and group != "rusher" and group2 != "passer" and group2 != "rusher" \
             and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" \
             and group2 != "receiver_player_name" and group2 != "week" and group != "week":
+
+            url = re.sub(r'grouping=[^&]*', 'grouping=', url)
+            url = re.sub(r'grouping2=[^&]*', 'grouping2=', url)
+
             return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
-                                    group2=group2, groupings=groupings, searchdesc=searchdesc)
+                                    group2=group2, groupings=groupings, searchdesc=searchdesc, url=url)
 
         else:
             return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
