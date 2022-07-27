@@ -115,10 +115,10 @@ db = SQL(os.getenv("DATABASE_URL"))
 # db = SQL("sqlite:///cleaned_pbp.db")
 # db = SQL("sqlite:///pbp.db")
 
-# passers = db.execute("SELECT DISTINCT passer_id, STRING_AGG(DISTINCT CAST(passer AS TEXT), ', ') AS passer FROM nflfastR_pbp WHERE passer_id !='' GROUP BY passer_id ORDER BY passer")
-# names = db.execute("SELECT DISTINCT id, STRING_AGG(DISTINCT CAST(name AS TEXT), ', ') AS name FROM nflfastR_pbp WHERE id !='' GROUP BY id ORDER BY name")
-# rushers = db.execute("SELECT DISTINCT rusher_id, STRING_AGG(DISTINCT CAST(rusher AS TEXT), ', ') AS rusher FROM nflfastR_pbp WHERE rusher_id !='' GROUP BY rusher_id ORDER BY rusher")
-# receivers = db.execute("SELECT DISTINCT receiver_id, STRING_AGG(DISTINCT CAST(receiver AS TEXT), ', ') AS receiver FROM nflfastR_pbp WHERE receiver_id !='' GROUP BY receiver_id ORDER BY receiver")
+passers = db.execute("SELECT DISTINCT passer_id, STRING_AGG(DISTINCT CAST(passer AS TEXT), ', ') AS passer FROM nflfastR_pbp WHERE passer_id !='' GROUP BY passer_id ORDER BY passer")
+names = db.execute("SELECT DISTINCT id, STRING_AGG(DISTINCT CAST(name AS TEXT), ', ') AS name FROM nflfastR_pbp WHERE id !='' GROUP BY id ORDER BY name")
+rushers = db.execute("SELECT DISTINCT rusher_id, STRING_AGG(DISTINCT CAST(rusher AS TEXT), ', ') AS rusher FROM nflfastR_pbp WHERE rusher_id !='' GROUP BY rusher_id ORDER BY rusher")
+receivers = db.execute("SELECT DISTINCT receiver_id, STRING_AGG(DISTINCT CAST(receiver AS TEXT), ', ') AS receiver FROM nflfastR_pbp WHERE receiver_id !='' GROUP BY receiver_id ORDER BY receiver")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -175,7 +175,7 @@ def index():
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
                             quarters=quarters, reg_weeks=reg_weeks, post_weeks=post_weeks, downs=downs,
-                            # passers=passers, names=names, rushers=rushers, receivers=receivers,
+                            passers=passers, names=names, rushers=rushers, receivers=receivers,
                             NUMFILTERS=5)
 
 # Provide search results
