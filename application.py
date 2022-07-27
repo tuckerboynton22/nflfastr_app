@@ -545,6 +545,18 @@ def results():
         win_query = " AND home_score = away_score "
         win_results = ", game was a tie"
 
+    # Create drive result query
+    drive_result = request.args.get("drive_result")
+    drive_result_query = ""
+    drive_result_results = ""
+
+    if drive_result == 1:
+        drive_result_query = " AND (drive_ended_with_score = 1) "
+        drive_result_results = ", drive ended with score"
+    elif drive_result == 0:
+        drive_result_query = " AND (drive_ended_with_score = 0) "
+        drive_result_results = ", drive didn't end with score"
+
     # Set groupings
     grouping = ""
     grouping_id = ""
@@ -658,7 +670,7 @@ def results():
     searchdesc = str(season_start) + "-" + str(season_end) + ", " + team_results \
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
                 + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
-                + play_type_results + ". " + indicator_results + filter_results + win_results + ". " \
+                + play_type_results + ". " + indicator_results + filter_results + win_results + drive_result_results + ". " \
                 + week_results + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
@@ -669,7 +681,7 @@ def results():
     if grouping == "":    
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
-                            + team_query + filter_query + indicators + win_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
@@ -687,7 +699,7 @@ def results():
                             + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
-                            + team_query + filter_query + indicators + win_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
