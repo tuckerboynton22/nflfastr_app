@@ -707,14 +707,13 @@ def results():
                             season_start, season_end)
         
         url = request.url
+        url = re.sub(r'grouping=[^&]*', 'grouping=', url)
+        url = re.sub(r'grouping2=[^&]*', 'grouping2=', url)
 
         if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver" \
             and group != "passer" and group != "rusher" and group2 != "passer" and group2 != "rusher" \
             and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" \
             and group2 != "receiver_player_name" and group2 != "week" and group != "week":
-
-            url = re.sub(r'grouping=[^&]*', 'grouping=', url)
-            url = re.sub(r'grouping2=[^&]*', 'grouping2=', url)
 
             return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
                                     group2=group2, groupings=groupings, searchdesc=searchdesc, url=url)
