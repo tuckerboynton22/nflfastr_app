@@ -550,10 +550,10 @@ def results():
     drive_result_query = ""
     drive_result_results = ""
 
-    if drive_result == 1:
+    if int(drive_result) == 1:
         drive_result_query = " AND (drive_ended_with_score = 1) "
         drive_result_results = ", drive ended with score"
-    elif drive_result == 0:
+    elif int(drive_result) == 0:
         drive_result_query = " AND (drive_ended_with_score = 0) "
         drive_result_results = ", drive didn't end with score"
 
