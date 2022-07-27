@@ -187,6 +187,8 @@ def results():
 
     """
 
+    url = request.url
+
     # Create player query
     player_query = ""
     player_results = ""
@@ -687,7 +689,7 @@ def results():
                             + order + " LIMIT 1000",
                             season_start, season_end)
 
-        return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
+        return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc, url=url)
 
 
     else:
