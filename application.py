@@ -38,7 +38,11 @@ filters = {
     "comp_yac_wpa": "Completed YAC WPA",
     "total_line": "Vegas Total",
     "xyac_mean_yardage": "Mean Expected YAC",
-    "xyac_epa": "Expected YAC EPA"
+    "xyac_epa": "Expected YAC EPA",
+    "ydsnet": "Total Yards on Drive",
+    "drive_play_count": "Total Plays on Drive",
+    "drive_quarter_start": "Drive Quarter Start",
+    "drive_quarter_end": "Drive Quarter End"
 }
 
 # Create global groupings
