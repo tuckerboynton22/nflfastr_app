@@ -201,8 +201,8 @@ def results():
         # passer = request.args.get("passer").split('(')[1][:-1]
     # if request.args.get("receiver") != "":
         # receiver = request.args.get("receiver").split('(')[1][:-1]
-    # if request.args.get("rusher") != "":
-        # rusher = request.args.get("rusher").split('(')[1][:-1]
+    if request.args.get("rusher") != "":
+        rusher = request.args.get("rusher")
     # if request.args.get("name") != "":
         # name = request.args.get("name").split('(')[1][:-1]
 
@@ -210,8 +210,8 @@ def results():
         # player_query = " AND passer_id = '" + passer + "' "
     # if receiver != "":
         # player_query = player_query + " AND receiver_id = '" + receiver + "' "
-    # if rusher != "":
-        # player_query = player_query + " AND rusher_id = '" + rusher + "' "
+    if rusher != "":
+        player_query = player_query + " AND rusher_id = '" + rusher + "' "
     # if name != "":
         # player_query = player_query + " AND id = '" + name + "' "
 
