@@ -200,13 +200,13 @@
         </datalist>
         <br>
         Rusher:
-        <select name="rusher">
+        <datalist id="rusher">
             <option selected value="">Choose</option>
             {% for rusher in rushers %}
                 {% set player_name = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.posteam|string + ')' %}
                 <option value="{{ rusher.rusher_id }}">{{ player_name }}</option>
             {% endfor %}
-        </select>
+        </datalist>
         <br>
         Receiver:
         <input name="receiver" list="receiver" placeholder="Choose"/>
