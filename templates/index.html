@@ -205,7 +205,7 @@
             <option selected value="">Choose</option>
             {% for rusher in rushers %}
                 {% set player_name = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.posteam|string + ')' %}
-                <option value="{{ player_name }}">
+                <option value="{{ rusher.rusher_id }}">
             {% endfor %}
         </datalist>
         <br>
