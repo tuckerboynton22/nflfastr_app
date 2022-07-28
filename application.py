@@ -118,7 +118,7 @@ db = SQL(os.getenv("DATABASE_URL"))
 passers = db.execute("SELECT passer_id, passer, posteam FROM passers")
 rushers = db.execute("SELECT rusher_id, rusher, posteam FROM rushers")
 names = db.execute("SELECT id, name, posteam FROM names")
-receivers = db.execute("SELECT receiver_id, receiver, posteam FROM passers")
+receivers = db.execute("SELECT receiver_id, receiver, posteam FROM receivers")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
