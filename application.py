@@ -115,10 +115,10 @@ db = SQL(os.getenv("DATABASE_URL"))
 # db = SQL("sqlite:///cleaned_pbp.db")
 # db = SQL("sqlite:///pbp.db")
 
-# passers = db.execute("SELECT DISTINCT passer_id, TOP 1(DISTINCT CAST(passer AS TEXT), ', ') AS passer FROM nflfastR_pbp WHERE passer_id !='' GROUP BY passer_id ORDER BY passer")
-# names = db.execute("SELECT DISTINCT id, TOP 1(DISTINCT CAST(name AS TEXT), ', ') AS name FROM nflfastR_pbp WHERE id !='' GROUP BY id ORDER BY name")
-# rushers = db.execute("SELECT DISTINCT rusher_id, TOP 1(DISTINCT CAST(rusher AS TEXT), ', ') AS rusher FROM nflfastR_pbp WHERE rusher_id !='' GROUP BY rusher_id ORDER BY rusher")
-# receivers = db.execute("SELECT DISTINCT receiver_id, TOP 1(DISTINCT CAST(receiver AS TEXT), ', ') AS receiver FROM nflfastR_pbp WHERE receiver_id !='' GROUP BY receiver_id ORDER BY receiver")
+# passers = db.execute("SELECT DISTINCT passer_id, STRING_AGG(DISTINCT CAST(passer AS TEXT), ', ') AS passer FROM nflfastR_pbp WHERE passer_id !='' GROUP BY passer_id ORDER BY passer")
+# names = db.execute("SELECT DISTINCT id, STRING_AGG(DISTINCT CAST(name AS TEXT), ', ') AS name FROM nflfastR_pbp WHERE id !='' GROUP BY id ORDER BY name")
+# rushers = db.execute("SELECT DISTINCT rusher_id, STRING_AGG(DISTINCT CAST(rusher AS TEXT), ', ') AS rusher FROM nflfastR_pbp WHERE rusher_id !='' GROUP BY rusher_id ORDER BY rusher")
+# receivers = db.execute("SELECT DISTINCT receiver_id, STRING_AGG(DISTINCT CAST(receiver AS TEXT), ', ') AS receiver FROM nflfastR_pbp WHERE receiver_id !='' GROUP BY receiver_id ORDER BY receiver")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -602,11 +602,11 @@ def results():
     if group != "" and group2 != "":
         grouping = grouping + ", "
         grouping_id = grouping_id + ", "
-        grouping_aggregator =  "TOP 1(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group + ", TOP 1(DISTINCT CAST(" + group2 + " AS TEXT), ', ') AS " + group2
+        grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group + ", STRING_AGG(DISTINCT CAST(" + group2 + " AS TEXT), ', ') AS " + group2
     elif group != "" and group2 == "":
-        grouping_aggregator =  "TOP 1(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group
+        grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group
     elif group == "" and group2 != "":
-        grouping_aggregator =  "TOP 1(DISTINCT CAST(" + group2 + " AS TEXT), ', ') AS " + group2
+        grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group2 + " AS TEXT), ', ') AS " + group2
 
     if group2 == "name":
         grouping = grouping + group2 + ", id"
@@ -696,7 +696,7 @@ def results():
                             AVG(epa) AS epa, " + grouping_aggregator \
                             + ", AVG(success) AS success, " \
                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
-                            + ", TOP 1(DISTINCT posteam, ', ') AS posteam"
+                            + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
                             + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
@@ -726,13 +726,13 @@ def results():
     #                             AVG(epa) AS epa, " + grouping_aggregator \
     #                             + ", AVG(success) AS success, " \
     #                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
-    #                             + ", TOP 1(DISTINCT posteam, ', ') AS posteam" \
+    #                             + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam" \
     #                             + " FROM (" + "SELECT " + grouping_id + ", COUNT(*) AS total, \
     #                             AVG(epa) AS epa, " + grouping_aggregator \
     #                             + ", ROW_NUMBER() OVER(PARTITION BY " + grouping_id \
     #                             + ") as rownum, AVG(success) AS success, season, " \
     #                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
-    #                             + ", TOP 1(DISTINCT posteam, ', ') AS posteam" \
+    #                             + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam" \
     #                             + " FROM nflfastR_pbp" \
     #                             + " WHERE season>=? AND season<=?" \
     #                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL" \
