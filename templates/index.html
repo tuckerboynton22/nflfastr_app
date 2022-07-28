@@ -195,19 +195,18 @@
             <option selected value="">Choose</option>
             {% for passer in passers %}
                 {% set player_name = passer.passer.split(',')[0].replace(' ','') + ' (' + passer.posteam|string + ')' %}
-                <option value="{{ player_name }}">
+                <option data-value="{{ player_name }}">
             {% endfor %}
         </datalist>
         <br>
         Rusher:
-        <input name="rusher" list="rusher" placeholder="Choose"/>
-        <datalist id="rusher">
+        <select name="rusher">
             <option selected value="">Choose</option>
             {% for rusher in rushers %}
                 {% set player_name = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.posteam|string + ')' %}
-                <option value="{{ rusher.rusher_id }}">
+                <option value="{{ rusher.rusher_id }}">{{ player_name }}</option>
             {% endfor %}
-        </datalist>
+        </select>
         <br>
         Receiver:
         <input name="receiver" list="receiver" placeholder="Choose"/>
