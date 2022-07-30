@@ -693,7 +693,7 @@ def results():
 
     else:
 
-        grouped_query = ("SELECT " + grouping_id + ", COUNT(*) AS total, \
+        grouped_query = str("SELECT " + grouping_id + ", COUNT(*) AS total, \
                 AVG(epa) AS epa, " + grouping_aggregator \
                 + ", AVG(success) AS success, " \
                 + total + "(" + sort[0] + ") AS total_" + sort[0]  \
