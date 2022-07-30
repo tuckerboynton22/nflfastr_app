@@ -49,7 +49,10 @@
                     <td>{{ '%0.3f'|format(play.epa) }}</td>
                     <td>{{ '%0.3f'|format(play.success) }}</td>
                     <td><form action="/results" method="GET">
-                        <input type="hidden" name="q" value="a">
+                        {% for arg in args.keys() %}
+                            <input type="hidden" name=arg value=args[arg]>
+                        {% endfor %}
+                        <button class="btn btn-primary" id="submit" type="submit">Plays</button>
                       </form></td>
                 </tr>
             {% endfor %}
