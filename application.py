@@ -223,32 +223,32 @@ def results():
     home = request.args.get("home")
     offense = request.args.get("offense")
 
-    if team != "" and opp == "":
+    if team != "" and (opp == "" or opp is None) and team is not None:
         team_results = team
         opp_results = "any team"
-        if home != "":
+        if home != "" and home is not None:
             team_query = team_query + " AND " + home + "='" + team + "' "
-        if offense != "":
+        if offense != "" and offense is not None:
             team_query = team_query + " AND " + offense + "='" + team + "' "
-        elif offense == "" and home == "":
+        elif (offense == "" or offense is None) and (home == "" or home is None):
             team_query = team_query + " AND(posteam='" + team + "' OR defteam='" + team + "') "
 
-    elif team == "" and opp != "":
+    elif (team == "" or team is None) and opp != "" and opp is not None:
         team_results = "any team"
         opp_results = opp
         team_query = team_query + " AND(posteam='" + opp + "' OR defteam='" + opp + "') "
-        if home != "":
+        if home != "" and home is not None:
             team_query = team_query + " AND " + home + "!='" + opp + "' "
-        if offense != "":
+        if offense != "" and offense is not None:
             team_query = team_query + " AND " + offense + "!='" + opp + "' "
 
-    elif request.args.get("team") != "" and request.args.get("opp") != "":
+    elif team != "" and opp != "" and team is not None and opp is not None:
         team_results = team
         opp_results = opp
         team_query = team_query + " AND((posteam='" + opp + "' AND defteam='" + team + "') OR (posteam='" + team + "' AND defteam='" + opp + "')) "
-        if home != "":
+        if home != "" and home is not None:
             team_query = team_query + " AND " + home + "='" + team + "' "
-        if offense != "":
+        if offense != "" and offense is not None:
             team_query = team_query + " AND " + offense + "='" + team + "' "
 
     else:
@@ -317,14 +317,14 @@ def results():
     else:
         post_week_query = ""
     
-    if reg_week_query != "" and post_week_query != "":
+    if reg_week_query != "" and post_week_query != "" and reg_week_query is not None and post_week_query is not None:
         week_query = " AND(" + reg_week_query + " OR " + post_week_query + ") "
         week_results = "REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: " \
                          + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + ". "
-    elif reg_week_query != "":
+    elif reg_week_query != "" and reg_week_query is not None:
         week_query = " AND" + reg_week_query
         week_results = "REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: None. "
-    elif post_week_query != "":
+    elif post_week_query != "" and post_week_query is not None:
         week_query = " AND" + post_week_query
         week_results = "REG Wks: None, POST Wks: " + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + ". "
     else:
@@ -335,7 +335,7 @@ def results():
     qtr_query = ""
     for quarter in quarters:
         if str(request.args.get(quarter)) in quarters:
-            if qtr_query == "":
+            if (qtr_query == "" or qtr_query is None):
                 if str(request.args.get(quarter)) == "5":
                     qtr_query = " AND(qtr=5 OR qtr=6"
                     qtrs = "OT"
@@ -349,14 +349,14 @@ def results():
                 else:
                     qtr_query = qtr_query + " OR qtr=" + str(request.args.get(quarter))
                     qtrs = qtrs + ", " + str(request.args.get(quarter))
-    if qtr_query != "":
+    if qtr_query != "" and qtr_query is not None:
         qtr_query = qtr_query + ") "
     
     # Create down query
     down_query = ""
     for down in downs:
         if str(request.args.get(down + '_down')) in downs:
-            if down_query == "":
+            if (down_query == "" or down_query is None):
                 if str(request.args.get(down + '_down')) == "5":
                     down_query = " AND(down IS NULL"
                     dwns = "None"
@@ -370,7 +370,7 @@ def results():
                 else:
                     down_query = down_query + " OR down=" + str(request.args.get(down + '_down'))
                     dwns = dwns + ", " + str(request.args.get(down + '_down'))
-    if down_query != "":
+    if down_query != "" and down_query is not None:
         down_query = down_query + ") "
 
     # Create play type query
@@ -379,21 +379,21 @@ def results():
     for play in play_types:
         playtype = str(request.args.get(play))
         if playtype != "rush" and playtype != "pass" and playtype != "two_point_attempt" and playtype in play_types.keys():
-            if play_type_query == "":
+            if (play_type_query == "" or play_type_query is None):
                 play_type_query = "AND(play_type='" + str(request.args.get(play)) + "' "
                 play_type_results = " " + str(play_types[playtype])
             else:
                 play_type_query = play_type_query + "OR play_type='" + playtype + "' "
                 play_type_results = play_type_results + ", " + play_types[playtype]
         elif (playtype == "pass" or playtype == "rush" or playtype == "two_point_attempt") and playtype in play_types.keys():
-            if play_type_query == "":
+            if (play_type_query == "" or play_type_query is None):
                 play_type_query = " AND(" + playtype + "=1 "
                 play_type_results = " "  + play_types[playtype]
             else:
                 play_type_query = play_type_query + " OR " + play + "=1 "
                 play_type_results = play_type_results + ", " + play_types[playtype]
 
-    if play_type_query != "":
+    if play_type_query != "" and play_type_query is not None:
         play_type_query = play_type_query + ") "
 
     # Create filter query and dictionary for column titles on results page
@@ -408,12 +408,14 @@ def results():
         inequal = "inequality"+str(i)
         filtval = "filtervalue"+str(i)
 
-        if request.args.get(filt) != "" and request.args.get(inequal) != "" and request.args.get(filtval) != "":
-            filter_query = filter_query + " AND " + str(request.args.get(filt)) + str(request.args.get(inequal)) \
-                            + str(request.args.get(filtval)) + " AND " + str(request.args.get(filt)) + " IS NOT NULL "
-            select = select + str(request.args.get(filt)) + ", "
-            filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
-            filter_results = filter_results + ", " + str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
+        if request.args.get(filt) != "" and request.args.get(filt) is not None \
+            and request.args.get(inequal) != "" and request.args.get(inequal) is not None \
+            and request.args.get(filtval) != "" and request.args.get(filtval) is not None:
+                filter_query = filter_query + " AND " + str(request.args.get(filt)) + str(request.args.get(inequal)) \
+                                + str(request.args.get(filtval)) + " AND " + str(request.args.get(filt)) + " IS NOT NULL "
+                select = select + str(request.args.get(filt)) + ", "
+                filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
+                filter_results = filter_results + ", " + str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
 
     # Set desired sorting mechanism
     sort = [request.args.get("sort"), filters[request.args.get("sort")]]
@@ -592,18 +594,18 @@ def results():
         grouping = group + ", 'week'"
         grouping_id = "week"
         grouping_null = " AND '" + group + "' IS NOT NULL " + " AND LENGTH(CAST('" + group + "' AS TEXT))>0 "
-    elif group != "":
+    elif group != "" and group is not None:
         grouping = group
         grouping_id = group
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     
-    if group != "" and group2 != "":
+    if group != "" and group2 != "" and group is not None and group2 is not None:
         grouping = grouping + ", "
         grouping_id = grouping_id + ", "
         grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group + ", STRING_AGG(DISTINCT CAST(" + group2 + " AS TEXT), ', ') AS " + group2
-    elif group != "" and group2 == "":
+    elif group != "" and group is not None and (group2 == "" or group2 is None):
         grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group + " AS TEXT), ', ') AS " + group
-    elif group == "" and group2 != "":
+    elif (group == "" or group is None) and group2 != "" and group2 is not None:
         grouping_aggregator =  "STRING_AGG(DISTINCT CAST(" + group2 + " AS TEXT), ', ') AS " + group2
 
     if group2 == "name":
@@ -634,31 +636,31 @@ def results():
         grouping = grouping + group2 + ", 'week'"
         grouping_id = grouping_id + "week"
         grouping_null = grouping_null + " AND '" + group2 + "' IS NOT NULL " + " AND LENGTH(CAST('" + group2 + "' AS TEXT))>0 "
-    elif group2 != "":
+    elif group2 != "" and group2 is not None:
         grouping = grouping + group2
         grouping_id = grouping_id + group2
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
 
-    if group != "":
+    if group != "" and group is not None:
         grouping_results = "Grouped by " + groupings[group]
-        if group2 != "":
+        if group2 != "" and group2 is not None:
             grouping_results = grouping_results + ", " + groupings[group2] + "."
         else:
             grouping_results = grouping_results + "."
-    elif group2 != "":
+    elif group2 != "" and group2 is not None:
         grouping_results = "Grouped by " + groupings[group2] + "."
     else:    
         grouping_results = ""
 
     # Create minimum description
-    if request.args.get("minimum") != "":
+    if request.args.get("minimum") != "" and minimum is not None:
         minplays = int(request.args.get("minimum"))
         minplay_query = " HAVING COUNT(*) >=" + str(request.args.get("minimum")) + " "
     else:
         minplays = 0
         minplay_query = ""
 
-    if minplay_query != "" and grouping != "":
+    if minplay_query != "" and grouping != "" and minplay_query is not None and grouping is not None:
         minplay_results = " Min. " + str(minplays) + " plays."
     else:
         minplay_results = ""
@@ -677,7 +679,7 @@ def results():
     # limit = request.args.get("limit")
 
     # If no grouping, pass list of plays to plays.html
-    if grouping == "":    
+    if (grouping == "" or grouping is None):    
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
                             + team_query + filter_query + indicators + win_query + drive_result_query \
