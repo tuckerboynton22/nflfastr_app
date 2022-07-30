@@ -209,7 +209,7 @@ def results():
     if request.args.get("name") != "":
         name = request.args.get("name")
 
-    if passer != "" and type(passer) != None:
+    if passer != "":
         player_query = " AND passer_id = '" + passer + "' "
     if receiver != "":
         player_query = player_query + " AND receiver_id = '" + receiver + "' "
