@@ -221,7 +221,7 @@
               <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
               {% for receiver in receivers %}
                 {% set player_name = receiver.receiver.split(',')[0].replace(' ','') + ' (' + receiver.posteam|string + ')' %}
-                <option value="{{ receiver.receiver_id }}">{{ player_name }}</option>
+                <a value="{{ receiver.receiver_id }}">{{ player_name }}</a>
             {% endfor %}
             </div>
           </div>
