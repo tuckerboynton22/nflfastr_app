@@ -1,7 +1,7 @@
 import os
 import datetime
 import re
-from types import NoneType
+# from types import NoneType
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
