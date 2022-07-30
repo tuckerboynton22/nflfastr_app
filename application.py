@@ -188,6 +188,8 @@ def results():
 
     """
 
+    args = request.args.to_dict()
+
     # Create player query
     player_query = ""
     player_results = ""
@@ -716,7 +718,7 @@ def results():
             and group2 != "receiver_player_name" and group2 != "week" and group != "week":
 
             return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
-                                    group2=group2, groupings=groupings, searchdesc=searchdesc)
+                                    group2=group2, groupings=groupings, searchdesc=searchdesc, args=args)
 
         else:
             return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
