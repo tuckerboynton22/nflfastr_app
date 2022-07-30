@@ -722,7 +722,7 @@ def results():
 
         else:
             return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
-                                    group2=group2, groupings=groupings, searchdesc=searchdesc)
+                                    group2=group2, groupings=groupings, searchdesc=searchdesc, args=args)
     # elif limit == "Yes":
     #     plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
     #                             AVG(epa) AS epa, " + grouping_aggregator \
