@@ -282,8 +282,14 @@ def results():
         away_team_results = "any team"
             
     # Identify start and end seasons
-    season_start = int(request.args.get("start"))
-    season_end = int(request.args.get("end"))
+    if season_start is not None:
+        season_start = int(request.args.get("start"))
+    else:
+        season_start = ""
+    if season_end is not None:
+        season_end = int(request.args.get("end"))
+    else:
+        season_end = ""
 
     # Create week query
     if request.args.get("start_reg_week") != "Any":
