@@ -659,7 +659,7 @@ def results():
         grouping_results = ""
 
     # Create minimum description
-    if request.args.get("minimum") != "" and minimum is not None:
+    if request.args.get("minimum") != "" and request.args.get("minimum") is not None:
         minplays = int(request.args.get("minimum"))
         minplay_query = " HAVING COUNT(*) >=" + str(request.args.get("minimum")) + " "
     else:
