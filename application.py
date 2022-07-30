@@ -1,6 +1,7 @@
 import os
 import datetime
 import re
+from types import NoneType
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
@@ -208,7 +209,7 @@ def results():
     if request.args.get("name") != "":
         name = request.args.get("name")
 
-    if passer != "":
+    if passer != "" and type(passer) != NoneType:
         player_query = " AND passer_id = '" + passer + "' "
     if receiver != "":
         player_query = player_query + " AND receiver_id = '" + receiver + "' "
