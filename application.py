@@ -705,20 +705,6 @@ def results():
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
-
-        grouped_query = ("SELECT " + grouping_id + ", COUNT(*) AS total, \
-                            AVG(epa) AS epa, " + grouping_aggregator \
-                            + ", AVG(success) AS success, " \
-                            + total + "(" + sort[0] + ") AS total_" + sort[0]  \
-                            + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
-                            + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
-                            + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
-                            and epa IS NOT NULL" + grouping_null \
-                            + team_query + filter_query + indicators + win_query + drive_result_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query \
-                            + "GROUP BY " + grouping_id + minplay_query \
-                            + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
-                            season_start, season_end)
         
         # url = request.url
         # url = re.sub(r'grouping=[^&]*', 'grouping=', url)
