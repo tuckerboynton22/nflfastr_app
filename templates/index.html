@@ -219,10 +219,10 @@
             <button onclick="myFunction()" class="dropbtn">Dropdown</button>
             <div id="myDropdown" class="dropdown-content">
               <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-              {% for receiver in receivers %}
-                {% set player_name = receiver.receiver.split(',')[0].replace(' ','') + ' (' + receiver.posteam|string + ')' %}
-                <a value="{{ receiver.receiver_id }}">{{ player_name }}</a>
-            {% endfor %}
+                {% for receiver in receivers %}
+                    {% set player_name = receiver.receiver.split(',')[0].replace(' ','') + ' (' + receiver.posteam|string + ')' %}
+                    <a>{{ player_name }}</a>
+                {% endfor %}
             </div>
           </div>
         Sort by:
