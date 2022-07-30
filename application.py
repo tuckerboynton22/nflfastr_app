@@ -698,13 +698,13 @@ def results():
                 + ", AVG(success) AS success, " \
                 + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                 + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam" \
-                + " FROM nflfastR_pbp WHERE season>=", season_start, " AND season<=" \
-                + season_end + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
+                + " FROM nflfastR_pbp WHERE season>=", str(season_start), " AND season<=" \
+                + str(season_end) + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                 and epa IS NOT NULL" + grouping_null \
                 + team_query + filter_query + indicators + win_query + drive_result_query \
                 + play_type_query + qtr_query + down_query + week_query + player_query \
                 + "GROUP BY " + grouping_id + minplay_query \
-                + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000")
+                + " ORDER BY total_" + str(sort[0]) + " " + str(order) + " LIMIT 1000")
 
         plays = db.execute(grouped_query)
         
