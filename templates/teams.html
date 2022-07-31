@@ -47,9 +47,9 @@
                     {% endif %}
                     <td><form action="/results" method="GET">
                         {% for arg in args.keys() %}
-                            {% if arg == 'group' and args[arg] != '' %}
+                            {% if arg == 'grouping' and args[arg] != '' %}
                                 <input type="hidden" name={{ arg }} value="">
-                            {% elif arg == 'group2' and args[arg] != '' %}
+                            {% elif arg == 'grouping2' and args[arg] != '' %}
                                 <input type="hidden" name={{ arg }} value="">
                             {% else %}
                                 <input type="hidden" name={{ arg }} value={{ args[arg] }}>
