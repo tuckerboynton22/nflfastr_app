@@ -210,15 +210,15 @@ def results():
         player_query = player_query + " AND id = '" + name + "' "
         # name_results = "Passer/Rusher = " + request.args.get("name").split("*")[0] + ". "
     if request.args.get("passer") != "" and request.args.get("passer") is not None:
-        passer = request.args.get("passer").split("*")[1]
+        passer = request.args.get("passer")
         player_query = player_query + " AND passer_id = '" + passer + "' "
         # passer_results = "Passer/Rusher = " + request.args.get("passer").split("*")[0] + ". "
     if request.args.get("receiver") != "" and request.args.get("receiver") is not None:
-        receiver = request.args.get("receiver").split("*")[1]
+        receiver = request.args.get("receiver")
         player_query = player_query + " AND receiver_id = '" + receiver + "' "
         # receiver_results = "Passer/Rusher = " + request.args.get("receiver").split("*")[0] + ". "
     if request.args.get("rusher") != "" and request.args.get("rusher") is not None:
-        rusher = request.args.get("rusher").split("*")[1]
+        rusher = request.args.get("rusher")
         player_query = player_query + " AND rusher_id = '" + rusher + "' "
         # rusher_results = "Passer/Rusher = " + request.args.get("rusher").split("*")[0] + ". "
 
