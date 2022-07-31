@@ -191,7 +191,8 @@
             <option selected value="">Choose</option>
             {% for name in names %}
                 {% set player_name = name.name.split(',')[0].replace(' ','') + ' (' + name.posteam|string + ')' %}
-                <option value="{{ name.id }}">{{ player_name }}</option>
+                {% set player_id = name.name.split(',')[0].replace(' ','') + ' (' + name.posteam|string + ')*' + name.id|string %}
+                <option value="{{ player_id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
         <br>

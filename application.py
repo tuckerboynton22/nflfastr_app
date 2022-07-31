@@ -201,6 +201,9 @@ def results():
     rusher = ""
     name = ""
 
+    if request.args.get("name") != "" and request.args.get("name") is not None:
+        name = request.args.get("name").split("*")[1]
+        player_query = player_query + " AND id = '" + name + "' "
     if request.args.get("passer") != "" and request.args.get("passer") is not None:
         passer = request.args.get("passer")
         player_query = " AND passer_id = '" + passer + "' "
@@ -210,9 +213,6 @@ def results():
     if request.args.get("rusher") != "" and request.args.get("rusher") is not None:
         rusher = request.args.get("rusher")
         player_query = player_query + " AND rusher_id = '" + rusher + "' "
-    if request.args.get("name") != "" and request.args.get("name") is not None:
-        name = request.args.get("name")
-        player_query = player_query + " AND id = '" + name + "' "
 
     # Create team query
     team_query = ""
