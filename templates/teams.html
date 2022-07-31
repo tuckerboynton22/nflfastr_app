@@ -54,8 +54,8 @@
                             {% endif %}
                         {% endfor %}
 
-                        {{ grouping }}
-                        {{ grouping2 }}
+                        {{ args[grouping] }}
+                        {{ args[grouping2] }}
 
                         {% for arg in args.keys() %}
                             {% if arg == 'grouping' and args[arg] != '' %}
