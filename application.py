@@ -567,6 +567,8 @@ def results():
     # Set groupings
     grouping = ""
     grouping_id = ""
+    grouping_id1 = ""
+    grouping_id2 = ""
     grouping_null = ""
     group = request.args.get("grouping")
     group2 = request.args.get("grouping2")
@@ -575,34 +577,42 @@ def results():
     if group == "name":
         grouping = group + ", id"
         grouping_id = "id"
+        grouping_id1 = "id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "passer":
         grouping = group + ", passer_id"
         grouping_id = "passer_id"
+        grouping_id1 = "passer_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "rusher":
         grouping = group + ", rusher_id"
         grouping_id = "rusher_id"
+        grouping_id1 = "rusher_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "kicker_player_name":
         grouping = group + ", kicker_player_id"
         grouping_id = "kicker_player_id"
+        grouping_id1 = "kicker_player_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "punter_player_name":
         grouping = group + ", punter_player_id"
         grouping_id = "punter_player_id"
+        grouping_id1 = "punter_player_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "receiver":
         grouping = group + ", receiver_id"
         grouping_id = "receiver_id"
+        grouping_id1 = "receiver_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "week":
         grouping = group + ", 'week'"
         grouping_id = "week"
+        grouping_id1 = "week"
         grouping_null = " AND '" + group + "' IS NOT NULL " + " AND LENGTH(CAST('" + group + "' AS TEXT))>0 "
     elif group != "" and group is not None:
         grouping = group
         grouping_id = group
+        grouping_id1 = group
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     
     if group != "" and group2 != "" and group is not None and group2 is not None:
@@ -617,34 +627,42 @@ def results():
     if group2 == "name":
         grouping = grouping + group2 + ", id"
         grouping_id = grouping_id + "id"
+        grouping_id2 = "id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "passer":
         grouping = grouping + group2 + ", passer_id"
         grouping_id = grouping_id + "passer_id"
+        grouping_id2 = "passer_id"
         grouping_null = " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "rusher":
         grouping = grouping + group2 + ", rusher_id"
         grouping_id = grouping_id + "rusher_id"
+        grouping_id2 = "rusher_id"
         grouping_null = " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "kicker_player_name":
         grouping = grouping + group2 + ", kicker_player_id"
         grouping_id = grouping_id + "kicker_player_id"
+        grouping_id2 = "kicker_player_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "punter_player_name":
         grouping = grouping + group2 + ", punter_player_id"
-        grouping_id = grouping_id + "punter_player)id"
+        grouping_id = grouping_id + "punter_player_id"
+        grouping_id2 = "punter_player_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "receiver":
         grouping = grouping + group2 + ", receiver_id"
         grouping_id = grouping_id + "receiver_id"
+        grouping_id2 = "receiver_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "week":
         grouping = grouping + group2 + ", 'week'"
         grouping_id = grouping_id + "week"
+        grouping_id2 = "week"
         grouping_null = grouping_null + " AND '" + group2 + "' IS NOT NULL " + " AND LENGTH(CAST('" + group2 + "' AS TEXT))>0 "
     elif group2 != "" and group2 is not None:
         grouping = grouping + group2
         grouping_id = grouping_id + group2
+        grouping_id2 = group2
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
 
     if group != "" and group is not None:
@@ -721,12 +739,12 @@ def results():
             and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" \
             and group2 != "receiver_player_name" and group2 != "week" and group != "week":
 
-            return render_template("teams.html", plays=plays, order=order, sort=sort, group=group,
-                                    group2=group2, groupings=groupings, searchdesc=searchdesc, args=args)
+            return render_template("teams.html", plays=plays, order=order, sort=sort, group=group, grouping_id1=grouping_id1,
+                                    group2=group2, grouping_id2=grouping_id2, groupings=groupings, searchdesc=searchdesc, args=args)
 
         else:
-            return render_template("players.html", plays=plays, order=order, sort=sort, group=group,
-                                    group2=group2, groupings=groupings, searchdesc=searchdesc, args=args)
+            return render_template("players.html", plays=plays, order=order, sort=sort, group=group, grouping_id1=grouping_id1,
+                                    group2=group2, grouping_id2=grouping_id2, groupings=groupings, searchdesc=searchdesc, args=args)
     # elif limit == "Yes":
     #     plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
     #                             AVG(epa) AS epa, " + grouping_aggregator \
