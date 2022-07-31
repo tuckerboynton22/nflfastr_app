@@ -48,9 +48,25 @@
                     <td><form action="/results" method="GET">
                         {% for arg in args.keys() %}
                             {% if arg == 'grouping' and args[arg] != '' %}
+                                {% set grouping = args[arg] %}
+                            {% elif arg == 'grouping2' and args[arg] != '' %}
+                                {% set grouping2 = args[arg] %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for arg in args.keys() %}
+                            {% if arg == 'grouping' and args[arg] != '' %}
                                 <input type="hidden" name={{ arg }} value="">
                             {% elif arg == 'grouping2' and args[arg] != '' %}
                                 <input type="hidden" name={{ arg }} value="">
+                            {% elif grouping == 'posteam' and arg == 'team'}
+                                <input type="hidden" name={{ arg }} value={{ play[group] }}>
+                            {% elif grouping == 'posteam' and arg == 'offense'}
+                                <input type="hidden" name={{ arg }} value='posteam'>
+                            {% elif grouping2 == 'posteam' and arg == 'team'}
+                                <input type="hidden" name={{ arg }} value={{ play[group2] }}>
+                            {% elif grouping2 == 'posteam' and arg == 'offense'}
+                                <input type="hidden" name={{ arg }} value='posteam'>
                             {% else %}
                                 <input type="hidden" name={{ arg }} value={{ args[arg] }}>
                             {% endif %}
