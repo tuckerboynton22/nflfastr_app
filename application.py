@@ -569,7 +569,7 @@ def results():
     game_id = request.args.get("game_id")
     game_query = ""
 
-    if game_id != "":
+    if game_id != " ":
         game_query = " AND game_id = " + game_id + " "
 
     # Set groupings
