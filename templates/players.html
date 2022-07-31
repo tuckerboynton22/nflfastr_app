@@ -61,6 +61,10 @@
                                 <input type="hidden" name={{ arg }} value="">
                             {% elif arg == 'grouping2' and args[arg] != '' %}
                                 <input type="hidden" name={{ arg }} value="">
+                            {% elif args['grouping'] == 'week' and (arg == 'start_reg_week' or arg == 'start_post_week' or arg == 'end_reg_week' or arg == 'end_post_week') %}
+                                <input type="hidden" name={{ arg }} value={{ play[group] }}>
+                            {% elif args['grouping2'] == 'week' and (arg == 'start_reg_week' or arg == 'start_post_week' or arg == 'end_reg_week' or arg == 'end_post_week') %}
+                                <input type="hidden" name={{ arg }} value={{ play[group2] }}>
                             {% else %}
                                 <input type="hidden" name={{ arg }} value={{ args[arg] }}>
                             {% endif %}

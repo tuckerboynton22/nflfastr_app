@@ -64,9 +64,9 @@
                                 <input type="hidden" name={{ arg }} value='posteam'>
                             {% elif args['grouping2'] == 'defteam' and arg == 'offense' %}
                                 <input type="hidden" name={{ arg }} value='defteam'>
-                            {% elif args['grouping'] == 'week' and (arg == 'start_reg_week' or arg == 'start_post_week' or arg == 'end_reg_week' or arg == 'end_post_week') %}
+                            {% elif args['grouping'] == 'season' and (arg == 'start' or arg == 'end') %}
                                 <input type="hidden" name={{ arg }} value={{ play[group] }}>
-                            {% elif args['grouping2'] == 'week' and (arg == 'start_reg_week' or arg == 'start_post_week' or arg == 'end_reg_week' or arg == 'end_post_week') %}
+                            {% elif args['grouping2'] == 'season' and (arg == 'start' or arg == 'end') %}
                                 <input type="hidden" name={{ arg }} value={{ play[group2] }}>
                             {% else %}
                                 <input type="hidden" name={{ arg }} value={{ args[arg] }}>
