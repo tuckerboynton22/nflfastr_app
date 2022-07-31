@@ -54,8 +54,16 @@
                                 <input type="hidden" name={{ arg }} value="">
                             {% elif (args['grouping'] == 'posteam' or args['grouping'] == 'defteam') and arg == 'team' %}
                                 <input type="hidden" name={{ arg }} value={{ play[group] }}>
+                            {% elif args['grouping'] == 'posteam' and arg == 'offense' %}
+                                <input type="hidden" name={{ arg }} value='posteam'>
+                            {% elif args['grouping'] == 'defteam' and arg == 'offense' %}
+                                <input type="hidden" name={{ arg }} value='defteam'>
                             {% elif (args['grouping2'] == 'posteam' or args['grouping2'] == 'defteam') and arg == 'team' %}
                                 <input type="hidden" name={{ arg }} value={{ play[group2] }}>
+                            {% elif args['grouping2'] == 'posteam' and arg == 'offense' %}
+                                <input type="hidden" name={{ arg }} value='posteam'>
+                            {% elif args['grouping2'] == 'defteam' and arg == 'offense' %}
+                                <input type="hidden" name={{ arg }} value='defteam'>
                             {% else %}
                                 <input type="hidden" name={{ arg }} value={{ args[arg] }}>
                             {% endif %}
