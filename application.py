@@ -726,7 +726,7 @@ def results():
                             + order + " LIMIT 1000",
                             season_start, season_end)
 
-        return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
+        return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc, extra=extra)
 
 
     else:
