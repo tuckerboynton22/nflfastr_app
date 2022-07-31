@@ -211,7 +211,7 @@
             <option selected value="">Choose</option>
             {% for rusher in rushers %}
                 {% set player_name = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.posteam|string + ')' %}
-                {% set player_name = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.posteam|string + ')*' +  rusher.rusher_id|string %}
+                {% set player_id = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.posteam|string + ')*' +  rusher.rusher_id|string %}
                 <option value="{{ player_id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
