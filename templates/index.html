@@ -2,10 +2,12 @@
 
 {% block main %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>$(document).ready(function() {
-        $('.js-example-basic-single').select2();
-    });</script>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script>$(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });</script>
+    </head>
 
     <h5>Find plays with...</h5>
     <hr>
@@ -184,6 +186,7 @@
         <hr>
         Passer/Rusher:
         <select class="js-example-basic-single" name="name">
+            <option selected value="">Choose</option>
             {% for name in names %}
                 {% set player_name = name.name.split(',')[0].replace(' ','') + ' (' + name.posteam|string + ')' %}
                 <option value="{{ name.id }}">{{ player_name }}</option>
