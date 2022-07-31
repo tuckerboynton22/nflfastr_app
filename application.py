@@ -206,21 +206,21 @@ def results():
     receiver_results = ""
 
     if request.args.get("name") != "" and request.args.get("name") is not None:
-        name = request.args.get("name").split("*")[1]
+        name = request.args.get("name")
         player_query = player_query + " AND id = '" + name + "' "
-        name_results = "Passer/Rusher = " + request.args.get("name").split("*")[0] + ". "
+        # name_results = "Passer/Rusher = " + request.args.get("name").split("*")[0] + ". "
     if request.args.get("passer") != "" and request.args.get("passer") is not None:
         passer = request.args.get("passer").split("*")[1]
         player_query = player_query + " AND passer_id = '" + passer + "' "
-        passer_results = "Passer/Rusher = " + request.args.get("passer").split("*")[0] + ". "
+        # passer_results = "Passer/Rusher = " + request.args.get("passer").split("*")[0] + ". "
     if request.args.get("receiver") != "" and request.args.get("receiver") is not None:
         receiver = request.args.get("receiver").split("*")[1]
         player_query = player_query + " AND receiver_id = '" + receiver + "' "
-        receiver_results = "Passer/Rusher = " + request.args.get("receiver").split("*")[0] + ". "
+        # receiver_results = "Passer/Rusher = " + request.args.get("receiver").split("*")[0] + ". "
     if request.args.get("rusher") != "" and request.args.get("rusher") is not None:
         rusher = request.args.get("rusher").split("*")[1]
         player_query = player_query + " AND rusher_id = '" + rusher + "' "
-        rusher_results = "Passer/Rusher = " + request.args.get("rusher").split("*")[0] + ". "
+        # rusher_results = "Passer/Rusher = " + request.args.get("rusher").split("*")[0] + ". "
 
 
     # Create team query
