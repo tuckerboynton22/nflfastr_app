@@ -564,6 +564,19 @@ def results():
         drive_result_query = " AND (drive_ended_with_score = 0) "
         drive_result_results = ", drive didn't end with score"
 
+    # Create extra query for ungrouping searches
+    extra = request.args.get("extra").split()
+    extra2 = request.args.get("extra2").split()
+    extra_query = ""
+
+    if extra != "" and extra is not None:
+        if extra2 != "":
+            extra_query = " AND " + extra[0] + " = " + extra[1] + " AND " + extra2[0] + " = " + extra2[1] + " "
+        else:
+            extra_query = " AND " + extra[0] + " = " + extra[1] + " "
+    elif extra2 != "" and extra2 is not None:
+        extra_query = " AND " + extra2[0] + " = " + extra2[1] + " "
+
     # Set groupings
     grouping = ""
     grouping_id = ""
@@ -707,7 +720,7 @@ def results():
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
                             + team_query + filter_query + indicators + win_query + drive_result_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query + extra_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -725,14 +738,10 @@ def results():
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query + drive_result_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query + extra_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
-        
-        # url = request.url
-        # url = re.sub(r'grouping=[^&]*', 'grouping=', url)
-        # url = re.sub(r'grouping2=[^&]*', 'grouping2=', url)
 
         if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver" \
             and group != "passer" and group != "rusher" and group2 != "passer" and group2 != "rusher" \

@@ -68,6 +68,10 @@
                                 <input type="hidden" name={{ arg }} value={{ play[group] }}>
                             {% elif args['grouping2'] == 'season' and (arg == 'start' or arg == 'end') %}
                                 <input type="hidden" name={{ arg }} value={{ play[group2] }}>
+                            {% elif args['grouping'] == arg %}
+                                <input type="hidden" name={{ arg }} value={{ play[grouping_id1] }}>
+                            {% elif args['grouping2'] == arg %}
+                                <input type="hidden" name={{ arg }} value={{ play[grouping_id2] }}>
                             {% else %}
                                 <input type="hidden" name={{ arg }} value={{ args[arg] }}>
                             {% endif %}
