@@ -186,7 +186,7 @@
         <select class="js-example-basic-single" name="name">
             {% for name in names %}
                 {% set player_name = name.name.split(',')[0].replace(' ','') + ' (' + name.posteam|string + ')' %}
-                <option value="{{ name.id }}">{{ player_name }}
+                <option value="{{ name.id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
         <br>
