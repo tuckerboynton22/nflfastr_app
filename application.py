@@ -569,8 +569,8 @@ def results():
     game_id = request.args.get("game_id")
     game_query = ""
 
-    if game_id != " ":
-        game_query = " AND CAST(game_id AS TEXT) = CAST(" + str(game_id) + " AS TEXT) "
+    if game_id != "":
+        game_query = " AND CAST(game_id AS TEXT) = " + str(game_id) + " "
 
     # Set groupings
     grouping = ""
