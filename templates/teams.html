@@ -17,14 +17,6 @@
     </head>
 
     <b>Query: </b>{{ searchdesc }}
-    <b>Args:</b>
-    {% for arg in args.keys() %}
-        {% if args[arg] != "" %}
-            {{ arg }} {{ args[arg]|string }},
-        {% else %}
-            {{ arg }} "",
-        {% endif %}
-    {% endfor %}
     <hr>
     <table id="table_id" class="cell-border compact stripe">
         <thead>
@@ -55,7 +47,13 @@
                     {% endif %}
                     <td><form action="/results" method="GET">
                         {% for arg in args.keys() %}
-                            <input type="hidden" name={{ arg }} value={{ args[arg] }}>
+                            {% if arg == 'group' and args[arg] != '' %}
+                                <input type="hidden" name={{ arg }} value="">
+                            {% elif arg == 'group2' and args[arg] != '' %}
+                                <input type="hidden" name={{ arg }} value="">
+                            {% else %}
+                                <input type="hidden" name={{ arg }} value={{ args[arg] }}>
+                            {% endif %}
                         {% endfor %}
                         <button class="btn btn-primary" id="submit" type="submit">{{ play.total }}</button>
                     </form></td>
