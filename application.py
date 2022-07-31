@@ -568,9 +568,11 @@ def results():
     # Create extra query for ungrouping searches
     game_id = request.args.get("game_id")
     game_query = ""
+    game_results = ""
 
     if game_id != "":
         game_query = " AND CAST(game_id AS TEXT) = '" + str(game_id) + "' "
+        game_results = " Game ID = " + str(game_id) + "."
 
     # Set groupings
     grouping = ""
@@ -704,7 +706,7 @@ def results():
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
                 + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
                 + play_type_results + ". " + indicator_results + filter_results + win_results + drive_result_results + ". " \
-                + week_results + grouping_results + minplay_results
+                + week_results + game_results + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
