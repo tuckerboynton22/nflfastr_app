@@ -19,7 +19,7 @@
     <b>Query: </b>{{ searchdesc }}
     <b>Args:</b>
     {% for arg in args.keys() %}
-        {{ arg }} {{ args[arg] }}
+        {{ arg }} {{ args[arg] }},
     {% endfor %}
     <hr>
     <table id="table_id" class="cell-border compact stripe">
