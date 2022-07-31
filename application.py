@@ -204,15 +204,20 @@ def results():
     if request.args.get("name") != "" and request.args.get("name") is not None:
         name = request.args.get("name").split("*")[1]
         player_query = player_query + " AND id = '" + name + "' "
+        name_results = "Passer/Rusher = " + request.args.get("name").split("*")[0] + ". "
     if request.args.get("passer") != "" and request.args.get("passer") is not None:
-        passer = request.args.get("passer")
-        player_query = " AND passer_id = '" + passer + "' "
+        passer = request.args.get("passer").split("*")[1]
+        player_query = player_query + " AND passer_id = '" + passer + "' "
+        passer_results = "Passer/Rusher = " + request.args.get("passer").split("*")[0] + ". "
     if request.args.get("receiver") != "" and request.args.get("receiver") is not None:
-        receiver = request.args.get("receiver")
+        receiver = request.args.get("receiver").split("*")[1]
         player_query = player_query + " AND receiver_id = '" + receiver + "' "
+        receiver_results = "Passer/Rusher = " + request.args.get("receiver").split("*")[0] + ". "
     if request.args.get("rusher") != "" and request.args.get("rusher") is not None:
-        rusher = request.args.get("rusher")
+        rusher = request.args.get("rusher").split("*")[1]
         player_query = player_query + " AND rusher_id = '" + rusher + "' "
+        rusher_results = "Passer/Rusher = " + request.args.get("rusher").split("*")[0] + ". "
+
 
     # Create team query
     team_query = ""
@@ -706,7 +711,8 @@ def results():
                 + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
                 + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
                 + play_type_results + ". " + indicator_results + filter_results + win_results + drive_result_results + ". " \
-                + week_results + game_results + grouping_results + minplay_results
+                + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
+                + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
