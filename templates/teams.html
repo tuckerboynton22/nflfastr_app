@@ -19,8 +19,10 @@
     <b>Query: </b>{{ searchdesc }}
     <b>Args:</b>
     {% for arg in args.keys() %}
-        {% if args[arg] is not None %}
+        {% if args[arg] != "" %}
             {{ arg }} {{ args[arg]|string }},
+        {% else %}
+            {{ arg }} "",
         {% endif %}
     {% endfor %}
     <hr>
