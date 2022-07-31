@@ -70,12 +70,6 @@
                                 <input type="hidden" name={{ arg }} value={{ play[grouping_id1] }}>
                             {% elif args['grouping2'] == arg %}
                                 <input type="hidden" name={{ arg }} value={{ play[grouping_id2] }}>
-                            {% elif args['grouping'] == 'game_id' and arg == 'extra' %}
-                                {% set extra_arg = "game_id" + " " + play[grouping_id] %}
-                                <input type="hidden" name={{ arg }} value={{ extra_arg }}>
-                            {% elif args['grouping2'] == 'game_id' and arg == 'extra2' %}
-                                {% set extra2_arg = "game_id" + " " + play[grouping_id2] %}
-                                <input type="hidden" name={{ arg }} value={{ extra2_arg }}>
                             {% else %}
                                 <input type="hidden" name={{ arg }} value={{ args[arg] }}>
                             {% endif %}

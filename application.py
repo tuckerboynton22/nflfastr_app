@@ -566,17 +566,11 @@ def results():
         drive_result_results = ", drive didn't end with score"
 
     # Create extra query for ungrouping searches
-    extra = request.args.get("extra").split()
-    extra2 = request.args.get("extra2").split()
-    extra_query = ""
+    game_id = request.args.get("game_id")
+    game_query = ""
 
-    if len(extra) > 1:
-        if len(extra2) > 1:
-            extra_query = " AND " + extra[0] + " = " + extra[1] + " AND " + extra2[0] + " = " + extra2[1] + " "
-        else:
-            extra_query = " AND " + extra[0] + " = " + extra[1] + " "
-    elif len(extra2) > 1:
-        extra_query = " AND " + extra2[0] + " = " + extra2[1] + " "
+    if game_id != "":
+        game_query = " AND game_id = " + game_id + " "
 
     # Set groupings
     grouping = ""
@@ -721,7 +715,7 @@ def results():
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
                             season>=? AND season<=?"
                             + team_query + filter_query + indicators + win_query + drive_result_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query + extra_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -739,7 +733,7 @@ def results():
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query + drive_result_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query + extra_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
