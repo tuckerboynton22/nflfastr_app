@@ -47,15 +47,15 @@
                     {% endif %}
                     <td><form action="/results" method="GET">
                         {% for arg in args.keys() %}
-                            {% if arg == 'grouping' and args[arg] != '' %}
+                            {% if arg == 'grouping' %}
                                 {% set grouping = args[arg] %}
-                            {% elif arg == 'grouping2' and args[arg] != '' %}
+                            {% elif arg == 'grouping2' %}
                                 {% set grouping2 = args[arg] %}
                             {% endif %}
                         {% endfor %}
-                        
-                        grouping
-                        grouping2
+
+                        {{ grouping }}
+                        {{ grouping2 }}
 
                         {% for arg in args.keys() %}
                             {% if arg == 'grouping' and args[arg] != '' %}
