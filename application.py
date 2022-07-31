@@ -200,6 +200,10 @@ def results():
     receiver = ""
     rusher = ""
     name = ""
+    name_results = ""
+    passer_results = ""
+    rusher_results = ""
+    receiver_results = ""
 
     if request.args.get("name") != "" and request.args.get("name") is not None:
         name = request.args.get("name").split("*")[1]
