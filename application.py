@@ -570,15 +570,13 @@ def results():
     extra2 = request.args.get("extra2").split()
     extra_query = ""
 
-    if extra != "" and extra is not None:
-        if extra2 != "":
+    if len(extra) > 1:
+        if len(extra2) > 1:
             extra_query = " AND " + extra[0] + " = " + extra[1] + " AND " + extra2[0] + " = " + extra2[1] + " "
         else:
             extra_query = " AND " + extra[0] + " = " + extra[1] + " "
-    elif extra2 != "" and extra2 is not None:
+    elif len(extra2) > 1:
         extra_query = " AND " + extra2[0] + " = " + extra2[1] + " "
-
-    extra_query = extra
 
     # Set groupings
     grouping = ""
