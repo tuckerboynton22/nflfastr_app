@@ -46,7 +46,26 @@
                     {% if group2 != '' %}
                         <td>{{ play[group2] }}</td>
                     {% endif %}
-                    <td>{{ play.posteam }}</td>
+                    <td><form action="/results" method="GET">
+                        {% for arg in args.keys() %}
+                            {% if arg == 'grouping' and args[arg] != '' %}
+                                {% set grouping = args[arg] %}
+                            {% elif arg == 'grouping2' and args[arg] != '' %}
+                                {% set grouping2 = args[arg] %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for arg in args.keys() %}
+                            {% if arg == 'grouping' and args[arg] != '' %}
+                                <input type="hidden" name={{ arg }} value="">
+                            {% elif arg == 'grouping2' and args[arg] != '' %}
+                                <input type="hidden" name={{ arg }} value="">
+                            {% else %}
+                                <input type="hidden" name={{ arg }} value={{ args[arg] }}>
+                            {% endif %}
+                        {% endfor %}
+                        <button class="btn btn-primary" id="submit" type="submit">{{ play.total }}</button>
+                    </form></td>
                     <td>{{ play.total }}</td>
                     <td>{{ '%0.3f'|format(play.epa) }}</td>
                     <td>{{ '%0.3f'|format(play.success) }}</td>
