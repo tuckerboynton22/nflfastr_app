@@ -46,25 +46,15 @@
                         <td>{{ play[group2] }}</td>
                     {% endif %}
                     <td><form action="/results" method="GET">
-                        {% for arg in args.keys() %}
-                            {% if arg == 'grouping' %}
-                                {% set grouping = args[arg] %}
-                            {% elif arg == 'grouping2' %}
-                                {% set grouping2 = args[arg] %}
-                            {% endif %}
-                        {% endfor %}
-
-                        {{ args[grouping] }}
-                        {{ args[grouping2] }}
 
                         {% for arg in args.keys() %}
                             {% if arg == 'grouping' and args[arg] != '' %}
                                 <input type="hidden" name={{ arg }} value="">
                             {% elif arg == 'grouping2' and args[arg] != '' %}
                                 <input type="hidden" name={{ arg }} value="">
-                            {% elif grouping == 'posteam' and arg == 'team' %}
+                            {% elif args['grouping'] == 'posteam' and arg == 'team' %}
                                 <input type="hidden" name={{ arg }} value={{ play[group] }}>
-                            {% elif grouping2 == 'posteam' and arg == 'team' %}
+                            {% elif args['grouping2'] == 'posteam' and arg == 'team' %}
                                 <input type="hidden" name={{ arg }} value={{ play[group2] }}>
                             {% else %}
                                 <input type="hidden" name={{ arg }} value={{ args[arg] }}>
