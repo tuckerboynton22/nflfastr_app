@@ -570,7 +570,7 @@ def results():
     game_query = ""
 
     if game_id != "":
-        game_query = " AND CAST(game_id AS TEXT) = " + str(game_id) + " "
+        game_query = " AND CAST(game_id AS TEXT) = '" + str(game_id) + "' "
 
     # Set groupings
     grouping = ""
