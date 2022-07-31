@@ -3,6 +3,9 @@
 {% block main %}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>$(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });</script>
 
     <h5>Find plays with...</h5>
     <hr>
@@ -180,7 +183,7 @@
         </select>
         <hr>
         Passer/Rusher:
-        <select name="name">
+        <select class="js-example-basic-single" name="name">
             <option selected value="">Choose</option>
             {% for name in names %}
                 {% set player_name = name.name.split(',')[0].replace(' ','') + ' (' + name.posteam|string + ')' %}
@@ -189,7 +192,7 @@
         </select>
         <br>
         Passer:
-        <select name="passer">
+        <select class="js-example-basic-single" name="passer">
             <option selected value="">Choose</option>
             {% for passer in passers %}
                 {% set player_name = passer.passer.split(',')[0].replace(' ','') + ' (' + passer.posteam|string + ')' %}
@@ -198,7 +201,7 @@
         </select>
         <br>
         Rusher:
-        <select name="rusher">
+        <select class="js-example-basic-single" name="rusher">
             <option selected value="">Choose</option>
             {% for rusher in rushers %}
                 {% set player_name = rusher.rusher.split(',')[0].replace(' ','') + ' (' + rusher.posteam|string + ')' %}
@@ -207,7 +210,7 @@
         </select>
         <br>
         Receiver:
-        <select name="receiver">
+        <select class="js-example-basic-single" name="receiver">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
                 {% set player_name = receiver.receiver.split(',')[0].replace(' ','') + ' (' + receiver.posteam|string + ')' %}
