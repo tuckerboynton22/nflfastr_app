@@ -41,6 +41,7 @@ filters = {
     "total_line": "Vegas Total",
     "xyac_mean_yardage": "Mean Expected YAC",
     "xyac_epa": "Expected YAC EPA",
+    "drive": "Drive Number",
     "ydsnet": "Total Yards on Drive",
     "drive_play_count": "Total Plays on Drive",
     "drive_quarter_start": "Drive Quarter Start",
@@ -576,6 +577,8 @@ def results():
             extra_query = " AND " + extra[0] + " = " + extra[1] + " "
     elif extra2 != "" and extra2 is not None:
         extra_query = " AND " + extra2[0] + " = " + extra2[1] + " "
+
+    extra_query = extra
 
     # Set groupings
     grouping = ""
