@@ -405,6 +405,8 @@ def results():
 
     if play_type_query != "" and play_type_query is not None:
         play_type_query = play_type_query + ") "
+    if play_type_results != "":
+        play_type_results += "."
 
     # Create filter query and dictionary for column titles on results page
     filter_query = ""
