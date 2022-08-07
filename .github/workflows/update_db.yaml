@@ -1,7 +1,6 @@
 name: update_db
 
 on:
-  push:
   schedule:
     - cron: 00 05 * * *
 
