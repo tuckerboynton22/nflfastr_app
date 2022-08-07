@@ -423,11 +423,22 @@ def results():
         if request.args.get(filt) != "" and request.args.get(filt) is not None \
             and request.args.get(inequal) != "" and request.args.get(inequal) is not None \
             and request.args.get(filtval) != "" and request.args.get(filtval) is not None:
+
+            if filter_results != "":
                 filter_query = filter_query + " AND " + str(request.args.get(filt)) + str(request.args.get(inequal)) \
                                 + str(request.args.get(filtval)) + " AND " + str(request.args.get(filt)) + " IS NOT NULL "
                 select = select + str(request.args.get(filt)) + ", "
                 filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
                 filter_results = filter_results + ", " + str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
+            else:
+                filter_query = filter_query + " AND " + str(request.args.get(filt)) + str(request.args.get(inequal)) \
+                                + str(request.args.get(filtval)) + " AND " + str(request.args.get(filt)) + " IS NOT NULL "
+                select = select + str(request.args.get(filt)) + ", "
+                filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
+                filter_results = str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
+    
+    if filter_results != "":
+        filter_results += "."
 
     # Set desired sorting mechanism
     sort = [request.args.get("sort"), filters[request.args.get("sort")]]
@@ -550,13 +561,13 @@ def results():
 
     if winner == "won":
         win_query = " AND ((posteam = home_team AND home_score > away_score) OR (posteam = away_team AND home_score < away_score)) "
-        win_results = ", possession team won"
+        win_results = " Possession team won."
     elif winner == "lost":
         win_query = " AND ((posteam = home_team AND home_score < away_score) OR (posteam = away_team AND home_score > away_score)) "
-        win_results = ", possession team lost"
+        win_results = " Possession team lost."
     elif winner == "tied":
         win_query = " AND home_score = away_score "
-        win_results = ", game was a tie"
+        win_results = " Game was a tie."
 
     # Create drive result query
     drive_result = request.args.get("drive_result")
@@ -565,10 +576,10 @@ def results():
 
     if int(drive_result) == 1:
         drive_result_query = " AND (drive_ended_with_score = 1) "
-        drive_result_results = ", drive ended with score"
+        drive_result_results = " Drive ended with score."
     elif int(drive_result) == 0:
         drive_result_query = " AND (drive_ended_with_score = 0) "
-        drive_result_results = ", drive didn't end with score"
+        drive_result_results = " Drive didn't end with score."
 
     # Create extra query for ungrouping searches
     game_id = request.args.get("game_id")
