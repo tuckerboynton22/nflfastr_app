@@ -721,7 +721,7 @@ def results():
     searchdesc = str(season_start) + "-" + str(season_end) + ", " + team_results \
                 + " vs. " + opp_results + posteam_results + defteam_results \
                 + home_team_results + away_team_results + ". Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
-                + play_type_results + indicator_results + filter_results + win_results + drive_result_results + \
+                + play_type_results + indicator_results + filter_results + win_results + drive_result_results \
                 + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
                 + grouping_results + minplay_results
 
