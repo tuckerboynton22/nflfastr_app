@@ -329,17 +329,17 @@ def results():
     
     if reg_week_query != "" and post_week_query != "" and reg_week_query is not None and post_week_query is not None:
         week_query = " AND(" + reg_week_query + " OR " + post_week_query + ") "
-        week_results = "REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: " \
+        week_results = " REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: " \
                          + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + ". "
     elif reg_week_query != "" and reg_week_query is not None:
         week_query = " AND" + reg_week_query
-        week_results = "REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: None. "
+        week_results = " REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: None. "
     elif post_week_query != "" and post_week_query is not None:
         week_query = " AND" + post_week_query
-        week_results = "REG Wks: None, POST Wks: " + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + ". "
+        week_results = " REG Wks: None, POST Wks: " + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + ". "
     else:
         week_query = ""
-        week_results = "REG Wks: None, POST Wks: None. "
+        week_results = " REG Wks: None, POST Wks: None. "
 
     # Create quarter query
     qtr_query = ""
@@ -435,7 +435,7 @@ def results():
                                 + str(request.args.get(filtval)) + " AND " + str(request.args.get(filt)) + " IS NOT NULL "
                 select = select + str(request.args.get(filt)) + ", "
                 filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
-                filter_results = str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
+                filter_results = " " + str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
     
     if filter_results != "":
         filter_results += "."
@@ -721,7 +721,7 @@ def results():
     searchdesc = str(season_start) + "-" + str(season_end) + ", " + team_results \
                 + " vs. " + opp_results + posteam_results + defteam_results \
                 + home_team_results + away_team_results + ". Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
-                + play_type_results + indicator_results + filter_results + win_results + drive_result_results + ". " \
+                + play_type_results + indicator_results + filter_results + win_results + drive_result_results + \
                 + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
                 + grouping_results + minplay_results
 
