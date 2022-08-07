@@ -269,27 +269,21 @@ def results():
     posteam_results = ""
     defteam_results = ""
     if request.args.get("offense") == "posteam":
-        posteam_results = team_results
-        defteam_results = opp_results
+        posteam_results = ", " + team_results + " on offense"
+        defteam_results = ", " + opp_results + " on defense"
     elif request.args.get("offense") == "defteam":
-        posteam_results = opp_results
-        defteam_results = team_results
-    else:
-        posteam_results = "any team"
-        defteam_results = "any team"
+        posteam_results = ", " + opp_results + " on offense"
+        defteam_results = ", " + team_results + " on defense"
 
     # Set home/away results
     home_team_results = ""
     away_team_results = ""
     if request.args.get("home") == "home_team":
-        home_team_results = team_results
-        away_team_results = opp_results
+        home_team_results = ", " + team_results + " at home"
+        away_team_results = ", " + opp_results + " on the road"
     elif request.args.get("home") == "away_team":
-        away_team_results = opp_results
-        home_team_results = team_results
-    else:
-        home_team_results = "any team"
-        away_team_results = "any team"
+        away_team_results = ", " + opp_results + " at home"
+        home_team_results = ", " + team_results + " on the road"
             
     # Identify start and end seasons
     if request.args.get("start") is not None:
@@ -442,20 +436,20 @@ def results():
     if request.args.get("penalty") != "either":
         penaltyindicator = " AND penalty=" + request.args.get("penalty") + " "
         if request.args.get("penalty") == "1":
-            penaltyresults = "A penalty, "
+            penaltyresults = " A penalty."
         else:
-            penaltyresults = "No penalties, "
+            penaltyresults = " No penalty."
     else:
         penaltyindicator = ""
-        penaltyresults = "Either penalty or no penalty, "
+        penaltyresults = ""
 
     # Create turnover query
     if request.args.get("turnover") == "1":
         turnoverindicator = " AND (interception=1 OR fumble_lost=1) "
-        turnoverresults = "a turnover, "
+        turnoverresults = " A turnover."
     elif request.args.get("turnover") == "0":
         turnoverindicator = " AND interception=0 AND fumble_lost=0 "
-        turnoverresults = "no turnover, "
+        turnoverresults = " No turnover."
     else:
         turnoverindicator = ""
         turnoverresults = ""
@@ -463,10 +457,10 @@ def results():
     # Create completion query
     if request.args.get("complete_pass") == "1":
         completionindicator = " AND complete_pass = 1 "
-        completionresults = "a complete pass, "
+        completionresults = " Complete pass."
     elif request.args.get("complete_pass") == "0":
         completionindicator = " AND complete_pass = 0 "
-        completionresults = "no complete pass, "
+        completionresults = " No complete pass."
     else:
         completionindicator = ""
         completionresults = ""
@@ -475,9 +469,9 @@ def results():
     if request.args.get("score") != "either":
         scoreindicator = " AND sp=" + request.args.get("score") + " "
         if request.args.get("score") == "1":
-            scoreresults = "a score, "
+            scoreresults = " A scoring play."
         else:
-            scoreresults = "no score, "
+            scoreresults = " A non-scoring play."
     else:
         scoreindicator = ""
         scoreresults = ""
@@ -486,9 +480,9 @@ def results():
     if request.args.get("sack") != "either":
         sackindicator = " AND sack=" + request.args.get("sack") + " "
         if request.args.get("sack") == "1":
-            sackresults = "a sack, "
+            sackresults = " A sack."
         else:
-            sackresults = "no sack, "
+            sackresults = " No sack."
     else:
         sackindicator = ""
         sackresults = ""
@@ -497,9 +491,9 @@ def results():
     if request.args.get("interception") != "either":
         intindicator = " AND interception=" + request.args.get("interception") + " "
         if request.args.get("interception") == "1":
-            intresults = "an interception, "
+            intresults = " An interception."
         else:
-            intresults = "not an interception, "
+            intresults = " Not an interception."
     else:
         intindicator = ""
         intresults = ""
@@ -508,9 +502,9 @@ def results():
     if request.args.get("no_huddle") != "either":
         nohuddleindicator = " AND no_huddle=" + request.args.get("no_huddle") + " "
         if request.args.get("no_huddle") == "1":
-            nohuddleresults = "offense in no-huddle, "
+            nohuddleresults = " Offense in no-huddle."
         else:
-            nohuddleresults = "offense huddled, "
+            nohuddleresults = " Offense huddled."
     else:
         nohuddleindicator = ""
         nohuddleresults = ""
@@ -519,11 +513,11 @@ def results():
     if request.args.get("pass_location") != "any":
         passlocquery = " AND pass_location='" + request.args.get("pass_location") + "' "
         if request.args.get("pass_location") == "left":
-            passlocresults = "pass to the left, "
+            passlocresults = " Pass to the left."
         elif request.args.get("pass_location") == "right":
-            passlocresults = "pass to the right, "
+            passlocresults = " Pass to the right."
         else:
-            passlocresults = "pass to the middle, "
+            passlocresults = " Pass to the middle."
     else:
         passlocquery = ""
         passlocresults = ""
@@ -532,16 +526,16 @@ def results():
     if request.args.get("roof") != "any":
         roofindicator = " AND roof='" + request.args.get("roof") + "' "
         if request.args.get("roof") == "dome":
-            roofresults = "game in dome"
+            roofresults = " Game in dome."
         elif request.args.get("roof") == "outdoors":
-            roofresults = "game outdoors"
+            roofresults = " Game outdoors."
         elif request.args.get("roof") == "closed":
-            roofresults = "game in closed retroof"
+            roofresults = " Game in closed retroof."
         else:
-            roofresults = "game in open retroof"
+            roofresults = " Game in open retroof."
     else:
         roofindicator = ""
-        roofresults = "game in any stadium"
+        roofresults = ""
 
     # Combine penalty, turnover, score, sack, interception, and roof queries for single indicator query
     indicators = penaltyindicator + passlocquery + turnoverindicator + scoreindicator + completionindicator + intindicator + sackindicator + nohuddleindicator + roofindicator
@@ -712,9 +706,9 @@ def results():
 
     # Create description of search for results page
     searchdesc = str(season_start) + "-" + str(season_end) + ", " + team_results \
-                + " vs. " + opp_results + ", " + posteam_results + " on offense, " + defteam_results + " on defense, " \
-                + home_team_results + " at home, " + away_team_results + " on the road. Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
-                + play_type_results + ". " + indicator_results + filter_results + win_results + drive_result_results + ". " \
+                + " vs. " + opp_results + posteam_results + defteam_results \
+                + home_team_results + away_team_results + ". Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
+                + play_type_results + "." + indicator_results + filter_results + win_results + drive_result_results + ". " \
                 + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
                 + grouping_results + minplay_results
 
