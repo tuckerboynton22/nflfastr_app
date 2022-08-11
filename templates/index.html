@@ -222,6 +222,21 @@
             {% endfor %}
         </select>
         <hr>
+        Player
+        <select class="js-example-basic-single" name="player">
+            <option selected value="">Choose</option>
+            {% for receiver in receivers %}
+                {% set player_name = receiver.receiver|string + ' (' + receiver.posteam|string + ')' %}
+                <option value="{{ receiver.receiver_id }}">{{ player_name }}</option>
+            {% endfor %}
+        </select>
+        is
+        <select name="on_off">
+            <option value="any">On/Off</option>
+            <option value="on">On</option>
+            <option value="off">Off</option>
+        </select>
+        <hr>
         Sort by:
         <select name="order">
             <option value="DESC">Descending</option>
