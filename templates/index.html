@@ -208,7 +208,7 @@
         <select class="js-example-basic-single" name="rusher">
             <option selected value="">Choose</option>
             {% for rusher in rushers %}
-                {% set player_name = rusher.rusher|string + ' (' + rusher.posteam|string + ')' %}
+                {% set player_name = rusher.rusher.replace(' ','') + ' (' + rusher.posteam|string + ')' %}
                 <option value="{{ rusher.rusher_id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
@@ -217,7 +217,7 @@
         <select class="js-example-basic-single" name="receiver">
             <option selected value="">Choose</option>
             {% for receiver in receivers %}
-                {% set player_name = receiver.receiver|string + ' (' + receiver.posteam|string + ')' %}
+                {% set player_name = receiver.receiver.replace(' ','') + ' (' + receiver.posteam|string + ')' %}
                 <option value="{{ receiver.receiver_id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
