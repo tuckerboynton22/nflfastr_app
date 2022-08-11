@@ -5,6 +5,8 @@ participation <- nflreadr::load_participation(seasons = 2016:2021)
 
 pbp <- nflreadr::load_pbp(seasons = 1999:2021)
 
+rosters <- nflreadr::load_rosters(seasons = 1999:2021)
+
 receivers <- pbp %>%
   select(receiver_id, receiver, posteam) %>%
   filter(!is.na(receiver_id)) %>%
@@ -49,6 +51,19 @@ passers <- pbp %>%
   ) %>%
   arrange(passer)
 
+players <- rosters %>%
+  mutate(player = paste0(substr(first_name,1,1), ".", last_name)) %>%
+  filter(!is.na(gsis_id)) %>%
+  select(gsis_id, player, team, sportradar_id) %>%
+  filter(!is.na(sportradar_id)) %>%
+  distinct() %>%
+  group_by(gsis_id) %>%
+  summarize(
+    player = last(player),
+    team = paste0(team, collapse = ", ")
+  ) %>%
+  arrange(player)
+
 conn <- DBI::dbConnect(RPostgres::Postgres(),
                        dbname = Sys.getenv("DB_NAME"),
                        host = Sys.getenv("DB_HOST"),
@@ -63,3 +78,4 @@ DBI::dbWriteTable(conn, "receivers", receivers, overwrite = T)
 DBI::dbWriteTable(conn, "rushers", rushers, overwrite = T)
 DBI::dbWriteTable(conn, "names", names, overwrite = T)
 DBI::dbWriteTable(conn, "passers", passers, overwrite = T)
+DBI::dbWriteTable(conn, "players", players, overwrite = T)
