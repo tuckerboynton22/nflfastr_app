@@ -5,7 +5,9 @@ participation <- nflreadr::load_participation(seasons = 2016:2021)
 
 pbp <- nflreadr::load_pbp(seasons = 1999:2021)
 
-rosters <- nflreadr::load_rosters(seasons = 1999:2021)
+snap_counts <- nflreadr::load_snap_counts(seasons = 2013:2021)
+
+rosters <- nflreadr::load_rosters_weekly(seasons = 2016:2021)
 
 receivers <- pbp %>%
   select(receiver_id, receiver, posteam) %>%
@@ -52,10 +54,10 @@ passers <- pbp %>%
   arrange(passer)
 
 players <- rosters %>%
-  mutate(player = paste0(substr(first_name,1,1), ".", last_name)) %>%
+  mutate(player = paste0(substr(first_name,1,1), ".", last_name),
+         team = team_abbr) %>%
   filter(!is.na(gsis_id)) %>%
-  select(gsis_id, player, team, sportradar_id) %>%
-  filter(!is.na(sportradar_id)) %>%
+  select(gsis_id, player, team) %>%
   distinct() %>%
   group_by(gsis_id) %>%
   summarize(

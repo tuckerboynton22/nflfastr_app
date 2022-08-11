@@ -762,6 +762,7 @@ def results():
         return render_template("plays.html", plays=plays, filter_dict=filter_dict, order=order, sort=sort, searchdesc=searchdesc)
 
 
+
     else:
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
                             AVG(epa) AS epa, " + grouping_aggregator \
