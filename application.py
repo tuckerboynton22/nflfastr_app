@@ -583,6 +583,23 @@ def results():
     elif int(drive_result) == 0:
         drive_result_query = " AND (drive_ended_with_score = 0) "
         drive_result_results = " Drive didn't end with score."
+    
+    # Create on/off query
+    on_off_player = request.args.get("player")
+    on_off = request.args.get("on_off")
+    join_query = ""
+    on_off_query = ""
+    on_off_results = ""
+
+    if on_off != "any" and on_off_player != "":
+        if on_off == "on":
+            on_off_query = " AND (offense_players LIKE '%" + on_off_player + "%' OR defense_players LIKE '%" + on_off_player + "%') "
+            join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
+        elif on_off == "off":
+            on_off_query = " AND (offense_players NOT LIKE '%" + on_off_player + "%' OR defense_players NOT LIKE '%" + on_off_player + "%') "
+            join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
+
+
 
     # Create extra query for ungrouping searches
     game_id = request.args.get("game_id")
@@ -734,9 +751,9 @@ def results():
 
     # If no grouping, pass list of plays to plays.html
     if (grouping == "" or grouping is None):    
-        plays = db.execute("SELECT " + select + " FROM nflfastR_pbp WHERE \
-                            season>=? AND season<=?"
-                            + team_query + filter_query + indicators + win_query + drive_result_query \
+        plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
+                            + join_query + " WHERE season>=? AND season<=? "
+                            + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
@@ -751,10 +768,10 @@ def results():
                             + ", AVG(success) AS success, " \
                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                             + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
-                            + " FROM nflfastR_pbp WHERE season>=? AND season<=?" \
+                            + " FROM nflfastR_pbp n WHERE season>=? AND season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
-                            + team_query + filter_query + indicators + win_query + drive_result_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
