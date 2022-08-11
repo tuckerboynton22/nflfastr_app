@@ -42,10 +42,10 @@
                     <td></td>
                     <td>{{ '%0.3f'|format(play[["total_",sort[0]]|join]|float) }}</td>
                     {% if group != '' %}
-                        <td>{{ play[group] }}</td>
+                        <td>{{ play[group].split(',')[0] }}</td>
                     {% endif %}
                     {% if group2 != '' %}
-                        <td>{{ play[group2] }}</td>
+                        <td>{{ play[group2].split(',')[0] }}</td>
                     {% endif %}
                     <td>{{ play.posteam }}</td>
                     <td><form action="/results" method="GET">
