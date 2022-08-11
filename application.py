@@ -768,7 +768,8 @@ def results():
                             + ", AVG(success) AS success, " \
                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                             + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
-                            + " FROM nflfastR_pbp n WHERE season>=? AND season<=?" \
+                            + " FROM nflfastR_pbp n " + join_query \
+                            + " WHERE season>=? AND season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query \
