@@ -210,7 +210,7 @@ def results():
     if request.args.get("name") != "" and request.args.get("name") is not None:
         name = request.args.get("name")
         player_query = player_query + " AND id = '" + name + "' "
-        name_dict = db.execute("SELECT name FROM names WHERE id=" + name)
+        name_dict = db.execute("SELECT name FROM names WHERE id = '" + name + "'")
         name_results = "Passer/Rusher = " + name_dict[0]['name'] + ". "
     if request.args.get("passer") != "" and request.args.get("passer") is not None:
         passer = request.args.get("passer")
