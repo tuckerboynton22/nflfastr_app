@@ -15,6 +15,7 @@ filters = {
     "epa":"Expected Points Added (EPA)",
     "cpoe": "Completion % Over Expected (CPOE)",
     "wpa": "Win Probability Added (WPA)",
+    "vegas_wpa": "Vegas-Adjusted WPA",
     "success": "Success",
     "ydstogo": "Yards to Go",
     "yards_gained": "Yards Gained",
@@ -121,6 +122,7 @@ passers = db.execute("SELECT passer_id, passer, posteam FROM passers")
 rushers = db.execute("SELECT rusher_id, rusher, posteam FROM rushers")
 names = db.execute("SELECT id, name, posteam FROM names")
 receivers = db.execute("SELECT receiver_id, receiver, posteam FROM receivers")
+players = db.execute("SELECT gsis_id, player, team FROM players")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -208,7 +210,7 @@ def results():
     if request.args.get("name") != "" and request.args.get("name") is not None:
         name = request.args.get("name")
         player_query = player_query + " AND id = '" + name + "' "
-        
+
         # name_results = "Passer/Rusher = " + request.args.get("name").split("*")[0] + ". "
     if request.args.get("passer") != "" and request.args.get("passer") is not None:
         passer = request.args.get("passer")

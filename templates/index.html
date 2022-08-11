@@ -224,9 +224,9 @@
         <hr>
         <select class="js-example-basic-single" name="player">
             <option selected value="">Choose</option>
-            {% for receiver in receivers %}
-                {% set player_name = receiver.receiver|string + ' (' + receiver.posteam|string + ')' %}
-                <option value="{{ receiver.receiver_id }}">{{ player_name }}</option>
+            {% for player in players %}
+                {% set player_name = player.player|string + ' (' + player.team|string + ')' %}
+                <option value="{{ player.gsis_id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
         is
