@@ -179,7 +179,7 @@ def index():
     return render_template("index.html", teams=teams, groupings=groupings, filters=filters,
                             inequalities=inequalities, seasons=seasons, play_types=play_types,
                             quarters=quarters, reg_weeks=reg_weeks, post_weeks=post_weeks, downs=downs,
-                            passers=passers, names=names, rushers=rushers, receivers=receivers, 
+                            passers=passers, names=names, rushers=rushers, receivers=receivers, players=players,
                             NUMFILTERS=5)
 
 # Provide search results
