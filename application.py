@@ -595,25 +595,35 @@ def results():
         drive_result_query = " AND (drive_ended_with_score = 0) "
         drive_result_results = " Drive didn't end with score."
     
-    # Create on/off query
+    # Create participation queries
     on_off_player = request.args.get("player")
     on_off = request.args.get("on_off")
+    o_personnel = request.args.get("o_personnel")
+    d_personnel = request.args.get("d_personnel")
     join_query = ""
     on_off_query = ""
     on_off_results = ""
+    o_personnel_query = ""
+    o_personnel_results = ""
+    d_personnel_query = ""
+    d_personnel_results = ""
 
-    if on_off != "any" and on_off_player != "":
-        if on_off == "on":
+    if (on_off != "any" and on_off_player != "") or o_personnel != "any" or d_personnel != "any":
+        
+        join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
+        
+        if on_off == "on" and on_off_player != "":
             on_off_query = " AND (offense_players LIKE '%" + on_off_player + "%' OR defense_players LIKE '%" + on_off_player + "%') "
-            join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
             on_off_dict = db.execute("SELECT player FROM players WHERE gsis_id = '" + on_off_player + "'")
             on_off_results = on_off_dict[0]['player'] + " is on the field. "
-        elif on_off == "off":
+        elif on_off == "off" and on_off_player != "":
             on_off_query = " AND (offense_players NOT LIKE '%" + on_off_player + "%' OR defense_players NOT LIKE '%" + on_off_player + "%') "
-            join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
             on_off_dict = db.execute("SELECT player FROM players WHERE gsis_id = '" + on_off_player + "'")
             on_off_results = on_off_dict[0]['player'] + " is off the field. "
-
+        
+        if o_personnel != "any":
+            o_personnel_query = " AND o_personnel=" + o_personnel + " "
+            o_personnel_results = " Offensive personnel: " + o_personnel
 
 
     # Create game_id query for ungrouping searches
@@ -758,7 +768,7 @@ def results():
                 + home_team_results + away_team_results + ". Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
                 + play_type_results + indicator_results + filter_results + win_results + drive_result_results \
                 + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
-                + on_off_results + no_play_results + grouping_results + minplay_results
+                + on_off_results + o_personnel_results + no_play_results + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
@@ -768,7 +778,7 @@ def results():
     if (grouping == "" or grouping is None):    
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
                             + join_query + " WHERE season>=? AND season<=? "
-                            + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query + o_personnel_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
@@ -788,7 +798,7 @@ def results():
                             + " WHERE season>=? AND season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
-                            + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query + o_personnel_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
