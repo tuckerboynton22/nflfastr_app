@@ -623,7 +623,7 @@ def results():
         
         if o_personnel != "any":
             o_personnel_query = " AND o_personnel='" + o_personnel + "' "
-            o_personnel_results = " Offensive personnel: " + o_personnel
+            o_personnel_results = " Offensive personnel: " + o_personnel + "."
 
 
     # Create game_id query for ungrouping searches
