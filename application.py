@@ -417,7 +417,7 @@ def results():
     # Create exclude no play query
     no_play_query = ""
     no_play_results = ""
-    no_play = request.args.get("no_play")
+    no_play = str(request.args.get("no_play"))
     if no_play == "yes":
         no_play_query = " AND play_type != 'no_play' "
         no_play_results = " Exclude plays voided due to penalties."
@@ -616,7 +616,7 @@ def results():
 
 
 
-    # Create extra query for ungrouping searches
+    # Create game_id query for ungrouping searches
     game_id = request.args.get("game_id")
     game_query = ""
     game_results = ""
