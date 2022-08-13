@@ -416,8 +416,9 @@ def results():
     
     # Create exclude no play query
     no_play_query = ""
-    no_play_results = str(request.args.get("no_play"))
-    if str(request.args.get("no_play")) == "Yes":
+    no_play_results = ""
+    no_play_excl = str(request.args.get("no_play_excl"))
+    if no_play_excl != "no":
         no_play_query = " AND play_type != 'no_play' "
         no_play_results = " Exclude plays voided due to penalties."
 
