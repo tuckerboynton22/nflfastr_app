@@ -598,8 +598,8 @@ def results():
     # Create participation queries
     on_off_player = request.args.get("player")
     on_off = request.args.get("on_off")
-    o_personnel = request.args.get("o_personnel")
-    d_personnel = request.args.get("d_personnel")
+    o_personnel = str(request.args.get("o_personnel"))
+    d_personnel = str(request.args.get("d_personnel"))
     join_query = ""
     on_off_query = ""
     on_off_results = ""
@@ -622,7 +622,7 @@ def results():
             on_off_results = on_off_dict[0]['player'] + " is off the field. "
         
         if o_personnel != "any":
-            o_personnel_query = " AND o_personnel=" + o_personnel + " "
+            o_personnel_query = " AND o_personnel='" + o_personnel + "' "
             o_personnel_results = " Offensive personnel: " + o_personnel
 
 
