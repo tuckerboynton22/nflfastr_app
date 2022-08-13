@@ -81,3 +81,8 @@ DBI::dbWriteTable(conn, "rushers", rushers, overwrite = T)
 DBI::dbWriteTable(conn, "names", names, overwrite = T)
 DBI::dbWriteTable(conn, "passers", passers, overwrite = T)
 DBI::dbWriteTable(conn, "players", players, overwrite = T)
+
+pbp %>%
+  filter(play_type == "no_play") %>%
+  select(desc) %>%
+  View()

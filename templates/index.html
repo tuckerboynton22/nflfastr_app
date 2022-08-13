@@ -94,6 +94,12 @@
         {% for play_type in play_types %}
             <input name="{{ play_type }}" value="{{ play_type }}" type="checkbox" checked="checked"> {{ play_types[play_type] }}
         {% endfor %}
+        <br>
+        Exclude plays voided by penalties:
+        <select name="no_play">
+            <option selected value="no">No</option>
+            <option value="yes">Yes</option>
+        </select>
         <hr>
         {% for i in range(NUMFILTERS) %}
             <select name={{ ["filter", i|string]|join }}>

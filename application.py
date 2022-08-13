@@ -413,6 +413,14 @@ def results():
         play_type_query = play_type_query + ") "
     if play_type_results != "":
         play_type_results += "."
+    
+    # Create exclude no play query
+    no_play_query = ""
+    no_play_results = ""
+    no_play = request.args.get("no_play")
+    if no_play == "yes":
+        no_play_query = " AND play_type != 'no_play' "
+        no_play_results = " Exclude plays voided due to penalties."
 
     # Create filter query and dictionary for column titles on results page
     filter_query = ""
@@ -750,7 +758,7 @@ def results():
                 + home_team_results + away_team_results + ". Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
                 + play_type_results + indicator_results + filter_results + win_results + drive_result_results \
                 + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
-                + on_off_results + grouping_results + minplay_results
+                + on_off_results + no_play_results + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
@@ -761,7 +769,7 @@ def results():
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
                             + join_query + " WHERE season>=? AND season<=? "
                             + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -781,7 +789,7 @@ def results():
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
