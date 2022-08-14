@@ -642,7 +642,7 @@ def results():
             d_personnel_results += "LB: " + lb + ". "
         
         if offense_formation != "any":
-            offense_formation_query = " AND offense_formation=" + offense_formation + " "
+            offense_formation_query = " AND offense_formation='" + offense_formation + "' "
             offense_formation_results = "Offensive formation: " + offense_formation + ". "
         
         if defenders_in_box != "any":
@@ -792,7 +792,8 @@ def results():
                 + home_team_results + away_team_results + ". Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
                 + play_type_results + indicator_results + filter_results + win_results + drive_result_results \
                 + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
-                + on_off_results + o_personnel_results + d_personnel_results + no_play_results + grouping_results + minplay_results
+                + on_off_results + o_personnel_results + d_personnel_results + offense_formation_results + defenders_in_box_results \
+                + no_play_results + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 

@@ -2,6 +2,11 @@ library(tidyverse)
 library(sjmisc)
 future::plan("multisession")
 
+participation %>%
+  select(offense_formation) %>%
+  distinct() %>%
+  View()
+
 participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
   mutate(
     o_personnel = case_when(
@@ -19,20 +24,6 @@ participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
     ),
     dl = substr(stringr::str_extract(defense_personnel, regex('([1-9]*) DL')),1,1),
     lb = substr(stringr::str_extract(defense_personnel, regex('([1-9]*) LB')),1,1)
-    # d_personnel = case_when(
-    #   stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "4 LB") ~ "4-4",
-    #   stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "3 LB") ~ "4-3",
-    #   stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "2 LB") ~ "4-2",
-    #   stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "1 LB") ~ "4-1",
-    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "4 LB") ~ "3-4",
-    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "3 LB") ~ "3-3",
-    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "2 LB") ~ "3-2",
-    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "1 LB") ~ "3-1",
-    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "4 LB") ~ "2-4",
-    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "3 LB") ~ "2-3",
-    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "2 LB") ~ "2-2",
-    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "1 LB") ~ "2-1"
-    # )
   )
 
 pbp <- nflreadr::load_pbp(seasons = 1999:2021)
