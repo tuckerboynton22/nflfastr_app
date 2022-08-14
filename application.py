@@ -627,10 +627,10 @@ def results():
             o_personnel_results = "Offensive personnel (RB,TE): " + o_personnel + ". "
 
         if dl != "any":
-            d_personnel_query = " AND dl=" + dl + " "
+            d_personnel_query = " AND dl='" + dl + "' "
             d_personnel_results = "DL: " + dl + ". "
         if lb != "any":
-            d_personnel_query += " AND lb=" + lb + " "
+            d_personnel_query += " AND lb='" + lb + "' "
             d_personnel_results += "LB: " + lb + ". "
 
 
