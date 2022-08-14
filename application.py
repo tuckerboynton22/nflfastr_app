@@ -626,7 +626,7 @@ def results():
             on_off_dict = db.execute("SELECT player FROM players WHERE gsis_id = '" + on_off_player + "'")
             on_off_results = on_off_dict[0]['player'] + " is on the field. "
         elif on_off == "off" and on_off_player != "":
-            on_off_query = " AND (offense_players NOT LIKE '%" + on_off_player + "%' OR defense_players NOT LIKE '%" + on_off_player + "%') "
+            on_off_query = " AND (offense_players NOT LIKE '%" + on_off_player + "%' AND defense_players NOT LIKE '%" + on_off_player + "%') "
             on_off_dict = db.execute("SELECT player FROM players WHERE gsis_id = '" + on_off_player + "'")
             on_off_results = on_off_dict[0]['player'] + " is off the field. "
         
