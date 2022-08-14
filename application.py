@@ -599,8 +599,8 @@ def results():
     on_off_player = request.args.get("player")
     on_off = request.args.get("on_off")
     o_personnel = str(request.args.get("o_personnel"))
-    dl = str(request.args.get("dl"))
-    lb = str(request.args.get("lb"))
+    dl = int(request.args.get("dl"))
+    lb = int(request.args.get("lb"))
     join_query = ""
     on_off_query = ""
     on_off_results = ""
