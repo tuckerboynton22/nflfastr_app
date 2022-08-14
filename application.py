@@ -601,15 +601,23 @@ def results():
     o_personnel = str(request.args.get("o_personnel"))
     dl = str(request.args.get("dl"))
     lb = str(request.args.get("lb"))
+    offense_formation = request.args.get("offense_formation")
+    defenders_in_box = request.args.get("defenders_in_box")
+
     join_query = ""
     on_off_query = ""
-    on_off_results = ""
     o_personnel_query = ""
-    o_personnel_results = ""
     d_personnel_query = ""
-    d_personnel_results = ""
+    offense_formation_query = ""
+    defenders_in_box_query = ""
 
-    if (on_off != "any" and on_off_player != "") or o_personnel != "any" or dl != "any" or lb != "any":
+    on_off_results = ""
+    o_personnel_results = ""
+    d_personnel_results = ""
+    offense_formation_results = ""
+    defenders_in_box_results = ""
+
+    if (on_off != "any" and on_off_player != "") or o_personnel != "any" or dl != "any" or lb != "any" or offense_formation != "any" or defenders_in_box != "any":
         
         join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
         
@@ -632,6 +640,14 @@ def results():
         if lb != "any":
             d_personnel_query += " AND lb='" + lb + "' "
             d_personnel_results += "LB: " + lb + ". "
+        
+        if offense_formation != "any":
+            offense_formation_query = " AND offense_formation=" + offense_formation + " "
+            offense_formation_results = "Offensive formation: " + offense_formation + ". "
+        
+        if defenders_in_box != "any":
+            defenders_in_box_query = " AND defenders_in_box='" + defenders_in_box + "' "
+            defenders_in_box_results = "Box defenders: " + defenders_in_box + ". "
 
 
     # Create game_id query for ungrouping searches
@@ -786,8 +802,9 @@ def results():
     if (grouping == "" or grouping is None):    
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
                             + join_query + " WHERE season>=? AND season<=? "
-                            + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query + o_personnel_query \
-                            + d_personnel_query + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query \
+                            + on_off_query + o_personnel_query + d_personnel_query + defenders_in_box_query + offense_formation_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -806,8 +823,9 @@ def results():
                             + " WHERE season>=? AND season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
-                            + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query + o_personnel_query \
-                            + d_personnel_query + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query \
+                            + on_off_query + o_personnel_query + d_personnel_query + defenders_in_box_query + offense_formation_query \
+                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)

@@ -259,6 +259,19 @@
             <option value="23">23</option>
         </select>
         <br>
+        Offensive formation:
+        <select name="offense_formation">
+            <option value="any">Any</option>
+            <option value="SINGLEBACK">Singleback</option>
+            <option value="I_FORM">I</option>
+            <option value="SHOTGUN">Shotgun</option>
+            <option value="PISTOL">Pistol</option>
+            <option value="EMPTY">Empty</option>
+            <option value="JUMBO">Jumbo</option>
+            <option value="WILDCAT">Wildcat</option>
+            <option value="ACE">Ace</option>
+        </select>
+        <br>
         Defensive personnel (DL,LB):
         <select name="dl">
             <option value="any">Any</option>
@@ -284,22 +297,12 @@
             <option value=7>7</option>
         </select>
         <br>
+        Box defenders:
         <select name="defenders_in_box">
             <option value="any">Any</option>
             {% for i in range(12) %}
                 <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
-        </select>
-        <select name="offense_formation">
-            <option value="any">Any</option>
-            <option value="SINGLEBACK">Singleback</option>
-            <option value="I_FORM">I</option>
-            <option value="SHOTGUN">Shotgun</option>
-            <option value="PISTOL">Pistol</option>
-            <option value="EMPTY">Empty</option>
-            <option value="JUMBO">Jumbo</option>
-            <option value="WILDCAT">Wildcat</option>
-            <option value="ACE">Ace</option>
         </select>
         <hr>
         Sort by:
@@ -340,5 +343,5 @@
             <button class="btn btn-primary" id="submit" type="submit">Submit</button>
         </div>
     </form>
-    Data coverage: Pass location/air yards and its derivatives (CPOE, YAC, etc.) 2006-21. Participation data (personnel, on/off field) 2016-21.
+    Data coverage: Pass location/air yards and its derivatives (CPOE, YAC, etc.) 2006-21. Participation data (personnel, on/off field, formations, box defenders) 2016-21.
 {% endblock %}
