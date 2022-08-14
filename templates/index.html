@@ -283,6 +283,24 @@
             <option value=6>6</option>
             <option value=7>7</option>
         </select>
+        <br>
+        <select name="defenders_in_box">
+            <option value="any">Any</option>
+            {% for i in range(12) %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+        <select name="offense_formation">
+            <option value="any">Any</option>
+            <option value="SINGLEBACK">Singleback</option>
+            <option value="I_FORM">I</option>
+            <option value="SHOTGUN">Shotgun</option>
+            <option value="PISTOL">Pistol</option>
+            <option value="EMPTY">Empty</option>
+            <option value="JUMBO">Jumbo</option>
+            <option value="WILDCAT">Wildcat</option>
+            <option value="ACE">Ace</option>
+        </select>
         <hr>
         Sort by:
         <select name="order">

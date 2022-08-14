@@ -420,7 +420,7 @@ def results():
     no_play_excl = str(request.args.get("no_play_excl"))
     if no_play_excl != "no":
         no_play_query = " AND play_type != 'no_play' "
-        no_play_results = " Exclude plays voided due to penalties."
+        no_play_results = " Exclude plays voided by penalties."
 
     # Create filter query and dictionary for column titles on results page
     filter_query = ""
