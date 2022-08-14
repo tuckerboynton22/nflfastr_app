@@ -17,16 +17,22 @@ participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
       stringr::str_detect(offense_personnel, "2 RB") & stringr::str_detect(offense_personnel, "2 TE") ~ "22",
       stringr::str_detect(offense_personnel, "2 RB") & stringr::str_detect(offense_personnel, "3 TE") ~ "23"
     ),
-    d_personnel = case_when(
-      stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "3 LB") & stringr::str_detect(defense_personnel, "4 DB") ~ "4-3-4",
-      stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "4 LB") & stringr::str_detect(defense_personnel, "4 DB") ~ "3-4-4",
-      stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "2 LB") & stringr::str_detect(defense_personnel, "5 DB") ~ "4-2-5",
-      stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "3 LB") & stringr::str_detect(defense_personnel, "5 DB") ~ "3-3-5",
-      stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "1 LB") & stringr::str_detect(defense_personnel, "6 DB") ~ "4-1-6",
-      stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "2 LB") & stringr::str_detect(defense_personnel, "6 DB") ~ "3-2-6",
-      stringr::str_detect(defense_personnel, "5 DL") | stringr::str_detect(defense_personnel, "6 DL") | stringr::str_detect(defense_personnel, "7 DL") ~ "GL",
-      stringr::str_detect(defense_personnel, "7 DB") ~ "QTR"
-    )
+    dl = substr(stringr::str_extract(defense_personnel, regex('([1-9]*) DL')),1,1),
+    lb = substr(stringr::str_extract(defense_personnel, regex('([1-9]*) LB')),1,1)
+    # d_personnel = case_when(
+    #   stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "4 LB") ~ "4-4",
+    #   stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "3 LB") ~ "4-3",
+    #   stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "2 LB") ~ "4-2",
+    #   stringr::str_detect(defense_personnel, "4 DL") & stringr::str_detect(defense_personnel, "1 LB") ~ "4-1",
+    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "4 LB") ~ "3-4",
+    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "3 LB") ~ "3-3",
+    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "2 LB") ~ "3-2",
+    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "1 LB") ~ "3-1",
+    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "4 LB") ~ "2-4",
+    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "3 LB") ~ "2-3",
+    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "2 LB") ~ "2-2",
+    #   stringr::str_detect(defense_personnel, "3 DL") & stringr::str_detect(defense_personnel, "1 LB") ~ "2-1"
+    # )
   )
 
 pbp <- nflreadr::load_pbp(seasons = 1999:2021)

@@ -599,7 +599,8 @@ def results():
     on_off_player = request.args.get("player")
     on_off = request.args.get("on_off")
     o_personnel = str(request.args.get("o_personnel"))
-    d_personnel = str(request.args.get("d_personnel"))
+    dl = str(request.args.get("dl"))
+    lb = str(request.args.get("lb"))
     join_query = ""
     on_off_query = ""
     on_off_results = ""
@@ -608,7 +609,7 @@ def results():
     d_personnel_query = ""
     d_personnel_results = ""
 
-    if (on_off != "any" and on_off_player != "") or o_personnel != "any" or d_personnel != "any":
+    if (on_off != "any" and on_off_player != "") or o_personnel != "any" or dl != "any" or lb != "any":
         
         join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
         
@@ -623,7 +624,14 @@ def results():
         
         if o_personnel != "any":
             o_personnel_query = " AND o_personnel='" + o_personnel + "' "
-            o_personnel_results = " Offensive personnel: " + o_personnel + "."
+            o_personnel_results = "Offensive personnel (RB,TE): " + o_personnel + ". "
+
+        if dl != "any":
+            d_personnel_query = " AND dl=" + dl + " "
+            d_personnel_results = "DL: " + dl + ". "
+        if lb != "any":
+            d_personnel_query += " AND lb=" + lb + " "
+            d_personnel_results += "LB: " + lb + ". "
 
 
     # Create game_id query for ungrouping searches
@@ -768,7 +776,7 @@ def results():
                 + home_team_results + away_team_results + ". Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
                 + play_type_results + indicator_results + filter_results + win_results + drive_result_results \
                 + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
-                + on_off_results + o_personnel_results + no_play_results + grouping_results + minplay_results
+                + on_off_results + o_personnel_results + d_personnel_results + no_play_results + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
