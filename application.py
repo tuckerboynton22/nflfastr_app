@@ -787,7 +787,7 @@ def results():
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
                             + join_query + " WHERE season>=? AND season<=? "
                             + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query + o_personnel_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
+                            + d_personnel_query + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -807,7 +807,7 @@ def results():
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query + drive_result_query + on_off_query + o_personnel_query \
-                            + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
+                            + d_personnel_query + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
