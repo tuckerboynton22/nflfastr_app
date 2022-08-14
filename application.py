@@ -599,8 +599,8 @@ def results():
     on_off_player = request.args.get("player")
     on_off = request.args.get("on_off")
     o_personnel = str(request.args.get("o_personnel"))
-    dl = int(request.args.get("dl"))
-    lb = int(request.args.get("lb"))
+    dl = str(request.args.get("dl"))
+    lb = str(request.args.get("lb"))
     join_query = ""
     on_off_query = ""
     on_off_results = ""
@@ -627,13 +627,11 @@ def results():
             o_personnel_results = "Offensive personnel (RB,TE): " + o_personnel + ". "
 
         if dl != "any":
-            dl = int(dl)
             d_personnel_query = " AND dl=" + dl + " "
-            d_personnel_results = "DL: " + str(dl) + ". "
+            d_personnel_results = "DL: " + dl + ". "
         if lb != "any":
-            lb = int(lb)
             d_personnel_query += " AND lb=" + lb + " "
-            d_personnel_results += "LB: " + str(lb) + ". "
+            d_personnel_results += "LB: " + lb + ". "
 
 
     # Create game_id query for ungrouping searches
