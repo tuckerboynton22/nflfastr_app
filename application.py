@@ -627,11 +627,13 @@ def results():
             o_personnel_results = "Offensive personnel (RB,TE): " + o_personnel + ". "
 
         if dl != "any":
+            dl = int(dl)
             d_personnel_query = " AND dl=" + dl + " "
-            d_personnel_results = "DL: " + dl + ". "
+            d_personnel_results = "DL: " + str(dl) + ". "
         if lb != "any":
+            lb = int(lb)
             d_personnel_query += " AND lb=" + lb + " "
-            d_personnel_results += "LB: " + lb + ". "
+            d_personnel_results += "LB: " + str(lb) + ". "
 
 
     # Create game_id query for ungrouping searches
