@@ -99,10 +99,9 @@ img {
   }
   
   /* Style the collapsible content. Note: hidden by default */
-  .content {
+.content {
     padding: 0 18px;
-    background-color: white;
-    max-height: 0;
+    display: none;
     overflow: hidden;
-    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
   }
