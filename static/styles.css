@@ -79,3 +79,11 @@ img {
     margin-right: auto;
     border-radius: 50%;
 }
+
+.collapse {
+    /* Center form controls */
+    display: inline-block;
+
+    /* Override Bootstrap's 100% width for form controls */
+    width: auto;
+}
