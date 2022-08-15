@@ -11,7 +11,7 @@
         });</script>
     </head>
 
-    <h5>Find plays with...</h5>
+    <h5>Find plays matching...</h5>
     <hr>
     <form action="/results" method="get">
         <select name="team">
@@ -101,6 +101,8 @@
             <option value="yes">Yes</option>
         </select>
         <hr>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#manualfilters">Add Custom Filters</button>
+        <div class="collapse" id="manualfilters">
         {% for i in range(NUMFILTERS) %}
             <select name={{ ["filter", i|string]|join }}>
                 <option selected value="">Choose Filter</option>
@@ -117,6 +119,7 @@
             <input name={{ ["filtervalue", i|string]|join }} placeholder=0 type="number" step=0.01>
             <br>
         {% endfor %}
+        </div>
         <hr>
         Penalty:
         <select name="penalty">
