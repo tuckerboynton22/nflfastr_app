@@ -101,25 +101,22 @@
             <option value="yes">Yes</option>
         </select>
         <hr>
-        <div data-role="collapsible">
-            <h3>Add Manual Filters</h3>  
-            {% for i in range(NUMFILTERS) %}
-                <select name={{ ["filter", i|string]|join }}>
-                    <option selected value="">Choose Filter</option>
-                        {% for filter in filters %}
-                            <option value="{{ filter }}">{{ filters[filter] }}</option>
-                        {% endfor %}
-                </select>
-                <select name={{ ["inequality", i|string]|join }}>
-                    <option selected value="">Choose</option>
-                        {% for inequality in inequalities %}
-                            <option value="{{ inequality }}">{{ inequality }}</option>
-                        {% endfor %}
-                </select>
-                <input name={{ ["filtervalue", i|string]|join }} placeholder=0 type="number" step=0.01>
-                <br>
-            {% endfor %}
-        </div>
+        {% for i in range(NUMFILTERS) %}
+            <select name={{ ["filter", i|string]|join }}>
+                <option selected value="">Choose Filter</option>
+                    {% for filter in filters %}
+                        <option value="{{ filter }}">{{ filters[filter] }}</option>
+                    {% endfor %}
+            </select>
+            <select name={{ ["inequality", i|string]|join }}>
+                <option selected value="">Choose</option>
+                    {% for inequality in inequalities %}
+                        <option value="{{ inequality }}">{{ inequality }}</option>
+                    {% endfor %}
+            </select>
+            <input name={{ ["filtervalue", i|string]|join }} placeholder=0 type="number" step=0.01>
+            <br>
+        {% endfor %}
         <hr>
         Penalty:
         <select name="penalty">
