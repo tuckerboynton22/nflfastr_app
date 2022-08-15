@@ -105,3 +105,7 @@ img {
     overflow: hidden;
     background-color: #f1f1f1;
   }
+
+  .active + .content {
+    display: block;
+  }
