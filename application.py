@@ -28,15 +28,17 @@ filters = {
     "play_clock": "Seconds on Play Clock",
     "yardline_100": "Yard Line (Distance from Off. EZ)",
     "score_differential": "Current Score Differential (Off-Def)",
-    "kick_distance": "Kick Distance",
     "quarter_seconds_remaining": "Seconds Remaining in Quarter",
+    "half_seconds_remaining": "Seconds Remaining in Half",
+    "game_seconds_remaining": "Seconds Remaining in Game",
+    "kick_distance": "Kick Distance",
     "ep": "Expected Points",
     "comp_air_epa": "Completed Air EPA",
     "air_epa": "Air EPA",
     "comp_yac_epa": "Completed YAC EPA",
     "yac_epa": "YAC EPA",
+    "wp": "Win Probability",
     "vegas_wp": "Vegas-Adjusted Win Probability",
-    "wp": "Non-Vegas Adjusted Win Probability",
     "comp_air_wpa": "Completed Air WPA",
     "comp_yac_wpa": "Completed YAC WPA",
     "total_line": "Vegas Total",
@@ -104,19 +106,11 @@ post_weeks = {
     "Super Bowl": 21
 }
 
-# indicators = {
-#     "penalty": "Penalty",
-#     "turnover": "Turnover",
-#     "score": "Score"
-# }
-
 # Configure application
 app = Flask(__name__)
 
 # Update database
 db = SQL(os.getenv("DATABASE_URL"))
-# db = SQL("sqlite:///cleaned_pbp.db")
-# db = SQL("sqlite:///pbp.db")
 
 passers = db.execute("SELECT passer_id, passer, posteam FROM passers")
 rushers = db.execute("SELECT rusher_id, rusher, posteam FROM rushers")
@@ -154,7 +148,7 @@ def apology(message, code=400):
                          ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
             s = s.replace(old, new)
         return s
-    return render_template("apology.html", top=code, bottom=escape(message)), code
+    return render_template("apology.html")
 
 # Homepage
 @app.route("/", methods=["GET"])
