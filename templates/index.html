@@ -100,6 +100,8 @@
             <option value="no">No</option>
             <option value="yes">Yes</option>
         </select>
+        <br>
+        <h5>Additional filters...</h5>
         <hr>
         <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playindicators">Play Outcome Indicators</button>
         <div class="collapse" id="playindicators">
@@ -121,7 +123,7 @@
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
-        <hr>
+        <br>
         Complete pass:
         <select name="complete_pass">
             <option value="either">Either</option>
@@ -221,7 +223,6 @@
                 <option value="{{ receiver.receiver_id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
-        <hr>
         <select class="js-example-basic-single" name="player">
             <option selected value="">Choose</option>
             {% for player in players %}
@@ -238,8 +239,8 @@
         the field
         </div>
         <hr>
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playerparticipation">Formation/Personnel</button>
-        <div class="collapse" id="playerparticipation">
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#formationpersonnel">Formation/Personnel</button>
+        <div class="collapse" id="formationpersonnel">
         Offensive personnel (RB,TE):
         <select name="o_personnel">
             <option value="any">Any</option>
@@ -322,6 +323,8 @@
             <br>
         {% endfor %}
         </div>
+        <br>
+        <h5>Grouping/sorting mechanisms...</h5>
         <hr>
         Sort by:
         <select name="order">
