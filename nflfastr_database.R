@@ -1,5 +1,4 @@
 library(tidyverse)
-library(sjmisc)
 future::plan("multisession")
 
 participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
