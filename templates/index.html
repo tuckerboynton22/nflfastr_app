@@ -6,29 +6,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
         <script>$(document).ready(function() {
             $('.js-example-basic-single').select2();
         });</script>
-
-        <script>
-
-            var coll = document.getElementsByClassName("collapsible");
-            var i;
-
-            for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-            }
-        </script>
-
     </head>
 
     <h5>Find plays with...</h5>
@@ -138,15 +118,12 @@
             <br>
         {% endfor %}
         <hr>
-        <button type="button" class="collapsible">Add Penalty Indicator</button>
-        <div class="content">
         Penalty:
         <select name="penalty">
             <option value="either">Either</option>
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
-        </div>
         Turnover:
         <select name="turnover">
             <option value="either">Either</option>
