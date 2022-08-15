@@ -2,11 +2,6 @@ library(tidyverse)
 library(sjmisc)
 future::plan("multisession")
 
-participation %>%
-  select(offense_formation) %>%
-  distinct() %>%
-  View()
-
 participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
   mutate(
     o_personnel = case_when(
