@@ -101,97 +101,6 @@
             <option value="yes">Yes</option>
         </select>
         <hr>
-        <h5>Additional filters...</h5>
-        <hr>
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playindicators">Play Outcome Indicators</button>
-        <br>
-        <div class="collapse" id="playindicators">
-        Penalty:
-        <select name="penalty">
-            <option value="either">Either</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-        Turnover:
-        <select name="turnover">
-            <option value="either">Either</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-        Score:
-        <select name="score">
-            <option value="either">Either</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-        <br>
-        Complete pass:
-        <select name="complete_pass">
-            <option value="either">Either</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-        Sack:
-        <select name="sack">
-            <option value="either">Either</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-        Interception:
-        <select name="interception">
-            <option value="either">Either</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-        </div>
-        <hr>
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playcontext">Play Context</button>
-        <br>
-        <div class="collapse" id="playcontext">
-        No-huddle:
-        <select name="no_huddle">
-            <option value="either">Either</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-        Pass location:
-        <select name="pass_location">
-            <option value="any">Any</option>
-            <option value="left">Left</option>
-            <option value="middle">Middle</option>
-            <option value="right">Right</option>
-        </select>
-        Roof:
-        <select name="roof">
-            <option value="any">Any</option>
-            <option value="dome">Dome</option>
-            <option value="outdoors">Outdoors</option>
-            <option value="closed">Closed</option>
-            <option value="open">Open</option>
-        </select>
-        </div>
-        <hr>
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#gamedriveresult">Game/Drive Result</button>
-        <br>
-        <div class="collapse" id="gamedriveresult">
-        Game result (for possession team):
-        <select name="win">
-            <option value="any">Any</option>
-            <option value="won">Won</option>
-            <option value="lost">Lost</option>
-            <option value="tied">Tied</option>
-        </select>
-        Drive result:
-        <select name="drive_result">
-            <option value=2>Any</option>
-            <option value=1>Score</option>
-            <option value=0>No Score</option>
-        </select>
-        </div>
-        <hr>
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playerparticipation">Player Participation</button>
-        <br>
-        <div class="collapse" id="playerparticipation">
         Passer/Rusher:
         <select class="js-example-basic-single" name="name">
             <option selected value="">Choose</option>
@@ -242,9 +151,96 @@
             <option value="off">Off</option>
         </select>
         the field
+        <hr>
+        <h5>Additional filters...</h5>
+        <hr>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#playindicators">Play Outcome Indicators</button>
+        <br>
+        <div class="collapse" id="playindicators">
+        Penalty:
+        <select name="penalty">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        Turnover:
+        <select name="turnover">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        Score:
+        <select name="score">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <br>
+        Complete pass:
+        <select name="complete_pass">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        Sack:
+        <select name="sack">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        Interception:
+        <select name="interception">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
         </div>
         <hr>
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#formationpersonnel">Formation/Personnel</button>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#playcontext">Play Context</button>
+        <br>
+        <div class="collapse" id="playcontext">
+        No-huddle:
+        <select name="no_huddle">
+            <option value="either">Either</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        Pass location:
+        <select name="pass_location">
+            <option value="any">Any</option>
+            <option value="left">Left</option>
+            <option value="middle">Middle</option>
+            <option value="right">Right</option>
+        </select>
+        Roof:
+        <select name="roof">
+            <option value="any">Any</option>
+            <option value="dome">Dome</option>
+            <option value="outdoors">Outdoors</option>
+            <option value="closed">Closed</option>
+            <option value="open">Open</option>
+        </select>
+        </div>
+        <hr>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#gamedriveresult">Game/Drive Result</button>
+        <br>
+        <div class="collapse" id="gamedriveresult">
+        Game result (for possession team):
+        <select name="win">
+            <option value="any">Any</option>
+            <option value="won">Won</option>
+            <option value="lost">Lost</option>
+            <option value="tied">Tied</option>
+        </select>
+        Drive result:
+        <select name="drive_result">
+            <option value=2>Any</option>
+            <option value=1>Score</option>
+            <option value=0>No Score</option>
+        </select>
+        </div>
+        <hr>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#formationpersonnel">Formation/Personnel</button>
         <div class="collapse" id="formationpersonnel">
         Offensive personnel (RB,TE):
         <select name="o_personnel">
@@ -309,7 +305,7 @@
         </select>
         </div>
         <hr>
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#manualfilters">Custom Filters</button>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#manualfilters">Custom Filters</button>
         <br>
         <div class="collapse" id="manualfilters">
         {% for i in range(NUMFILTERS) %}
