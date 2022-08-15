@@ -120,8 +120,6 @@
             <option value="yes">Yes</option>
         </select>
         <hr>
-        <button type="button" class="collapsible">Add Filters</button>
-        <div class="content">
         {% for i in range(NUMFILTERS) %}
             <select name={{ ["filter", i|string]|join }}>
                 <option selected value="">Choose Filter</option>
@@ -138,14 +136,16 @@
             <input name={{ ["filtervalue", i|string]|join }} placeholder=0 type="number" step=0.01>
             <br>
         {% endfor %}
-        </div>
         <hr>
+        <button type="button" class="collapsible">Add Penalty Indicator</button>
+        <div class="content">
         Penalty:
         <select name="penalty">
             <option value="either">Either</option>
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
+        </div>
         Turnover:
         <select name="turnover">
             <option value="either">Either</option>
