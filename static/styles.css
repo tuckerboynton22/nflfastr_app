@@ -101,7 +101,7 @@ img {
 /* Style the collapsible content. Note: hidden by default */
 .content {
     padding: 0 18px;
-    display: none;
+    display: block;
     overflow: hidden;
     background-color: #f1f1f1;
 }
