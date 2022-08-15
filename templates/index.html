@@ -101,27 +101,7 @@
             <option value="yes">Yes</option>
         </select>
         <hr>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#manualfilters">Add Custom Filters</button>
-        <div class="collapse" id="manualfilters">
-        {% for i in range(NUMFILTERS) %}
-            <select name={{ ["filter", i|string]|join }}>
-                <option selected value="">Choose Filter</option>
-                    {% for filter in filters %}
-                        <option value="{{ filter }}">{{ filters[filter] }}</option>
-                    {% endfor %}
-            </select>
-            <select name={{ ["inequality", i|string]|join }}>
-                <option selected value="">Choose</option>
-                    {% for inequality in inequalities %}
-                        <option value="{{ inequality }}">{{ inequality }}</option>
-                    {% endfor %}
-            </select>
-            <input name={{ ["filtervalue", i|string]|join }} placeholder=0 type="number" step=0.01>
-            <br>
-        {% endfor %}
-        </div>
-        <hr>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#playindicators">Play Outcome Indicators</button>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playindicators">Play Outcome Indicators</button>
         <div class="collapse" id="playindicators">
         Penalty:
         <select name="penalty">
@@ -162,7 +142,7 @@
         </select>
         </div>
         <hr>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#playcontext">Play Context</button>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playcontext">Play Context</button>
         <div class="collapse" id="playcontext">
         No-huddle:
         <select name="no_huddle">
@@ -187,7 +167,7 @@
         </select>
         </div>
         <hr>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#gamedriveresult">Game/Drive Result</button>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#gamedriveresult">Game/Drive Result</button>
         <div class="collapse" id="gamedriveresult">
         Game result (for possession team):
         <select name="win">
@@ -204,7 +184,7 @@
         </select>
         </div>
         <hr>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#playerparticipation">Player Participation</button>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playerparticipation">Player Participation</button>
         <div class="collapse" id="playerparticipation">
         Passer/Rusher:
         <select class="js-example-basic-single" name="name">
@@ -258,7 +238,7 @@
         the field
         </div>
         <hr>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#formationpersonnel">Formation/Personnel</button>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playerparticipation">Formation/Personnel</button>
         <div class="collapse" id="playerparticipation">
         Offensive personnel (RB,TE):
         <select name="o_personnel">
@@ -321,6 +301,26 @@
                 <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
         </select>
+        </div>
+        <hr>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#manualfilters">Custom Filters</button>
+        <div class="collapse" id="manualfilters">
+        {% for i in range(NUMFILTERS) %}
+            <select name={{ ["filter", i|string]|join }}>
+                <option selected value="">Choose Filter</option>
+                    {% for filter in filters %}
+                        <option value="{{ filter }}">{{ filters[filter] }}</option>
+                    {% endfor %}
+            </select>
+            <select name={{ ["inequality", i|string]|join }}>
+                <option selected value="">Choose</option>
+                    {% for inequality in inequalities %}
+                        <option value="{{ inequality }}">{{ inequality }}</option>
+                    {% endfor %}
+            </select>
+            <input name={{ ["filtervalue", i|string]|join }} placeholder=0 type="number" step=0.01>
+            <br>
+        {% endfor %}
         </div>
         <hr>
         Sort by:
