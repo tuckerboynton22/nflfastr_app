@@ -104,6 +104,7 @@
         <h5>Additional filters...</h5>
         <hr>
         <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playindicators">Play Outcome Indicators</button>
+        <br>
         <div class="collapse" id="playindicators">
         Penalty:
         <select name="penalty">
@@ -145,6 +146,7 @@
         </div>
         <hr>
         <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playcontext">Play Context</button>
+        <br>
         <div class="collapse" id="playcontext">
         No-huddle:
         <select name="no_huddle">
@@ -170,6 +172,7 @@
         </div>
         <hr>
         <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#gamedriveresult">Game/Drive Result</button>
+        <br>
         <div class="collapse" id="gamedriveresult">
         Game result (for possession team):
         <select name="win">
@@ -187,6 +190,7 @@
         </div>
         <hr>
         <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#playerparticipation">Player Participation</button>
+        <br>
         <div class="collapse" id="playerparticipation">
         Passer/Rusher:
         <select class="js-example-basic-single" name="name">
@@ -223,6 +227,7 @@
                 <option value="{{ receiver.receiver_id }}">{{ player_name }}</option>
             {% endfor %}
         </select>
+        <br>
         <select class="js-example-basic-single" name="player">
             <option selected value="">Choose</option>
             {% for player in players %}
@@ -305,6 +310,7 @@
         </div>
         <hr>
         <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#manualfilters">Custom Filters</button>
+        <br>
         <div class="collapse" id="manualfilters">
         {% for i in range(NUMFILTERS) %}
             <select name={{ ["filter", i|string]|join }}>

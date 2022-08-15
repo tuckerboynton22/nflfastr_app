@@ -82,7 +82,7 @@ img {
 
 .collapse {
     /* Center form controls */
-    display: inline-block;
+    display: block;
 
     /* Override Bootstrap's 100% width for form controls */
     width: auto;
