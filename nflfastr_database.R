@@ -22,8 +22,6 @@ participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
 
 pbp <- nflreadr::load_pbp(seasons = 1999:2021)
 
-snap_counts <- nflreadr::load_snap_counts(seasons = 2013:2021)
-
 rosters <- nflreadr::load_rosters_weekly(seasons = 2016:2021)
 
 receivers <- pbp %>%
@@ -83,6 +81,8 @@ players <- rosters %>%
   ) %>%
   arrange(player)
 
+qbs <- read_csv("qb_comps.csv")
+
 conn <- DBI::dbConnect(RPostgres::Postgres(),
                        dbname = Sys.getenv("DB_NAME"),
                        host = Sys.getenv("DB_HOST"),
@@ -98,3 +98,4 @@ DBI::dbWriteTable(conn, "rushers", rushers, overwrite = T)
 DBI::dbWriteTable(conn, "names", names, overwrite = T)
 DBI::dbWriteTable(conn, "passers", passers, overwrite = T)
 DBI::dbWriteTable(conn, "players", players, overwrite = T)
+DBI::dbWriteTable(conn, "qbs", qbs, overwrite = T)
