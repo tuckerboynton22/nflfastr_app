@@ -83,6 +83,9 @@ players <- rosters %>%
 
 qbs <- read_csv("qb_comps.csv")
 
+qbs <- qbs %>%
+  mutate(Plays = plays)
+
 conn <- DBI::dbConnect(RPostgres::Postgres(),
                        dbname = Sys.getenv("DB_NAME"),
                        host = Sys.getenv("DB_HOST"),
