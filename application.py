@@ -117,6 +117,7 @@ rushers = db.execute("SELECT rusher_id, rusher, posteam FROM rushers")
 names = db.execute("SELECT id, name, posteam FROM names")
 receivers = db.execute("SELECT receiver_id, receiver, posteam FROM receivers")
 players = db.execute("SELECT gsis_id, player, team FROM players")
+qbs = db.execute("SELECT full_name, season, plays, epa, cpoe, dvoa, dyar, pff, qbr_total, sack_rate FROM qbs")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -896,7 +897,9 @@ def yellowpages():
 def cards():
     return render_template("cards.html")
 
-
+@app.route("/qbs", methods=["GET"])
+def qbs():
+    return render_template("qbs.html", qbs=qbs)
 
 # Handle error
 def errorhandler(e):
