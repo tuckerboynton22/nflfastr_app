@@ -22,7 +22,6 @@
                 <th>Season</th>
                 <th>EPA/P</th>
                 <th>CPOE</th>
-                <th>CPOE</th>
                 <th>DVOA</th>
                 <th>DYAR</th>
                 <th>PFF</th>
@@ -35,14 +34,14 @@
                 <tr>
                     <td></td>
                     <td>{{ qb.full_name }}</td>
-                    <td>{{ qb.season }}</td>
-                    <td>{{ qb.EPA }}</td>
-                    <td>{{ qb.CPOE }}</td>
-                    <td>{{ qb.DVOA }}</td>
-                    <td>{{ qb.DYAR }}</td>
+                    <td>{{ qb.season|int }}</td>
+                    <td>{{ '%0.2f'|format(qb.EPA|float) }}</td>
+                    <td>{{ '%0.2f'|format(qb.CPOE|float) }}</td>
+                    <td>{{ '%0.2f'|format(qb.DVOA|float) }}</td>
+                    <td>{{ qb.DYAR|int }}</td>
                     <td>{{ qb.pff_grade }}</td>
                     <td>{{ qb.qbr_total }}</td>
-                    <td>{{ qb.sack_rate }}</td>
+                    <td>{{ '%0.2f'|format(qb.sack_rate|float) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
