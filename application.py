@@ -584,7 +584,7 @@ def results():
 
     if drive_result != "any":
         drive_result_query = " AND fixed_drive_result='" + drive_result + "' "
-        drive_result_results = "Drive result: " + drive_result + ". "
+        drive_result_results = " Drive result: " + drive_result + ". "
     
     # Create participation queries
     on_off_player = request.args.get("player")
