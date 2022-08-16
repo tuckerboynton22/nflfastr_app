@@ -897,9 +897,7 @@ def yellowpages():
 def cards():
     return render_template("cards.html")
 
-@app.route("/qbs", methods=["GET"])
-def qbs():
-    return render_template("qbs.html", qbs=qbs)
+
 
 # Handle error
 def errorhandler(e):
