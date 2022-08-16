@@ -582,12 +582,9 @@ def results():
     drive_result_query = ""
     drive_result_results = ""
 
-    if int(drive_result) == 1:
-        drive_result_query = " AND (drive_ended_with_score = 1) "
-        drive_result_results = " Drive ended with score."
-    elif int(drive_result) == 0:
-        drive_result_query = " AND (drive_ended_with_score = 0) "
-        drive_result_results = " Drive didn't end with score."
+    if drive_result != "any":
+        drive_result_query = " AND fixed_drive_result='" + drive_result + "' "
+        drive_result_results = "Drive result: " + drive_result + ". "
     
     # Create participation queries
     on_off_player = request.args.get("player")
