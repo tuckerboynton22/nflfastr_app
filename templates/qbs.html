@@ -15,6 +15,36 @@
         <script src="static/datatables.js"></script>
     </head>
 
-    {{ quarterbacks }}
-
+    <table id="table_id" class="cell-border compact stripe">
+        <thead>
+            <tr>
+                <th>QB</th>
+                <th>Season</th>
+                <th>EPA/P</th>
+                <th>CPOE</th>
+                <th>CPOE</th>
+                <th>DVOA</th>
+                <th>DYAR</th>
+                <th>PFF</th>
+                <th>QBR</th>
+                <th>Sack%</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for qb in quarterbacks %}
+                <tr>
+                    <td></td>
+                    <td>{{ qb.full_name }}</td>
+                    <td>{{ qb.season }}</td>
+                    <td>{{ qb.EPA }}</td>
+                    <td>{{ qb.CPOE }}</td>
+                    <td>{{ qb.DVOA }}</td>
+                    <td>{{ qb.DYAR }}</td>
+                    <td>{{ qb.pff_grade }}</td>
+                    <td>{{ qb.qbr_total }}</td>
+                    <td>{{ qb.sack_rate }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
