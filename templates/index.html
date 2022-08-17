@@ -326,43 +326,46 @@
             Age:
             <select name="start_age">
                 {% for i in range(17,51) %}
-                    <option value="{{ i }}">i</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
             -
             <select name="end_age">
                 {% for i in range(50,16,-1) %}
-                    <option value="{{ i }}">i</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
+            <br>
             Height (in):
             <select name="start_height">
                 {% for i in range(60,86) %}
-                    <option value="{{ i }}">i</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
             -
             <select  name="end_height">
                 {% for i in range(85,59,-1) %}
-                    <option value="{{ i }}">i</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
+            <br>
             Weight (lb):
             <select name="start_weight">
                 {% for i in range(100,451) %}
-                    <option value="{{ i }}">i</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
             -
             <select name="end_weight">
                 {% for i in range(450,99,-1) %}
-                    <option value="{{ i }}">i</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
+            <br>
             Season of career:
             <select name="start_exp">
                 {% for i in range(1,31) %}
-                    <option value="{{ i }}">i</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
             -
