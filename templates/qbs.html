@@ -21,6 +21,8 @@
                 <th>Rank</th>
                 <th>QB</th>
                 <th>Season</th>
+                <th>Team</th>
+                <th>Plays</th>
                 <th>EPA/P</th>
                 <th>CPOE</th>
                 <th>DVOA</th>
@@ -36,6 +38,8 @@
                     <td></td>
                     <td>{{ qb.full_name }}</td>
                     <td>{{ qb.season|int }}</td>
+                    <td><img src="{{ qb.tean_wordmark }}"></td>
+                    <td>{{ qb.Plays|int }}</td>
                     <td>{{ '%0.3f'|format(qb.EPA|float) }}</td>
                     <td>{{ '%0.2f'|format(qb.CPOE|float) }}</td>
                     <td>{{ '%0.2f'|format(qb.DVOA|float) }}</td>
