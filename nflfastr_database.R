@@ -20,93 +20,6 @@ participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
     lb = substr(stringr::str_extract(defense_personnel, regex('([1-9]*) LB')),1,1)
   )
 
-pbp <- nflreadr::load_pbp(seasons = 1999:2021)
-
-# quarterbacks <- pbp %>%
-#   filter(down < 5, season_type == "REG", !is.na(qb_epa), pass == 1 | rush == 1) %>%
-#   mutate(no_play = ifelse(play_type == "no_play", 1, 0)) %>%
-#   group_by(name, id, season) %>%
-#   summarize(
-#     espn_plays = n() - sum(no_play),
-#     plays = n(),
-#     dropbacks = sum(pass),
-#     epa = mean(qb_epa, na.rm = T),
-#     cpoe = mean(cpoe, na.rm = T),
-#     air_yards = mean(air_yards, na.rm = T),
-#     sack_rate = sum(sack, na.rm = T) / dropbacks,
-#     cp = mean(cp, na.rm = T),
-#     wpa = mean(wpa, na.rm = T),
-#     xpass = mean(xpass, na.rm = T)
-#   ) %>%
-#   ungroup() %>%
-#   mutate(is_eligible = case_when(
-#     # season == 2021 & espn_plays >= min_plays & Dropbacks >= min_plays ~ 1,
-#     espn_plays >= 300 & dropbacks >= 250 ~ 1,
-#     TRUE ~ 0
-#   )) %>%
-#   filter(is_eligible == 1) %>%
-#   merge(roster, by.x=c("id","season"), by.y=c("gsis_id","season")) %>%
-#   merge(qbrs, by.x=c("qbr_join","season"),by.y=c("qbr_join","season")) %>%
-#   merge(pff, by.x=c("pff_id","season"), by.y=c("player_id","season")) %>%
-#   merge(teams_colors_logos, by.x=c("team.x"), by.y=c("team_abbr")) %>%
-#   merge(dvoa, by.x=c("name.x","season"), by.y=c("Player","Year")) %>%
-#   left_join(caphits, by=c("full_name"="Player","season"="Year")) %>%
-#   merge(pff_teams, by.x=c("team_name.y","season"), by.y=c("team","season"), all.x = T) %>%
-#   left_join(num_games, by=c("team.x"="posteam","season"="season")) %>%
-#   mutate(
-#     pa = ifelse(is.na(team_games), team_pa / 16, team_pa / team_games),
-#     PFF = grades_offense,
-#     qbr_pct = percent_rank(qbr_total)*100,
-#     DVOA_pct = percent_rank(DVOA)*100,
-#     DYAR_pct = percent_rank(DYAR)*100,
-#     PFF_pct = percent_rank(grades_offense)*100,
-#     pa_pct = percent_rank(team_pa)*100,
-#     pblk_pct = percent_rank(grades_pblk)*100,
-#     recv_pct = percent_rank(grades_recv)*100
-#   ) %>%
-#   rename(
-#     name = name.x,
-#     team = team.x,
-#     position = position.x,
-#     team_name = team.y,
-#     team_name_alt = team_name.x,
-#     full_team_name = team_name.y
-#   ) %>%
-#   select(
-#     headshot_url,
-#     full_name,
-#     season,
-#     team_logo_espn,
-#     Plays,
-#     EPA_pct,
-#     CPOE_pct,
-#     DVOA_pct,
-#     DYAR_pct,
-#     PFF_pct,
-#     qbr_pct,
-#     sack_rate_pct,
-#     air_yards_pct,
-#     cp_pct,
-#     recv_pct,
-#     pblk_pct,
-#     pa_pct,
-#     EPA,
-#     CPOE,
-#     DVOA,
-#     DYAR,
-#     PFF,
-#     qbr_total,
-#     sack_rate,
-#     air_yards,
-#     cp,
-#     grades_recv,
-#     grades_pblk,
-#     pa,
-#     team_wordmark
-#   ) %>%
-#   distinct() %>%
-#   arrange(full_name, season)
-
 rosters <- nflreadr::load_rosters_weekly(seasons = 2002:2021)
 
 season_rosters <- nflreadr::load_ff_playerids() %>%
@@ -199,6 +112,143 @@ DBI::dbWriteTable(conn, "kickers", kickers, overwrite = T)
 DBI::dbWriteTable(conn, "players", players, overwrite = T)
 DBI::dbWriteTable(conn, "season_rosters", season_rosters, overwrite = T)
 
+pbp <- nflreadr::load_pbp(seasons = 1999:2021)
+
+## CREATE TABLE FOR QB PAGE
+
+quarterbacks <- pbp %>%
+  filter(down < 5, season_type == "REG", !is.na(qb_epa), pass == 1 | rush == 1, !is.na(id)) %>%
+  mutate(no_play = ifelse(play_type == "no_play", 1, 0)) %>%
+  group_by(name, id, season) %>%
+  summarize(
+    espn_plays = n() - sum(no_play),
+    plays = n(),
+    dropbacks = sum(pass),
+    epa = mean(qb_epa, na.rm = T),
+    cpoe = mean(cpoe, na.rm = T),
+    air_yards = mean(air_yards, na.rm = T),
+    sack_rate = sum(sack, na.rm = T) / dropbacks,
+    cp = mean(cp, na.rm = T),
+    wpa = mean(wpa, na.rm = T),
+    xpass = mean(xpass, na.rm = T),
+    posteam = first(posteam)
+  ) %>%
+  ungroup() %>%
+  mutate(is_eligible = case_when(
+    # season == 2022 & espn_plays >= min_plays & dropbacks >= min_plays ~ 1,
+    espn_plays >= 300 & dropbacks >= 250 ~ 1,
+    TRUE ~ 0
+  )) %>%
+  filter(is_eligible == 1)
+
+any_att <- pbp %>%
+  filter(down < 5, season_type == "REG", pass == 1 | qb_spike == 1, play_type != "no_play" | qb_spike == 1, play_type != "run") %>%
+  group_by(name, id, season) %>%
+  summarize(
+    n = n(),
+    sack_yards = sum(yards_gained*sack, na.rm = T),
+    sacks = sum(sack, na.rm = T),
+    pass_yards = sum(yards_gained*complete_pass, na.rm = T),
+    pass_att = sum(pass_attempt-sack, na.rm = T),
+    pass_tds = sum(pass_touchdown, na.rm = T),
+    interceptions = sum(interception, na.rm = T),
+    any_att = (pass_yards + sack_yards + 20*pass_tds - 45*interceptions)/(pass_att + sacks),
+    spikes = sum(qb_spike, na.rm = T)
+  ) %>%
+  filter(n > 99) %>%
+  ungroup() %>%
+  select(id, season, any_att)
+
+pbp %>%
+  select(down, season_type, pass, play_type, qb_spike) %>%
+  filter(qb_spike == 1) %>%
+  View()
+
+caphits <- readxl::read_excel("Data/caphits.xlsx")
+
+pff_teams <- readxl::read_excel("Data/pff_teams.xlsx")
+
+pff <- readxl::read_excel("Data/pff_qbs.xlsx")
+
+dvoa <- readxl::read_excel("Data/dvoa.xlsx") %>%
+  select(-QBR)
+
+full_rosters <- nflreadr::load_rosters(seasons = 1999:2021) %>%
+  filter(position == "QB") %>%
+  rename(espn_id_roster = espn_id) %>%
+  filter(!is.na(gsis_id)) %>%
+  left_join(nflreadr::load_ff_playerids() %>% select(-c(pff_id)), by="gsis_id") %>%
+  mutate(
+    espn_id = case_when(
+      !is.na(espn_id) ~ as.character(espn_id),
+      !is.na(espn_id_roster) ~ as.character(espn_id_roster),
+      TRUE ~ NA_character_),
+    qbr_join = ifelse(is.na(espn_id), full_name, espn_id)) %>%
+  mutate(pff_id = as.numeric(pff_id)) %>%
+  rename(team = team.x) %>%
+  select(full_name, qbr_join, season, team, gsis_id, pff_id, espn_id, headshot_url)
+
+no_espn_id <- full_rosters %>%
+  filter(is.na(espn_id)) %>%
+  select(full_name, gsis_id) %>%
+  rename(name_display = full_name) %>%
+  mutate(missing_espn = 1) %>%
+  distinct()
+
+qbrs <- nflreadr::load_espn_qbr(seasons = 2006:2021) %>%
+  filter(season_type == "Regular") %>%
+  left_join(no_espn_id, by="name_display") %>%
+  mutate(qbr_join = ifelse(is.na(missing_espn), player_id, name_display))
+
+pfr_passing <- nflreadr::load_pfr_passing()
+
+quarterbacks_enriched <- quarterbacks %>%
+  left_join(full_rosters, by=c("id"="gsis_id", "season")) %>%
+  left_join(qbrs, by=c("qbr_join","season")) %>%
+  left_join(pff, by=c("pff_id"="player_id", "season")) %>%
+  left_join(dvoa, by=c("name"="Player","season"="Year")) %>%
+  left_join(caphits, by=c("full_name"="Player","season"="Year")) %>%
+  left_join(nflreadr::load_teams(), by=c("posteam"="team_abbr")) %>%
+  left_join(any_att, by=c("id", "season")) %>%
+  mutate(
+    pff = grades_offense,
+    # qbr_pct = percent_rank(qbr_total)*100,
+    # DVOA_pct = percent_rank(DVOA)*100,
+    # DYAR_pct = percent_rank(DYAR)*100,
+    # PFF_pct = percent_rank(grades_offense)*100,
+    # pa_pct = percent_rank(team_pa)*100,
+    # pblk_pct = percent_rank(grades_pblk)*100,
+    # recv_pct = percent_rank(grades_recv)*100
+  ) %>%
+  rename(
+    team = team.x,
+    dvoa = DVOA,
+    dyar = DYAR,
+    n = plays
+  ) %>%
+  select(
+    headshot_url,
+    full_name,
+    team_wordmark,
+    season,
+    team,
+    n,
+    epa,
+    cpoe,
+    dvoa,
+    dyar,
+    pff,
+    qbr_total,
+    sack_rate,
+    any_att,
+    air_yards
+  ) %>%
+  distinct() %>%
+  mutate(
+    cpoe = ifelse(is.nan(cpoe), NA_real_, cpoe),
+    air_yards = ifelse(is.nan(air_yards), NA_real_, air_yards),
+  ) %>%
+  arrange(full_name, season)
+
 DBI::dbWriteTable(conn, "qbs", qbs, overwrite = T)
 
-test <- nflreadr::load_ff_playerids()

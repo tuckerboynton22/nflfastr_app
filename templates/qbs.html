@@ -22,12 +22,15 @@
                 <th>QB</th>
                 <th>Season</th>
                 <th>Team</th>
-                <th>EPA/P</th>
+                <th>players</th>
+                <th>EPA/Play</th>
                 <th>CPOE</th>
                 <th>DVOA</th>
                 <th>DYAR</th>
                 <th>PFF</th>
                 <th>QBR</th>
+                <th>ANY/Att</th>
+                <th>aDOT</th>
                 <th>Sack%</th>
             </tr>
         </thead>
@@ -38,13 +41,16 @@
                     <td>{{ qb.full_name }}</td>
                     <td>{{ qb.season|int }}</td>
                     <td><img src="{{ qb.team_wordmark }}"></td>
-                    <td>{{ '%0.3f'|format(qb.EPA|float) }}</td>
-                    <td>{{ '%0.2f'|format(qb.CPOE|float) }}</td>
-                    <td>{{ '%0.2f'|format(qb.DVOA|float) }}</td>
-                    <td>{{ qb.DYAR|int }}</td>
-                    <td>{{ qb.PFF }}</td>
+                    <td>{{ qb.n|int }}</td>
+                    <td>{{ '%0.3f'|format(qb.epa|float) }}</td>
+                    <td>{{ '%0.2f'|format(qb.cpoe|float) }}</td>
+                    <td>{{ '%0.2f'|format(qb.dvoa|float) }}</td>
+                    <td>{{ qb.dyar|int }}</td>
+                    <td>{{ qb.pff }}</td>
                     <td>{{ qb.qbr_total }}</td>
-                    <td>{{ '%0.2f'|format(qb.sack_rate|float) }}</td>
+                    <td>{{ '%0.2f'|format(qb.any_att|float) }}</td>
+                    <td>{{ '%0.2f'|format(qb.air_yards|float) }}</td>
+                    <td>{{ '%0.3f'|format(qb.sack_rate|float) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
