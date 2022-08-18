@@ -659,12 +659,17 @@ def results():
     if start_age != "any" or end_age != "any" or start_height != "any" or end_height != "any" \
         or start_weight != "any" or end_weight != "any" or start_exp != "any" or end_exp != "any":
         
-        join_query += " JOIN season_rosters r ON r.roster_season=n.season AND r.gsis_id=n." + player_info_join + " "
+        join_query += " JOIN season_rosters r ON r.gsis_id=n." + player_info_join + " "
 
         if start_age != "any":
-            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birth_date))>=" + start_age + " "
+            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))>=" + start_age + " "
         if end_age != "any":
-            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birth_date))<=" + end_age + " "
+            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))<=" + end_age + " "
+        if start_age != "any":
+            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))>=" + start_age + " "
+        if end_age != "any":
+            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))<=" + end_age + " "
+
 
     # Create game_id query for ungrouping searches
     game_id = request.args.get("game_id")

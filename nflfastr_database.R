@@ -110,7 +110,8 @@ pbp <- nflreadr::load_pbp(seasons = 1999:2021)
 rosters <- nflreadr::load_rosters_weekly(seasons = 2002:2021)
 
 season_rosters <- nflreadr::load_rosters(seasons = 1999:2021) %>%
-  rename(roster_season = season)
+  rename(roster_season = season) %>%
+  select(-week)
 
 receivers <- pbp %>%
   select(receiver_id, receiver, posteam) %>%
@@ -186,6 +187,11 @@ DBI::dbWriteTable(conn, "rushers", rushers, overwrite = T)
 DBI::dbWriteTable(conn, "names", names, overwrite = T)
 DBI::dbWriteTable(conn, "passers", passers, overwrite = T)
 DBI::dbWriteTable(conn, "players", players, overwrite = T)
-DBI::dbWriteTable(conn, "season_rosters", season_rosters, overwrite = T)
+DBI::dbWriteTable(conn, "season_rosters", test, overwrite = T)
 
 DBI::dbWriteTable(conn, "qbs", qbs, overwrite = T)
+
+
+test <- nflreadr::load_ff_playerids()
+
+test$birthdate
