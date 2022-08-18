@@ -643,7 +643,7 @@ def results():
             defenders_in_box_query = " AND defenders_in_box='" + defenders_in_box + "' "
             defenders_in_box_results = "Box defenders: " + defenders_in_box + ". "
 
-    # Create participation queries
+    # Create player info queries
     player_info_join = request.args.get("player_info_join")
     start_age = request.args.get("start_age")
     end_age = request.args.get("end_age")
@@ -662,22 +662,39 @@ def results():
         
         join_query += " JOIN season_rosters r ON r.gsis_id=n." + player_info_join + " "
 
+        if player_info_join == "id":
+            player_type = "Passer/Rusher"
+        elif player_info_join == "passer_id":
+            player_type = "Passer"
+        elif player_info_join == "rusher_id":
+            player_type = "Rusher"
+        else:
+            player_type = "Receiver"
+
         if start_age != "any":
             player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))>=" + start_age + " "
+            player_info_results += " " + player_type + " age >= " + start_age + "."
         if end_age != "any":
             player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))<=" + end_age + " "
+            player_info_results += " " + player_type + " age <= " + end_age + "."
         if start_height != "any":
             player_info_query += " AND height>=" + start_height + " "
+            player_info_results += " " + player_type + " height >= " + start_height + " in."
         if end_height != "any":
             player_info_query += " AND height<=" + end_height + " "
+            player_info_results += " " + player_type + " height <= " + end_height + " in."
         if start_weight != "any":
             player_info_query += " AND weight>=" + start_weight + " "
+            player_info_results += " " + player_type + " weight >= " + start_weight + " lb."
         if end_weight != "any":
             player_info_query += " AND weight<=" + end_weight + " "
+            player_info_results += " " + player_type + " weight <= " + end_weight + " lb."
         if start_exp != "any":
             player_info_query += " AND season-draft_year+1>=" + start_exp + " "
+            player_info_results += " " + player_type + " career season >= " + start_exp + "."
         if end_exp != "any":
             player_info_query += " AND season-draft_year+1<=" + end_exp + " "
+            player_info_results += " " + player_type + " career season <= " + end_exp + "."
 
     # Create game_id query for ungrouping searches
     game_id = request.args.get("game_id")
@@ -822,7 +839,7 @@ def results():
                 + play_type_results + indicator_results + filter_results + win_results + drive_result_results \
                 + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
                 + on_off_results + o_personnel_results + d_personnel_results + offense_formation_results + defenders_in_box_results \
-                + no_play_results + grouping_results + minplay_results
+                + no_play_results + player_info_results + grouping_results + minplay_results
 
     select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
 
