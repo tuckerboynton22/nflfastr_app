@@ -665,10 +665,18 @@ def results():
             player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))>=" + start_age + " "
         if end_age != "any":
             player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))<=" + end_age + " "
-        if start_age != "any":
-            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))>=" + start_age + " "
-        if end_age != "any":
-            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))<=" + end_age + " "
+        if start_height != "any":
+            player_info_query += " AND weight>=" + start_height + " "
+        if end_height != "any":
+            player_info_query += " AND weight<=" + end_height + " "
+        if start_weight != "any":
+            player_info_query += " AND weight>=" + start_weight + " "
+        if end_weight != "any":
+            player_info_query += " AND weight<=" + end_weight + " "
+        if start_exp != "any":
+            player_info_query += " AND season-draft_year+1>=" + start_exp + " "
+        if end_exp != "any":
+            player_info_query += " AND season-draft_year+1<=" + end_exp + " "
 
     # Create game_id query for ungrouping searches
     game_id = request.args.get("game_id")
