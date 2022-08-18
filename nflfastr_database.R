@@ -193,5 +193,3 @@ DBI::dbWriteTable(conn, "qbs", qbs, overwrite = T)
 
 
 test <- nflreadr::load_ff_playerids()
-
-test$birthdate

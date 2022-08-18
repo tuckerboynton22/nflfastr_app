@@ -670,7 +670,6 @@ def results():
         if end_age != "any":
             player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))<=" + end_age + " "
 
-
     # Create game_id query for ungrouping searches
     game_id = request.args.get("game_id")
     game_query = ""
