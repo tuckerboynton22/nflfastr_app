@@ -205,22 +205,22 @@ def results():
         name = request.args.get("name")
         player_query = player_query + " AND id = '" + name + "' "
         name_dict = db.execute("SELECT name FROM names WHERE id = '" + name + "'")
-        name_results = "Passer/Rusher: " + name_dict[0]['name'] + ". "
+        name_results = " Passer/Rusher: " + name_dict[0]['name'] + "."
     if request.args.get("passer") != "" and request.args.get("passer") is not None:
         passer = request.args.get("passer")
         player_query = player_query + " AND passer_id = '" + passer + "' "
         passer_dict = db.execute("SELECT passer FROM passers WHERE passer_id = '" + passer + "'")
-        passer_results = "Passer: " + passer_dict[0]['passer'] + ". "
+        passer_results = " Passer: " + passer_dict[0]['passer'] + "."
     if request.args.get("receiver") != "" and request.args.get("receiver") is not None:
         receiver = request.args.get("receiver")
         player_query = player_query + " AND receiver_id = '" + receiver + "' "
         receiver_dict = db.execute("SELECT receiver FROM receivers WHERE receiver_id = '" + receiver + "'")
-        receiver_results = "Receiver: " + receiver_dict[0]['receiver'] + ". "
+        receiver_results = " Receiver: " + receiver_dict[0]['receiver'] + "."
     if request.args.get("rusher") != "" and request.args.get("rusher") is not None:
         rusher = request.args.get("rusher")
         player_query = player_query + " AND rusher_id = '" + rusher + "' "
         rusher_dict = db.execute("SELECT rusher FROM rushers WHERE rusher_id = '" + rusher + "'")
-        rusher_results = "Rusher: " + rusher_dict[0]['rusher'] + ". "
+        rusher_results = " Rusher: " + rusher_dict[0]['rusher'] + "."
 
 
     # Create team query
@@ -330,16 +330,16 @@ def results():
     if reg_week_query != "" and post_week_query != "" and reg_week_query is not None and post_week_query is not None:
         week_query = " AND(" + reg_week_query + " OR " + post_week_query + ") "
         week_results = " REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: " \
-                         + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + ". "
+                         + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + "."
     elif reg_week_query != "" and reg_week_query is not None:
         week_query = " AND" + reg_week_query
-        week_results = " REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: None. "
+        week_results = " REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: None."
     elif post_week_query != "" and post_week_query is not None:
         week_query = " AND" + post_week_query
-        week_results = " REG Wks: None, POST Wks: " + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + ". "
+        week_results = " REG Wks: None, POST Wks: " + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + "."
     else:
         week_query = ""
-        week_results = " REG Wks: None, POST Wks: None. "
+        week_results = " REG Wks: None, POST Wks: None."
 
     # Create quarter query
     qtr_query = ""
@@ -584,7 +584,7 @@ def results():
 
     if drive_result != "any":
         drive_result_query = " AND fixed_drive_result='" + drive_result + "' "
-        drive_result_results = " Drive result: " + drive_result + ". "
+        drive_result_results = " Drive result: " + drive_result + "."
     
     # Create participation queries
     on_off_player = request.args.get("player")
@@ -617,30 +617,30 @@ def results():
         if on_off == "on" and on_off_player != "":
             on_off_query = " AND (offense_players LIKE '%" + on_off_player + "%' OR defense_players LIKE '%" + on_off_player + "%') "
             on_off_dict = db.execute("SELECT player FROM players WHERE gsis_id = '" + on_off_player + "'")
-            on_off_results = on_off_dict[0]['player'] + " is on the field. "
+            on_off_results = " " + on_off_dict[0]['player'] + " is on the field."
         elif on_off == "off" and on_off_player != "":
             on_off_query = " AND (offense_players NOT LIKE '%" + on_off_player + "%' AND defense_players NOT LIKE '%" + on_off_player + "%') "
             on_off_dict = db.execute("SELECT player FROM players WHERE gsis_id = '" + on_off_player + "'")
-            on_off_results = on_off_dict[0]['player'] + " is off the field. "
+            on_off_results = " " + on_off_dict[0]['player'] + " is off the field."
         
         if o_personnel != "any":
             o_personnel_query = " AND o_personnel='" + o_personnel + "' "
-            o_personnel_results = "Offensive personnel (RB,TE): " + o_personnel + ". "
+            o_personnel_results = " Offensive personnel (RB,TE): " + o_personnel + "."
 
         if dl != "any":
             d_personnel_query = " AND dl='" + dl + "' "
-            d_personnel_results = "DL: " + dl + ". "
+            d_personnel_results = " DL: " + dl + "."
         if lb != "any":
             d_personnel_query += " AND lb='" + lb + "' "
-            d_personnel_results += "LB: " + lb + ". "
+            d_personnel_results += " LB: " + lb + "."
         
         if offense_formation != "any":
             offense_formation_query = " AND offense_formation='" + offense_formation + "' "
-            offense_formation_results = "Offensive formation: " + offense_formation + ". "
+            offense_formation_results = " Offensive formation: " + offense_formation + "."
         
         if defenders_in_box != "any":
             defenders_in_box_query = " AND defenders_in_box='" + defenders_in_box + "' "
-            defenders_in_box_results = "Box defenders: " + defenders_in_box + ". "
+            defenders_in_box_results = " Box defenders: " + defenders_in_box + "."
 
     # Create player info queries
     player_info_join = request.args.get("player_info_join")
@@ -700,17 +700,17 @@ def results():
     game_query = ""
     game_results = ""
 
-    kicker_player_id = request.args.get("kicker_player_id")
+    kicker_player_name = request.args.get("kicker_player_name")
     kicker_query = ""
     kicker_results = ""
 
     if game_id != "":
         game_query = " AND CAST(game_id AS TEXT) = '" + str(game_id) + "' "
         game_results = " Game ID = " + str(game_id) + "."
-    if kicker_player_id != "":
-        kicker_query = " AND kicker_player_id = '" + kicker_player_id + "' "
-        kicker_dict = db.execute("SELECT kicker_player_name FROM kickers WHERE kicker_player_id = '" + kicker_player_id + "'")
-        rusher_results = "Kicker: " + kicker_dict[0]['kicker_player_name'] + ". "
+    if kicker_player_name != "":
+        kicker_query = " AND kicker_player_id = '" + kicker_player_name + "' "
+        kicker_dict = db.execute("SELECT kicker_player_name FROM kickers WHERE kicker_player_id = '" + kicker_player_name + "'")
+        kicker_results = " Kicker: " + kicker_dict[0]['kicker_player_name'] + "."
 
     # Set groupings
     grouping = ""
@@ -834,7 +834,7 @@ def results():
                 + " vs. " + opp_results + posteam_results + defteam_results \
                 + home_team_results + away_team_results + ". Quarters: " + qtrs + ". Downs: " + dwns + ". Play types: " \
                 + play_type_results + indicator_results + filter_results + win_results + drive_result_results \
-                + week_results + game_results + name_results + passer_results + rusher_results + receiver_results \
+                + week_results + game_results + name_results + passer_results + rusher_results + receiver_results + kicker_results \
                 + on_off_results + o_personnel_results + d_personnel_results + offense_formation_results + defenders_in_box_results \
                 + no_play_results + player_info_results + grouping_results + minplay_results
 
