@@ -224,7 +224,7 @@ quarterbacks_enriched <- quarterbacks %>%
     team = team.x,
     dvoa = DVOA,
     dyar = DYAR,
-    n = plays
+    num_plays = plays
   ) %>%
   select(
     headshot_url,
@@ -232,7 +232,7 @@ quarterbacks_enriched <- quarterbacks %>%
     team_wordmark,
     season,
     team,
-    n,
+    num_plays,
     epa,
     cpoe,
     dvoa,

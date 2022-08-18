@@ -41,7 +41,7 @@
                     <td>{{ qb.full_name }}</td>
                     <td>{{ qb.season|int }}</td>
                     <td><img src="{{ qb.team_wordmark }}"></td>
-                    <td>{{ qb.n|int }}</td>
+                    <td>{{ qb.num_plays|int }}</td>
                     <td>{{ '%0.3f'|format(qb.epa|float) }}</td>
                     <td>{{ '%0.2f'|format(qb.cpoe|float) }}</td>
                     <td>{{ '%0.2f'|format(qb.dvoa|float) }}</td>
