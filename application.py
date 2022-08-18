@@ -665,7 +665,7 @@ def results():
             player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birth_date))>=" + start_age + " "
         if end_age != "any":
             player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birth_date))<=" + end_age + " "
-            
+
     # Create game_id query for ungrouping searches
     game_id = request.args.get("game_id")
     game_query = ""
@@ -819,7 +819,7 @@ def results():
     if (grouping == "" or grouping is None):    
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
                             + join_query + " WHERE season>=? AND season<=? "
-                            + team_query + filter_query + indicators + win_query + drive_result_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query + player_info_query \
                             + on_off_query + o_personnel_query + d_personnel_query + defenders_in_box_query + offense_formation_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
@@ -840,7 +840,7 @@ def results():
                             + " WHERE season>=? AND season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
-                            + team_query + filter_query + indicators + win_query + drive_result_query \
+                            + team_query + filter_query + indicators + win_query + drive_result_query + player_info_query \
                             + on_off_query + o_personnel_query + d_personnel_query + defenders_in_box_query + offense_formation_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
                             + "GROUP BY " + grouping_id + minplay_query \
