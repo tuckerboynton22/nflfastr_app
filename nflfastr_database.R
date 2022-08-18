@@ -169,6 +169,16 @@ players <- rosters %>%
   ) %>%
   arrange(player)
 
+kickers <- pbp %>%
+  select(kicker_player_id, kicker_player_name, posteam) %>%
+  filter(!is.na(kicker_player_id)) %>%
+  distinct() %>%
+  group_by(kicker_player_id) %>%
+  summarize(
+    kicker_player_name = stringr::str_replace(last(kicker_player_name), " ", "")
+  ) %>%
+  arrange(kicker_player_name)
+
 qbs <- read_csv("qb_comps.csv")
 
 conn <- DBI::dbConnect(RPostgres::Postgres(),
@@ -185,6 +195,7 @@ DBI::dbWriteTable(conn, "receivers", receivers, overwrite = T)
 DBI::dbWriteTable(conn, "rushers", rushers, overwrite = T)
 DBI::dbWriteTable(conn, "names", names, overwrite = T)
 DBI::dbWriteTable(conn, "passers", passers, overwrite = T)
+DBI::dbWriteTable(conn, "kickers", kickers, overwrite = T)
 DBI::dbWriteTable(conn, "players", players, overwrite = T)
 DBI::dbWriteTable(conn, "season_rosters", season_rosters, overwrite = T)
 

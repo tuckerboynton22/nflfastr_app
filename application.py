@@ -58,7 +58,6 @@ groupings = {
     "rusher": "Rusher",
     "receiver": "Receiver",
     "kicker_player_name": "Kicker",
-    "punter_player_name": "Punter",
     "posteam": "Offense",
     "defteam": "Defense",
     "game_id": "Game",
@@ -112,10 +111,11 @@ app = Flask(__name__)
 # Update database
 db = SQL(os.getenv("DATABASE_URL"))
 
-passers = db.execute("SELECT passer_id, passer, posteam FROM passers")
-rushers = db.execute("SELECT rusher_id, rusher, posteam FROM rushers")
-names = db.execute("SELECT id, name, posteam FROM names")
-receivers = db.execute("SELECT receiver_id, receiver, posteam FROM receivers")
+passers = db.execute("SELECT * FROM passers")
+rushers = db.execute("SELECT * FROM rushers")
+names = db.execute("SELECT * FROM names")
+receivers = db.execute("SELECT * FROM receivers")
+kickers = db.execute("SELECT * FROM kickers")
 players = db.execute("SELECT gsis_id, player, team FROM players")
 quarterbacks = db.execute("SELECT * FROM qbs")
 
@@ -191,7 +191,6 @@ def results():
 
     # Create player query
     player_query = ""
-    player_results = ""
 
     passer = ""
     receiver = ""
@@ -696,14 +695,22 @@ def results():
             player_info_query += " AND season-draft_year+1<=" + end_exp + " "
             player_info_results += " " + player_type + " career season <= " + end_exp + "."
 
-    # Create game_id query for ungrouping searches
+    # Create game_id, kicker_player_id query for ungrouping searches
     game_id = request.args.get("game_id")
     game_query = ""
     game_results = ""
 
+    kicker_player_id = request.args.get("kicker_player_id")
+    kicker_query = ""
+    kicker_results = ""
+
     if game_id != "":
         game_query = " AND CAST(game_id AS TEXT) = '" + str(game_id) + "' "
         game_results = " Game ID = " + str(game_id) + "."
+    if kicker_player_id != "":
+        kicker_query = " AND kicker_player_id = '" + kicker_player_id + "' "
+        kicker_dict = db.execute("SELECT kicker_player_name FROM kickers WHERE kicker_player_id = '" + kicker_player_id + "'")
+        rusher_results = "Kicker: " + kicker_dict[0]['kicker_player_name'] + ". "
 
     # Set groupings
     grouping = ""
@@ -734,11 +741,6 @@ def results():
         grouping = group + ", kicker_player_id"
         grouping_id = "kicker_player_id"
         grouping_id1 = "kicker_player_id"
-        grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
-    elif group == "punter_player_name":
-        grouping = group + ", punter_player_id"
-        grouping_id = "punter_player_id"
-        grouping_id1 = "punter_player_id"
         grouping_null = " AND " + group + " IS NOT NULL " + " AND LENGTH(CAST(" + group + " AS TEXT))>0 "
     elif group == "receiver":
         grouping = group + ", receiver_id"
@@ -784,11 +786,6 @@ def results():
         grouping = grouping + group2 + ", kicker_player_id"
         grouping_id = grouping_id + "kicker_player_id"
         grouping_id2 = "kicker_player_id"
-        grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
-    elif group2 == "punter_player_name":
-        grouping = grouping + group2 + ", punter_player_id"
-        grouping_id = grouping_id + "punter_player_id"
-        grouping_id2 = "punter_player_id"
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
     elif group2 == "receiver":
         grouping = grouping + group2 + ", receiver_id"
@@ -852,6 +849,7 @@ def results():
                             + team_query + filter_query + indicators + win_query + drive_result_query + player_info_query \
                             + on_off_query + o_personnel_query + d_personnel_query + defenders_in_box_query + offense_formation_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
+                            + kicker_query \
                             + " AND " + sort[0] + " IS NOT NULL ORDER BY " + sort[0] + " " \
                             + order + " LIMIT 1000",
                             season_start, season_end)
@@ -873,13 +871,14 @@ def results():
                             + team_query + filter_query + indicators + win_query + drive_result_query + player_info_query \
                             + on_off_query + o_personnel_query + d_personnel_query + defenders_in_box_query + offense_formation_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
+                            + kicker_query \
                             + "GROUP BY " + grouping_id + minplay_query \
                             + " ORDER BY total_" + sort[0] + " " + order + " LIMIT 1000",
                             season_start, season_end)
 
-        if group != "name" and group != "kicker_player_name" and group != "punter_player_name" and group != "receiver" \
+        if group != "name" and group != "kicker_player_name" and group != "receiver" \
             and group != "passer" and group != "rusher" and group2 != "passer" and group2 != "rusher" \
-            and group2 != "name" and group2 != "kicker_player_name" and group2 != "punter_player_name" \
+            and group2 != "name" and group2 != "kicker_player_name" \
             and group2 != "receiver_player_name" and group2 != "week" and group != "week":
 
             return render_template("teams.html", plays=plays, order=order, sort=sort, group=group, grouping_id1=grouping_id1,
