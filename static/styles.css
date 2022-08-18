@@ -88,3 +88,7 @@ img {
 
     padding: 0.75rem;
 }
+
+#playerinfo {
+    display: none;
+}
