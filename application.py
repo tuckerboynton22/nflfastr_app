@@ -655,6 +655,7 @@ def results():
     end_exp = request.args.get("end_exp")
 
     player_info_query = ""
+    player_info_results = ""
 
     if start_age != "any" or end_age != "any" or start_height != "any" or end_height != "any" \
         or start_weight != "any" or end_weight != "any" or start_exp != "any" or end_exp != "any":
@@ -666,9 +667,9 @@ def results():
         if end_age != "any":
             player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birthdate))<=" + end_age + " "
         if start_height != "any":
-            player_info_query += " AND weight>=" + start_height + " "
+            player_info_query += " AND height>=" + start_height + " "
         if end_height != "any":
-            player_info_query += " AND weight<=" + end_height + " "
+            player_info_query += " AND height<=" + end_height + " "
         if start_weight != "any":
             player_info_query += " AND weight>=" + start_weight + " "
         if end_weight != "any":
