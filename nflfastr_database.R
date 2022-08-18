@@ -247,8 +247,9 @@ quarterbacks_enriched <- quarterbacks %>%
   mutate(
     cpoe = ifelse(is.nan(cpoe), NA_real_, cpoe),
     air_yards = ifelse(is.nan(air_yards), NA_real_, air_yards),
+    pff = ifelse(is.na(pff), 0, pff),
+    qbr_total = ifelse(is.na(qbr_total), 0, qbr_total)
   ) %>%
   arrange(full_name, season)
 
-DBI::dbWriteTable(conn, "qbs", qbs, overwrite = T)
-
+DBI::dbWriteTable(conn, "qbs", quarterbacks_enriched, overwrite = T)
