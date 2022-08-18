@@ -609,7 +609,9 @@ def results():
     offense_formation_results = ""
     defenders_in_box_results = ""
 
-    if (on_off != "any" and on_off_player != "") or o_personnel != "any" or dl != "any" or lb != "any" or offense_formation != "any" or defenders_in_box != "any":
+    if (on_off != "any" and on_off_player != "") \
+        or o_personnel != "any" or dl != "any" or lb != "any" \
+            or offense_formation != "any" or defenders_in_box != "any":
         
         join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
         
@@ -641,7 +643,29 @@ def results():
             defenders_in_box_query = " AND defenders_in_box='" + defenders_in_box + "' "
             defenders_in_box_results = "Box defenders: " + defenders_in_box + ". "
 
+    # Create participation queries
+    player_info_join = request.args.get("player_info_join")
+    start_age = request.args.get("start_age")
+    end_age = request.args.get("end_age")
+    start_height = request.args.get("start_height")
+    end_height = request.args.get("end_height")
+    start_weight = request.args.get("start_weight")
+    end_weight = request.args.get("end_weight")
+    start_exp = request.args.get("start_exp")
+    end_exp = request.args.get("end_exp")
 
+    player_info_query = ""
+
+    if start_age != "any" or end_age != "any" or start_height != "any" or end_height != "any" \
+        or start_weight != "any" or end_weight != "any" or start_exp != "any" or end_exp != "any":
+        
+        join_query += " JOIN season_rosters r ON r.roster_season=n.season AND r.gsis_id=n." + player_info_join + " "
+
+        if start_age != "any":
+            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birth_date))>=" + start_age + " "
+        if end_age != "any":
+            player_info_query += " AND date_part('year', AGE(TO_DATE(game_date, 'YYYY/MM/DD'), birth_date))<=" + end_age + " "
+            
     # Create game_id query for ungrouping searches
     game_id = request.args.get("game_id")
     game_query = ""
