@@ -807,13 +807,13 @@ def results():
         grouping_null = grouping_null + " AND " + group2 + " IS NOT NULL " + " AND LENGTH(CAST(" + group2 + " AS TEXT))>0 "
 
     if group != "" and group is not None:
-        grouping_results = "Grouped by " + groupings[group]
+        grouping_results = " Grouped by " + groupings[group]
         if group2 != "" and group2 is not None:
             grouping_results = grouping_results + ", " + groupings[group2] + "."
         else:
             grouping_results = grouping_results + "."
     elif group2 != "" and group2 is not None:
-        grouping_results = "Grouped by " + groupings[group2] + "."
+        grouping_results = " Grouped by " + groupings[group2] + "."
     else:    
         grouping_results = ""
 
