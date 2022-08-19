@@ -220,6 +220,10 @@ quarterbacks_enriched <- quarterbacks %>%
     dyar = DYAR,
     num_plays = plays
   ) %>%
+  mutate(
+    dvoa = dvoa*100,
+    sack_rate = sack_rate*100
+  ) %>%
   select(
     headshot_url,
     full_name,
