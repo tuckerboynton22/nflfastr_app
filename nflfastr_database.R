@@ -238,8 +238,8 @@ quarterbacks_enriched <- quarterbacks %>%
   ) %>%
   distinct() %>%
   mutate(
-    cpoe = ifelse(is.nan(cpoe), "", cpoe),
-    air_yards = ifelse(is.nan(air_yards), "", air_yards)
+    cpoe = round(cpoe, 2),
+    air_yards = round(air_yards, 2)
   ) %>%
   arrange(full_name, season)
 

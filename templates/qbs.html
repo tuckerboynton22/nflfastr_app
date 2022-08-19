@@ -43,13 +43,13 @@
                     <td><img src="{{ qb.team_wordmark }}"></td>
                     <td>{{ qb.num_plays|int }}</td>
                     <td>{{ '%0.3f'|format(qb.epa|float) }}</td>
-                    <td>{{ '%0.2f'|format(qb.cpoe|float) }}</td>
+                    <td>{{ qb.cpoe }}</td>
                     <td>{{ '%0.2f'|format(qb.dvoa|float) }}</td>
                     <td>{{ qb.dyar|int }}</td>
                     <td>{{ qb.pff }}</td>
                     <td>{{ qb.qbr_total }}</td>
                     <td>{{ '%0.2f'|format(qb.any_att|float) }}</td>
-                    <td>{{ '%0.2f'|format(qb.air_yards|float) }}</td>
+                    <td>{{ qb.air_yards }}</td>
                     <td>{{ '%0.3f'|format(qb.sack_rate|float) }}</td>
                 </tr>
             {% endfor %}
