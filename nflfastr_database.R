@@ -176,6 +176,7 @@ full_rosters <- nflreadr::load_rosters(seasons = 1999:2021) %>%
   left_join(nflreadr::load_ff_playerids() %>% select(-c(pff_id)), by="gsis_id") %>%
   mutate(
     espn_id = case_when(
+      season == 2010 & full_name == "Jay Cutler" ~ "9597",
       !is.na(espn_id) ~ as.character(espn_id),
       !is.na(espn_id_roster) ~ as.character(espn_id_roster),
       TRUE ~ NA_character_),
