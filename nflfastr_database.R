@@ -121,10 +121,11 @@ quarterbacks <- pbp %>%
   mutate(no_play = ifelse(play_type == "no_play", 1, 0)) %>%
   group_by(name, id, season) %>%
   summarize(
-    espn_plays = n() - sum(no_play),
+    espn_plays = n() - sum(no_play, na.rm = T),
     plays = n(),
-    dropbacks = sum(pass),
+    dropbacks = sum(pass, na.rm = T),
     epa = mean(qb_epa, na.rm = T),
+    t_epa = sum(qb_epa, na.rm = T),
     cpoe = mean(cpoe, na.rm = T),
     air_yards = mean(air_yards, na.rm = T),
     sack_rate = sum(sack, na.rm = T) / dropbacks,
@@ -227,6 +228,7 @@ quarterbacks_enriched <- quarterbacks %>%
     team,
     num_plays,
     epa,
+    t_epa,
     cpoe,
     dvoa,
     dyar,

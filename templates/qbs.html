@@ -23,13 +23,14 @@
                 <th>Season</th>
                 <th>Team</th>
                 <th>Plays</th>
-                <th>EPA/Play</th>
+                <th>EPA</th>
+                <th>EPA/P</th>
                 <th>CPOE</th>
                 <th>DVOA</th>
                 <th>DYAR</th>
                 <th>PFF</th>
                 <th>QBR</th>
-                <th>ANY/Att</th>
+                <th>ANY/A</th>
                 <th>aDOT</th>
                 <th>Sack%</th>
             </tr>
@@ -42,6 +43,7 @@
                     <td>{{ qb.season|int }}</td>
                     <td><img src="{{ qb.team_wordmark }}"></td>
                     <td>{{ qb.num_plays|int }}</td>
+                    <td>{{ '%0.1f'|format(qb.t_epa|float) }}</td>
                     <td>{{ '%0.3f'|format(qb.epa|float) }}</td>
                     <td>{{ qb.cpoe }}</td>
                     <td>{{ '%0.2f'|format(qb.dvoa|float) }}</td>
