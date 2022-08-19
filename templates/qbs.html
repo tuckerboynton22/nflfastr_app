@@ -52,7 +52,7 @@
                     {% else %}
                         <td></td>
                     {% endif %}
-                    <td>{{ '%0.1f'|format|(qb.dvoa|float) }}%</td>
+                    <td>{{ '%0.1f'|format(qb.dvoa|float) }}%</td>
                     <td>{{ qb.dyar|int }}</td>
                     {% if qb.qbr_total is not none %}
                         <td>{{ qb.qbr_total }}</td>
