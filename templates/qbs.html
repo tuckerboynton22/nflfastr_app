@@ -52,7 +52,7 @@
                     {% else %}
                         <td></td>
                     {% endif %}
-                    <td>{{ qb.dvoa }}%</td>
+                    <td>{{ '%0.1f'|format|(qb.dvoa|float) }}%</td>
                     <td>{{ qb.dyar|int }}</td>
                     {% if qb.qbr_total is not none %}
                         <td>{{ qb.qbr_total }}</td>
@@ -61,11 +61,11 @@
                     {% endif %}
                     <td>{{ '%0.2f'|format(qb.any_att|float) }}</td>
                     {% if qb.air_yards is not none %}
-                        <td>{{ qb.air_yards }}</td>
+                        <td>{{ '%0.2f'|format(qb.air_yards|float) }}</td>
                     {% else %}
                         <td></td>
                     {% endif %}
-                    <td>{{ '%0.1f'|format(qb.sack_rate|float) }}%</td>
+                    <td>{{ '%0.2f'|format(qb.sack_rate|float) }}%</td>
                 </tr>
             {% endfor %}
         </tbody>
