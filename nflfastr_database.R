@@ -20,6 +20,8 @@ participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
     lb = substr(stringr::str_extract(defense_personnel, regex('([1-9]*) LB')),1,1)
   )
 
+pbp <- nflreadr::load_pbp(seasons = 1999:2021)
+
 rosters <- nflreadr::load_rosters_weekly(seasons = 2002:2021)
 
 season_rosters <- nflreadr::load_ff_playerids() %>%
@@ -111,8 +113,6 @@ DBI::dbWriteTable(conn, "passers", passers, overwrite = T)
 DBI::dbWriteTable(conn, "kickers", kickers, overwrite = T)
 DBI::dbWriteTable(conn, "players", players, overwrite = T)
 DBI::dbWriteTable(conn, "season_rosters", season_rosters, overwrite = T)
-
-pbp <- nflreadr::load_pbp(seasons = 1999:2021)
 
 ## CREATE TABLE FOR QB PAGE
 
