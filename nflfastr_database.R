@@ -159,11 +159,6 @@ any_att <- pbp %>%
   ungroup() %>%
   select(id, season, any_att)
 
-pbp %>%
-  select(down, season_type, pass, play_type, qb_spike) %>%
-  filter(qb_spike == 1) %>%
-  View()
-
 caphits <- readxl::read_excel("Data/caphits.xlsx")
 
 pff_teams <- readxl::read_excel("Data/pff_teams.xlsx")
@@ -199,8 +194,6 @@ qbrs <- nflreadr::load_espn_qbr(seasons = 2006:2021) %>%
   filter(season_type == "Regular") %>%
   left_join(no_espn_id, by="name_display") %>%
   mutate(qbr_join = ifelse(is.na(missing_espn), player_id, name_display))
-
-pfr_passing <- nflreadr::load_pfr_passing()
 
 quarterbacks_enriched <- quarterbacks %>%
   left_join(full_rosters, by=c("id"="gsis_id", "season")) %>%
@@ -244,12 +237,6 @@ quarterbacks_enriched <- quarterbacks %>%
     air_yards
   ) %>%
   distinct() %>%
-  mutate(
-    cpoe = ifelse(is.nan(cpoe), NA_real_, cpoe),
-    air_yards = ifelse(is.nan(air_yards), NA_real_, air_yards),
-    pff = ifelse(is.na(pff), 0, pff),
-    qbr_total = ifelse(is.na(qbr_total), 0, qbr_total)
-  ) %>%
   arrange(full_name, season)
 
 DBI::dbWriteTable(conn, "qbs", quarterbacks_enriched, overwrite = T)
