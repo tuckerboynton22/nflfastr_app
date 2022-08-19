@@ -16,7 +16,7 @@
     </head>
 
     <h3>Quarterback Season Database</h3>
-    Here, you can find a full database of QB seasons since 1999. Filter by year or player using the search box.
+    Here, you can find a full database of QB seasons (min. 300 plays) since 1999. Filter by year or player using the search box.
     <hr>
     <table id="table_id" class="cell-border compact stripe">
         <thead>
@@ -31,7 +31,6 @@
                 <th>CPOE</th>
                 <th>DVOA</th>
                 <th>DYAR</th>
-                <th>PFF</th>
                 <th>QBR</th>
                 <th>ANY/A</th>
                 <th>aDOT</th>
@@ -48,10 +47,13 @@
                     <td>{{ qb.num_plays|int }}</td>
                     <td>{{ '%0.1f'|format(qb.t_epa|float) }}</td>
                     <td>{{ '%0.3f'|format(qb.epa|float) }}</td>
-                    <td>{{ qb.cpoe }}</td>
-                    <td>{{ '%0.2f'|format(qb.dvoa|float) }}</td>
+                    {% if qb.cpoe is not none %}
+                        <td>{{ '%0.2f'|format(qb.cpoe|float) }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td>{{ '%0.3f'|format(qb.dvoa|float) }}</td>
                     <td>{{ qb.dyar|int }}</td>
-                    <td>{{ qb.pff }}</td>
                     <td>{{ qb.qbr_total }}</td>
                     <td>{{ '%0.2f'|format(qb.any_att|float) }}</td>
                     <td>{{ qb.air_yards }}</td>

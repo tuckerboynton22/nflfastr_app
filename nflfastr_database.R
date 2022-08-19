@@ -239,10 +239,6 @@ quarterbacks_enriched <- quarterbacks %>%
     air_yards
   ) %>%
   distinct() %>%
-  mutate(
-    cpoe = round(cpoe, 2),
-    air_yards = round(air_yards, 2)
-  ) %>%
   arrange(full_name, season)
 
 DBI::dbWriteTable(conn, "qbs", quarterbacks_enriched, overwrite = T)
