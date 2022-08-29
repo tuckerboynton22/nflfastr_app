@@ -11,6 +11,8 @@
         });</script>
         
     </head>
+    <h3>Quarterback Database</h3>
+    Here, you can find a full database of QB seasons (min. 300 plays) and games (min. 20 plays) since 1999. Filter by team, week, year, or player using the form below.
     <hr>
     <form action="/qb_seasons" method="get">
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#qbseasons">Seasons</button>
@@ -43,6 +45,7 @@
                 {% for quarterback in season_quarterbacks %}
                     <option value="{{ quarterback.full_name }}">{{ quarterback.full_name }}</option>
                 {% endfor %}
+            </select>
             <div class="form-group">
                 <button class="btn btn-primary" id="submit" type="submit">Submit</button>
             </div>
@@ -68,7 +71,7 @@
             <br>
             Team:
             <select name="team">
-                <option selected value="">Team</option>
+                <option selected value="">Any</option>
                 {% for team in teams %}
                     <option value="{{ team }}">{{ team }}</option>
                 {% endfor %}
@@ -80,6 +83,7 @@
                 {% for quarterback in game_quarterbacks %}
                     <option value="{{ quarterback.full_name }}">{{ quarterback.full_name }}</option>
                 {% endfor %}
+            </select>
             Week:
             <select name="week_start">
                 {% for week in range(1,23,1) %}

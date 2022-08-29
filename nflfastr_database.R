@@ -256,9 +256,9 @@ DBI::dbWriteTable(conn, "qbs", quarterbacks_enriched, overwrite = T)
 ## GET QB GAME LOG
 
 qb_gamelog <- pbp %>%
-  filter(down < 5, season_type == "REG", !is.na(qb_epa), pass == 1 | rush == 1, !is.na(id)) %>%
+  filter(down < 5, !is.na(qb_epa), pass == 1 | rush == 1, !is.na(id)) %>%
   mutate(no_play = ifelse(play_type == "no_play", 1, 0)) %>%
-  group_by(name, id, season, game_id) %>%
+  group_by(name, id, season, game_id, week) %>%
   summarize(
     posteam = first(posteam),
     espn_plays = n() - sum(no_play, na.rm = T),
