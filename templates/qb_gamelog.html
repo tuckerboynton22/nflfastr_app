@@ -36,7 +36,6 @@
                 <th>Tot WPA</th>
                 <th>CPOE</th>
                 <th>aDOT</th>
-                <th>Cmp AirYds</th>
             </tr>
         </thead>
         <tbody>
@@ -63,11 +62,6 @@
                     {% endif %}
                     {% if qb_game.air_yards is not none %}
                         <td>{{ '%0.2f'|format(qb_game.air_yards|float) }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                    {% if qb_game.cmp_air_yards is not none %}
-                        <td>{{ '%0.2f'|format(qb_game.cmp_air_yards|float) }}</td>
                     {% else %}
                         <td></td>
                     {% endif %}
