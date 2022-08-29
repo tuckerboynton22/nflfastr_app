@@ -255,20 +255,29 @@ DBI::dbWriteTable(conn, "qbs", quarterbacks_enriched, overwrite = T)
 
 ## GET QB GAME LOG
 
-qbr_games <- nflreadr::load_espn_qbr(seasons = 2006:2021, summary_type = "weekly") %>%
-  left_join(no_espn_id, by=c("name_display","season")) %>%
-  mutate(qbr_join = ifelse(is.na(missing_espn), player_id, name_display)) %>%
-  select(season, game_id, game_week, team_abb, qbr_total, opp_abb, qbr_join) %>%
-  left_join(full_rosters, by=c("season","qbr_join"))
+qb_gamelog <- pbp %>%
+  filter(down < 5, season_type == "REG", !is.na(qb_epa), pass == 1 | rush == 1, !is.na(id)) %>%
+  mutate(no_play = ifelse(play_type == "no_play", 1, 0)) %>%
+  group_by(name, id, season, game_id) %>%
+  summarize(
+    posteam = first(posteam),
+    espn_plays = n() - sum(no_play, na.rm = T),
+    plays = n(),
+    dropbacks = sum(pass, na.rm = T),
+    cmp = sum(complete_pass, na.rm = T),
+    att = sum(pass_attempt-sack, na.rm = T),
+    cpoe = mean(cpoe, na.rm = T),
+    tds = sum(pass_touchdown, na.rm = T) + sum(rush_touchdown, na.rm = T),
+    epa = mean(qb_epa, na.rm = T),
+    t_epa = sum(qb_epa, na.rm = T),
+    sack_epa = sum(qb_epa*sack, na.rm = T),
+    pass_epa = sum(qb_epa*(pass_attempt-sack), na.rm = T),
+    rush_epa = sum(qb_epa*rush_attempt, na.rm = T),
+    air_yards = mean(air_yards, na.rm = T),
+    cmp_air_yards = mean(air_yards*complete_pass, na.rm = T),
+    wpa = sum(wpa, na.rm = T)
+  ) %>%
+  ungroup() %>%
+  filter(espn_plays >= 20, dropbacks >= 10)
 
-game_logs <- nflreadr::load_player_stats(stat_type = "offense", seasons = 1999:2021) %>%
-  select(player_id:sack_yards, passing_air_yards:passing_yards_after_catch, passing_epa, dakota, rushing_epa, fantasy_points) %>%
-  mutate(passing_air_yards = passing_yards - passing_yards_after_catch) %>%
-  filter(attempts >= 15) %>%
-  left_join(qbr_games, by=c("player_id"="gsis_id", "season","week"="game_week")) %>%
-  mutate(passing_epa = ifelse(is.na(passing_epa), 0, passing_epa),
-         rushing_epa = ifelse(is.na(rushing_epa), 0, rushing_epa),
-         total_epa = passing_epa + rushing_epa) %>%
-  select(player_id:week, completions:fantasy_points, total_epa, qbr_total)
-
-DBI::dbWriteTable(conn, "qbs", quarterbacks_enriched, overwrite = T)
+DBI::dbWriteTable(conn, "qb_gamelog", qb_gamelog, overwrite = T)
