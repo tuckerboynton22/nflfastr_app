@@ -262,7 +262,7 @@ qb_gamelog <- pbp %>%
   summarize(
     posteam = first(posteam),
     espn_plays = n() - sum(no_play, na.rm = T),
-    plays = n(),
+    tot_plays = n(),
     dropbacks = sum(pass, na.rm = T),
     cmp = sum(complete_pass, na.rm = T),
     att = sum(pass_attempt-sack, na.rm = T),
@@ -274,7 +274,7 @@ qb_gamelog <- pbp %>%
     pass_epa = sum(qb_epa*(pass_attempt-sack), na.rm = T),
     rush_epa = sum(qb_epa*rush_attempt, na.rm = T),
     air_yards = mean(air_yards, na.rm = T),
-    cmp_air_yards = mean(air_yards*complete_pass, na.rm = T),
+    cmp_air_yards = sum(air_yards*complete_pass, na.rm = T),
     wpa = sum(wpa, na.rm = T)
   ) %>%
   ungroup() %>%

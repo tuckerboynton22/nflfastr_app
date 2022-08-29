@@ -118,6 +118,7 @@ receivers = db.execute("SELECT * FROM receivers")
 kickers = db.execute("SELECT * FROM kickers")
 players = db.execute("SELECT gsis_id, player, team FROM players")
 quarterbacks = db.execute("SELECT * FROM qbs")
+qb_gamelog = db.execute("SELECT * FROM qb_gamelog")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -953,6 +954,10 @@ def cards():
 @app.route("/qbs", methods=["GET"])
 def qbs():
     return render_template("qbs.html", quarterbacks=quarterbacks)
+
+@app.route("/qb_gamelog", methods=["GET"])
+def qb_gamelog():
+    return render_template("qb_gamelog.html", qb_gamelog=qb_gamelog)
 
 # Handle error
 def errorhandler(e):

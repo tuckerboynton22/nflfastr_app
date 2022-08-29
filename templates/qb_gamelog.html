@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+        <script src="static/datatables.js"></script>
+    </head>
+
+    <h3>Quarterback Season Database</h3>
+    Here, you can find a full database of QB seasons (min. 300 plays) since 1999. Filter by year or player using the search box.
+    <hr>
+    <table id="table_id" class="cell-border compact stripe">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>QB</th>
+                <th>Season</th>
+                <th>Team</th>
+                <th>Game</th>
+                <th>Plays</th>
+                <th>Cmp</th>
+                <th>Att</th>
+                <th>EPA/P</th>
+                <th>Tot EPA</th>
+                <th>Pass EPA</th>
+                <th>Rush EPA</th>
+                <th>Sack EPA</th>
+                <th>Tot WPA</th>
+                <th>CPOE</th>
+                <th>aDOT</th>
+                <th>Cmp AirYds</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for qb_game in qb_gamelog %}
+                <tr>
+                    <td></td>
+                    <td>{{ qb_game.name }}</td>
+                    <td>{{ qb_game.season|int }}</td>
+                    <td>{{ qb_game.posteam }}</td>
+                    <td>{{ qb_game.game_id }}</td>
+                    <td>{{ qb_game.tot_plays }}</td>
+                    <td>{{ qb_game.cmp|int }}</td>
+                    <td>{{ qb_game.att|int }}</td>
+                    <td>{{ '%0.3f'|format(qb_game.epa|float) }}</td>
+                    <td>{{ '%0.1f'|format(qb_game.t_epa|float) }}</td>
+                    <td>{{ '%0.1f'|format(qb_game.pass_epa|float) }}</td>
+                    <td>{{ '%0.1f'|format(qb_game.rush_epa|float) }}</td>
+                    <td>{{ '%0.1f'|format(qb_game.sack_epa|float) }}</td>
+                    <td>{{ '%0.2f'|format(qb_game.wpa|float) }}</td>
+                    {% if qb_game.cpoe is not none %}
+                        <td>{{ '%0.2f'|format(qb_game.cpoe|float) }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    {% if qb_game.air_yards is not none %}
+                        <td>{{ '%0.2f'|format(qb_game.air_yards|float) }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    {% if qb_game.cmp_air_yards is not none %}
+                        <td>{{ '%0.2f'|format(qb_game.cmp_air_yards|float) }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td>{{ '%0.2f'|format(qb.sack_rate|float) }}%</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
