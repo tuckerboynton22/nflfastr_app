@@ -75,7 +75,7 @@
             <br>
             Quarterback:
             <select class="js-example-basic-single" name="quarterback">
-                <option selected value="">Choose</option>
+                <option selected value="">Any</option>
                 {% for quarterback in game_quarterbacks %}
                     <option value="{{ quarterback.full_name }}">{{ quarterback.full_name }}</option>
                 {% endfor %}
