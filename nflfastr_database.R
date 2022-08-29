@@ -278,6 +278,7 @@ qb_gamelog <- pbp %>%
     wpa = sum(wpa, na.rm = T)
   ) %>%
   ungroup() %>%
-  filter(espn_plays >= 20, dropbacks >= 10)
+  filter(espn_plays >= 20, dropbacks >= 10) %>%
+  left_join(full_rosters, by=c("id"="gsis_id", "season"))
 
 DBI::dbWriteTable(conn, "qb_gamelog", qb_gamelog, overwrite = T)

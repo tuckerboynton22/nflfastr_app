@@ -116,9 +116,9 @@ rushers = db.execute("SELECT * FROM rushers")
 names = db.execute("SELECT * FROM names")
 receivers = db.execute("SELECT * FROM receivers")
 kickers = db.execute("SELECT * FROM kickers")
-players = db.execute("SELECT gsis_id, player, team FROM players")
-quarterbacks = db.execute("SELECT * FROM qbs")
-quarterback_gamelog = db.execute("SELECT * FROM qb_gamelog")
+players = db.execute("SELECT * FROM players")
+season_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qbs")
+game_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qb_gamelog")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -162,7 +162,6 @@ def homepage():
 def index():
 
     # Provide form for query
-    # teams = db.execute("SELECT DISTINCT posteam FROM nflfastR_pbp WHERE posteam!='' ORDER BY posteam")
     teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
                 "LA", "LAC", "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"]
 
@@ -953,11 +952,62 @@ def cards():
 
 @app.route("/qbs", methods=["GET"])
 def qbs():
-    return render_template("qbs.html", quarterbacks=quarterbacks)
+
+    teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
+                "LA", "LAC", "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"]
+
+    return render_template("qbs.html", season_quarterbacks=season_quarterbacks, game_quarterbacks=game_quarterbacks, teams=teams)
 
 @app.route("/qb_gamelog", methods=["GET"])
 def qb_gamelog():
+
+    season_start = str(request.args.get("start"))
+    season_end = str(request.args.get("end"))
+    team = request.args.get("team")
+    quarterback = request.args.get("quarterback")
+    week_start = str(request.args.get("week_start"))
+    week_end = str(request.args.get("week_end"))
+
+    if team != "":
+        team_query = " AND posteam = " + team
+    else:
+        team_query = ""
+    
+    if quarterback != "":
+        quarterback_query = " AND full_name = " + quarterback
+    else:
+        quarterback_query = ""
+
+    quarterback_gamelog = db.execute("SELECT * FROM qb_gamelog WHERE season >=" \
+                                    + season_start + " AND season <= " + season_end \
+                                    + " AND week >= " + week_start + " AND week <= " \
+                                    + week_end + team_query + quarterback_query)
+
     return render_template("qb_gamelog.html", quarterback_gamelog=quarterback_gamelog)
+
+@app.route("/qb_seasons", methods=["GET"])
+def qb_seasons():
+
+    season_start = str(request.args.get("start"))
+    season_end = str(request.args.get("end"))
+    team = request.args.get("team")
+    quarterback = request.args.get("quarterback")
+
+    if team != "":
+        team_query = " AND team = " + team
+    else:
+        team_query = ""
+    
+    if quarterback != "":
+        quarterback_query = " AND full_name = " + quarterback
+    else:
+        quarterback_query = ""
+
+    quarterback_seasons = db.execute("SELECT * FROM qb_gamelog WHERE season >=" \
+                                    + season_start + " AND season <= " + season_end \
+                                    + team_query + quarterback_query)
+
+    return render_template("qb_seasons.html", quarterback_seasons=quarterback_seasons)
 
 # Handle error
 def errorhandler(e):
