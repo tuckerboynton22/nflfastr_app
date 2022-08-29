@@ -251,7 +251,7 @@ quarterbacks_enriched <- quarterbacks %>%
   distinct() %>%
   arrange(full_name, season)
 
-DBI::dbWriteTable(conn, "qbs", quarterbacks_enriched, overwrite = T)
+DBI::dbWriteTable(conn, "qb_seasons", quarterbacks_enriched, overwrite = T)
 
 ## GET QB GAME LOG
 
@@ -280,5 +280,8 @@ qb_gamelog <- pbp %>%
   ungroup() %>%
   filter(espn_plays >= 20, dropbacks >= 10) %>%
   left_join(full_rosters, by=c("id"="gsis_id", "season"))
+
+qb_gamelog <- qb_gamelog %>%
+  arrange(full_name)
 
 DBI::dbWriteTable(conn, "qb_gamelog", qb_gamelog, overwrite = T)
