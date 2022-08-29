@@ -1003,9 +1003,7 @@ def qb_seasons():
     else:
         quarterback_query = ""
 
-    quarterback_seasons = db.execute("SELECT * FROM qbs WHERE season >=" \
-                                    + season_start + " AND season <= " + season_end \
-                                    + team_query + quarterback_query)
+    quarterback_seasons = db.execute("SELECT * FROM qbs")
 
     return render_template("qb_seasons.html", quarterback_seasons=quarterback_seasons)
 
