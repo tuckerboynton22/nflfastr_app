@@ -117,7 +117,7 @@ names = db.execute("SELECT * FROM names")
 receivers = db.execute("SELECT * FROM receivers")
 kickers = db.execute("SELECT * FROM kickers")
 players = db.execute("SELECT * FROM players")
-season_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qbs")
+season_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qb_seasons")
 game_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qb_gamelog")
 
 # Ensure templates are auto-reloaded
@@ -1003,7 +1003,9 @@ def qb_seasons():
     else:
         quarterback_query = ""
 
-    quarterback_seasons = db.execute("SELECT * FROM qbs")
+    quarterback_seasons = db.execute("SELECT * FROM qb_seasons WHERE season >=" \
+                                    + season_start + " AND season <= " + season_end \
+                                    + team_query + quarterback_query)
 
     return render_template("qb_seasons.html", quarterback_seasons=quarterback_seasons)
 
