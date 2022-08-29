@@ -117,8 +117,8 @@ names = db.execute("SELECT * FROM names")
 receivers = db.execute("SELECT * FROM receivers")
 kickers = db.execute("SELECT * FROM kickers")
 players = db.execute("SELECT * FROM players")
-season_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qb_seasons")
-game_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qb_gamelog")
+season_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qb_seasons ORDER BY full_name")
+game_quarterbacks = db.execute("SELECT DISTINCT full_name FROM qb_gamelog ORDER BY full_name")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
