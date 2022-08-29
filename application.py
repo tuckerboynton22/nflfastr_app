@@ -968,22 +968,28 @@ def qb_gamelog():
     week_start = str(request.args.get("week_start"))
     week_end = str(request.args.get("week_end"))
 
+    game_desc = "Seasons: " + season_start + "-" + season_end + ", Weeks: " + week_start + "-" + week_end
+
     if team != "":
         team_query = " AND posteam = '" + team + "' "
+        game_desc += ", Team: " + team
     else:
         team_query = ""
+        game_desc += ", Team: Any"
     
     if quarterback != "":
         quarterback_query = " AND full_name = '" + quarterback + "' "
+        game_desc += ", QB: " + quarterback
     else:
         quarterback_query = ""
+        game_desc += ", QB: Any"
 
     quarterback_gamelog = db.execute("SELECT * FROM qb_gamelog WHERE season >=" \
                                     + season_start + " AND season <= " + season_end \
                                     + " AND week >= " + week_start + " AND week <= " \
                                     + week_end + team_query + quarterback_query)
 
-    return render_template("qb_gamelog.html", quarterback_gamelog=quarterback_gamelog)
+    return render_template("qb_gamelog.html", quarterback_gamelog=quarterback_gamelog, game_desc=game_desc)
 
 @app.route("/qb_seasons", methods=["GET"])
 def qb_seasons():
@@ -993,21 +999,27 @@ def qb_seasons():
     team = request.args.get("team")
     quarterback = request.args.get("quarterback")
 
+    season_desc = "Seasons: " + season_start + "-" + season_end
+
     if team != "":
         team_query = " AND team = '" + team + "' "
+        season_desc += ", Team: " + team
     else:
         team_query = ""
+        season_desc += ", Team: Any"
     
     if quarterback != "":
         quarterback_query = " AND full_name = '" + quarterback + "' "
+        season_desc += ", QB: " + quarterback
     else:
         quarterback_query = ""
+        season_desc += ", QB: Any"
 
     quarterback_seasons = db.execute("SELECT * FROM qb_seasons WHERE season >=" \
                                     + season_start + " AND season <= " + season_end \
                                     + team_query + quarterback_query)
 
-    return render_template("qb_seasons.html", quarterback_seasons=quarterback_seasons)
+    return render_template("qb_seasons.html", quarterback_seasons=quarterback_seasons, season_desc=season_desc)
 
 # Handle error
 def errorhandler(e):
