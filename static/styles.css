@@ -67,7 +67,7 @@ table td {
     vertical-align: middle;
 }
 
-select {
+.form-group {
     padding: 0.75rem;
 }
 
