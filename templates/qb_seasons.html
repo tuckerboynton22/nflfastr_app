@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+        <script src="static/datatables.js"></script>
+    </head>
+
+    <h3>Quarterback Season Database</h3>
+    <hr>
+    <table id="table_id" class="cell-border compact stripe">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>QB</th>
+                <th>Season</th>
+                <th>Team</th>
+                <th>Plays</th>
+                <th>EPA</th>
+                <th>EPA/P</th>
+                <th>CPOE</th>
+                <th>DVOA</th>
+                <th>DYAR</th>
+                <th>QBR</th>
+                <th>ANY/A</th>
+                <th>aDOT</th>
+                <th>Sack%</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for qb in quarterbacks %}
+                <tr>
+                    <td></td>
+                    <td>{{ qb.full_name }}</td>
+                    <td>{{ qb.season|int }}</td>
+                    <td><img src="{{ qb.team_wordmark }}"></td>
+                    <td>{{ qb.num_plays|int }}</td>
+                    <td>{{ '%0.1f'|format(qb.t_epa|float) }}</td>
+                    <td>{{ '%0.3f'|format(qb.epa|float) }}</td>
+                    {% if qb.cpoe is not none %}
+                        <td>{{ '%0.2f'|format(qb.cpoe|float) }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td>{{ '%0.1f'|format(qb.dvoa|float) }}%</td>
+                    <td>{{ qb.dyar|int }}</td>
+                    {% if qb.qbr_total is not none %}
+                        <td>{{ qb.qbr_total }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td>{{ '%0.2f'|format(qb.any_att|float) }}</td>
+                    {% if qb.air_yards is not none %}
+                        <td>{{ '%0.2f'|format(qb.air_yards|float) }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td>{{ '%0.2f'|format(qb.sack_rate|float) }}%</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
