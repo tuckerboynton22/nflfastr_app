@@ -16,7 +16,7 @@
     </head>
 
     <h3>Quarterback Season Database</h3>
-    Here, you can find a full database of QB seasons (min. 300 plays) since 1999. Filter by year or player using the search box.
+    Here, you can find a full database of QB games (min. 20 plays) since 1999. Filter by year, player, or game using the search box.
     <hr>
     <table id="table_id" class="cell-border compact stripe">
         <thead>
@@ -41,7 +41,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for qb_game in qb_gamelog %}
+            {% for qb_game in quarterback_gamelog %}
                 <tr>
                     <td></td>
                     <td>{{ qb_game.name }}</td>
