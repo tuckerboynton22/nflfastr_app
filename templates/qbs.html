@@ -15,8 +15,7 @@
     Here, you can find a full database of QB seasons (min. 300 plays) and games (min. 20 plays) since 1999. Filter by team, week, year, or player using the forms below.
     <hr>
     <form action="/qb_seasons" method="get">
-        <h4>Seasons:</h4>
-        <br>
+        <h5>Seasons:</h5>
             Season:
             <select name="start">
                 {% for season in range(2022, 1998, -1) %}
@@ -45,13 +44,14 @@
                     <option value="{{ quarterback.full_name }}">{{ quarterback.full_name }}</option>
                 {% endfor %}
             </select>
+            <hr>
             <div class="form-group">
-                <button class="btn btn-primary" id="submit" type="submit">Submit</button>
+                <button class="btn btn-primary" id="submit" type="submit">Search Seasons</button>
             </div>
     </form>
     <hr>
     <form action="/qb_gamelog" method="get">
-        <br>
+        <h5>Games:</h5>
             Season:
             <select name="start">
                 {% for season in range(2022, 1998, -1) %}
@@ -92,10 +92,12 @@
                     <option value="{{ week }}">{{ week }}</option>
                 {% endfor %}
             </select>
+            <hr>
             <div class="form-group">
-                <button class="btn btn-primary" id="submit" type="submit">Submit</button>
+                <button class="btn btn-primary" id="submit" type="submit">Search Games</button>
             </div>
             Note: Single-game searches with fewer parameters will take longer to render.
+            <hr>
     </form>
     Data coverage: Pass location/air yards and its derivatives (CPOE, YAC, etc.) 2006-21. Participation data (personnel, on/off field, formations, box defenders) 2016-21.
 {% endblock %}
