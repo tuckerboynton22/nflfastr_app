@@ -969,12 +969,12 @@ def qb_gamelog():
     week_end = str(request.args.get("week_end"))
 
     if team != "":
-        team_query = " AND posteam = " + team
+        team_query = " AND posteam = '" + team + "' "
     else:
         team_query = ""
     
     if quarterback != "":
-        quarterback_query = " AND full_name = " + quarterback
+        quarterback_query = " AND full_name = '" + quarterback + "' "
     else:
         quarterback_query = ""
 
@@ -994,16 +994,16 @@ def qb_seasons():
     quarterback = request.args.get("quarterback")
 
     if team != "":
-        team_query = " AND team = " + team
+        team_query = " AND team = '" + team + "' "
     else:
         team_query = ""
     
     if quarterback != "":
-        quarterback_query = " AND full_name = " + quarterback
+        quarterback_query = " AND full_name = '" + quarterback + "' "
     else:
         quarterback_query = ""
 
-    quarterback_seasons = db.execute("SELECT * FROM qb_gamelog WHERE season >=" \
+    quarterback_seasons = db.execute("SELECT * FROM qbs WHERE season >=" \
                                     + season_start + " AND season <= " + season_end \
                                     + team_query + quarterback_query)
 

@@ -12,12 +12,11 @@
         
     </head>
     <h3>Quarterback Database</h3>
-    Here, you can find a full database of QB seasons (min. 300 plays) and games (min. 20 plays) since 1999. Filter by team, week, year, or player using the form below.
+    Here, you can find a full database of QB seasons (min. 300 plays) and games (min. 20 plays) since 1999. Filter by team, week, year, or player using the forms below.
     <hr>
     <form action="/qb_seasons" method="get">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#qbseasons">Seasons</button>
+        <h4>Seasons:</h4>
         <br>
-        <div class="collapse" id="qbseasons">
             Season:
             <select name="start">
                 {% for season in range(2022, 1998, -1) %}
@@ -49,13 +48,10 @@
             <div class="form-group">
                 <button class="btn btn-primary" id="submit" type="submit">Submit</button>
             </div>
-        </div>
     </form>
     <hr>
     <form action="/qb_gamelog" method="get">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#qbgamelog">Games</button>
         <br>
-        <div class="collapse" id="qbgamelog">
             Season:
             <select name="start">
                 {% for season in range(2022, 1998, -1) %}
@@ -100,7 +96,6 @@
                 <button class="btn btn-primary" id="submit" type="submit">Submit</button>
             </div>
             Note: Single-game searches with fewer parameters will take longer to render.
-        </div>
     </form>
     Data coverage: Pass location/air yards and its derivatives (CPOE, YAC, etc.) 2006-21. Participation data (personnel, on/off field, formations, box defenders) 2016-21.
 {% endblock %}
