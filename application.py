@@ -49,9 +49,9 @@ filters = {
     "drive_play_count": "Total Plays on Drive",
     "drive_quarter_start": "Drive Quarter Start",
     "drive_quarter_end": "Drive Quarter End",
-    "return_yards": "Return Yards",
-    "exp_yards": "Expected Rush Yards",
-    "ryoe": "Rush Yards Over Expected (RYOE)"
+    "return_yards": "Return Yards"
+    # "exp_yards": "Expected Rush Yards",
+    # "ryoe": "Rush Yards Over Expected (RYOE)"
 }
 
 # Create global groupings
