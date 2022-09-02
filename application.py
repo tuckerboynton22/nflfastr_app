@@ -50,7 +50,7 @@ filters = {
     "drive_quarter_start": "Drive Quarter Start",
     "drive_quarter_end": "Drive Quarter End",
     "return_yards": "Return Yards",
-    "x_rush_yards": "Expected Rush Yards",
+    "exp_yards": "Expected Rush Yards",
     "ryoe": "Rush Yards Over Expected (RYOE)"
 }
 
@@ -451,7 +451,7 @@ def results():
                 filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
                 filter_results = " " + str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
 
-            if str(request.args.get(filt)) == "ryoe" or str(request.args.get(filt)) == "x_rush_yards":
+            if str(request.args.get(filt)) == "ryoe" or str(request.args.get(filt)) == "exp_yards":
                 need_ryoe_join += 1
 
     if filter_results != "":
@@ -460,14 +460,14 @@ def results():
     # Set desired sorting mechanism
     sort = [request.args.get("sort"), filters[request.args.get("sort")]]
 
-    if request.args.get("sort") != "ryoe" and request.args.get("sort") != "x_rush_yards":
+    if request.args.get("sort") != "ryoe" and request.args.get("sort") != "exp_yards":
         select += "n." + request.args.get("sort") + ", "
     else:
         select += request.args.get("sort") + ", "
         need_ryoe_join += 1
 
     if need_ryoe_join > 0:
-        join_query += " JOIN ryoe ON ryoe.game_id=n.old_game_id  AND ryoe.play_id=n.play_id "
+        join_query += " JOIN ryoe ON CAST(ryoe.game_id AS TEXT)=n.old_game_id  AND ryoe.play_id=n.play_id "
     
     order = request.args.get("order")
 
