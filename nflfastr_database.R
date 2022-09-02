@@ -8,6 +8,7 @@ ryoe <- rbind(read_csv(url("https://raw.githubusercontent.com/tejseth/RYOE/main/
   select(season, week, posteam, play_id, x_rush_yards, ryoe) %>%
   mutate(x_rush_yards = x_rush_yards - 1.2)
 
+
 participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
   mutate(
     o_personnel = case_when(
