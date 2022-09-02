@@ -457,9 +457,6 @@ def results():
     if filter_results != "":
         filter_results += "."
     
-    if need_ryoe_join > 0:
-        join_query += " JOIN ryoe ON ryoe.season=n.season  AND ryoe.week=n.week AND ryoe.posteam=n.posteam AND ryoe.play_id=n.play_id "
-
     # Set desired sorting mechanism
     sort = [request.args.get("sort"), filters[request.args.get("sort")]]
 
@@ -467,11 +464,12 @@ def results():
         select += "n." + request.args.get("sort") + ", "
     else:
         select += request.args.get("sort") + ", "
+        need_ryoe_join += 1
 
-    if request.args.get("order") != "ryoe" and request.args.get("order") != "x_rush_yards":
-        order = request.args.get("order")
-    else:
-        order = "n." + request.args.get("order")
+    if need_ryoe_join > 0:
+        join_query += " JOIN ryoe ON ryoe.season=n.season  AND ryoe.week=n.week AND ryoe.posteam=n.posteam AND ryoe.play_id=n.play_id "
+    
+    order = request.args.get("order")
 
     # Create penalty query
     if request.args.get("penalty") != "either":
