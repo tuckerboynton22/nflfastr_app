@@ -244,12 +244,12 @@ def results():
         if offense != "" and offense is not None:
             team_query = team_query + " AND " + offense + "='" + team + "' "
         elif (offense == "" or offense is None) and (home == "" or home is None):
-            team_query = team_query + " AND(posteam='" + team + "' OR defteam='" + team + "') "
+            team_query = team_query + " AND(n.posteam='" + team + "' OR defteam='" + team + "') "
 
     elif (team == "" or team is None) and opp != "" and opp is not None:
         team_results = "any team"
         opp_results = opp
-        team_query = team_query + " AND(posteam='" + opp + "' OR defteam='" + opp + "') "
+        team_query = team_query + " AND(n.posteam='" + opp + "' OR defteam='" + opp + "') "
         if home != "" and home is not None:
             team_query = team_query + " AND " + home + "!='" + opp + "' "
         if offense != "" and offense is not None:
@@ -258,7 +258,7 @@ def results():
     elif team != "" and opp != "" and team is not None and opp is not None:
         team_results = team
         opp_results = opp
-        team_query = team_query + " AND((posteam='" + opp + "' AND defteam='" + team + "') OR (posteam='" + team + "' AND defteam='" + opp + "')) "
+        team_query = team_query + " AND((n.posteam='" + opp + "' AND defteam='" + team + "') OR (n.posteam='" + team + "' AND defteam='" + opp + "')) "
         if home != "" and home is not None:
             team_query = team_query + " AND " + home + "='" + team + "' "
         if offense != "" and offense is not None:
@@ -586,10 +586,10 @@ def results():
     win_results = ""
 
     if winner == "won":
-        win_query = " AND ((posteam = home_team AND home_score > away_score) OR (posteam = away_team AND home_score < away_score)) "
+        win_query = " AND ((n.posteam = home_team AND home_score > away_score) OR (n.posteam = away_team AND home_score < away_score)) "
         win_results = " Possession team won."
     elif winner == "lost":
-        win_query = " AND ((posteam = home_team AND home_score < away_score) OR (posteam = away_team AND home_score > away_score)) "
+        win_query = " AND ((n.posteam = home_team AND home_score < away_score) OR (n.posteam = away_team AND home_score > away_score)) "
         win_results = " Possession team lost."
     elif winner == "tied":
         win_query = " AND home_score = away_score "
@@ -880,7 +880,7 @@ def results():
                             AVG(epa) AS epa, " + grouping_aggregator \
                             + ", AVG(success) AS success, " \
                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
-                            + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
+                            + ", STRING_AGG(DISTINCT n.posteam, ', ') AS posteam"
                             + " FROM nflfastR_pbp n " + join_query \
                             + " WHERE n.season>=? AND n.season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
@@ -988,7 +988,7 @@ def qb_gamelog():
     game_desc = "Seasons: " + season_start + "-" + season_end + ", Weeks: " + week_start + "-" + week_end
 
     if team != "":
-        team_query = " AND posteam = '" + team + "' "
+        team_query = " AND n.posteam = '" + team + "' "
         game_desc += ", Team: " + team
     else:
         team_query = ""
