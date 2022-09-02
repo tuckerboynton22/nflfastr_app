@@ -3,11 +3,9 @@ options(remove(list=ls()))
 library(tidyverse)
 future::plan("multisession")
 
-ryoe <- rbind(read_csv(url("https://raw.githubusercontent.com/tejseth/RYOE/main/pbp_all_un_1.csv")),
-              read_csv(url("https://raw.githubusercontent.com/tejseth/RYOE/main/pbp_all_un_2.csv"))) %>%
-  select(season, week, posteam, play_id, x_rush_yards, ryoe) %>%
+ryoe <- read_csv(url("https://raw.githubusercontent.com/tejseth/RYOE/main/ryoe_github.csv")) %>%
+  select(game_id, play_id, exp_yards, ryoe) %>%
   mutate(x_rush_yards = x_rush_yards - 1.2)
-
 
 participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
   mutate(

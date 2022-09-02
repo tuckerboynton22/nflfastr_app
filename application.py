@@ -467,7 +467,7 @@ def results():
         need_ryoe_join += 1
 
     if need_ryoe_join > 0:
-        join_query += " JOIN ryoe ON ryoe.season=n.season  AND ryoe.week=n.week AND ryoe.posteam=n.posteam AND ryoe.play_id=n.play_id "
+        join_query += " JOIN ryoe ON ryoe.game_id=n.old_game_id  AND ryoe.play_id=n.play_id "
     
     order = request.args.get("order")
 
