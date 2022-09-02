@@ -49,7 +49,9 @@ filters = {
     "drive_play_count": "Total Plays on Drive",
     "drive_quarter_start": "Drive Quarter Start",
     "drive_quarter_end": "Drive Quarter End",
-    "return_yards": "Return Yards"
+    "return_yards": "Return Yards",
+    "x_rush_yards": "Expected Rush Yards",
+    "ryoe": "Rush Yards Over Expected (RYOE)"
 }
 
 # Create global groupings
@@ -422,7 +424,10 @@ def results():
     filter_dict = {}
     filter_results = ""
     select = ""
+    join_query = ""
+    need_ryoe_join = 0
     NUMFILTERS = 5
+    
     for i in range(NUMFILTERS):
         # Set variables to iterate over filter, inequality, and filter value for all filters
         filt = "filter"+str(i)
@@ -436,22 +441,32 @@ def results():
             if filter_results != "":
                 filter_query = filter_query + " AND " + str(request.args.get(filt)) + str(request.args.get(inequal)) \
                                 + str(request.args.get(filtval)) + " AND " + str(request.args.get(filt)) + " IS NOT NULL "
-                select = select + str(request.args.get(filt)) + ", "
+                select = select + "n." + str(request.args.get(filt)) + ", "
                 filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
                 filter_results = filter_results + ", " + str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
             else:
                 filter_query = filter_query + " AND " + str(request.args.get(filt)) + str(request.args.get(inequal)) \
                                 + str(request.args.get(filtval)) + " AND " + str(request.args.get(filt)) + " IS NOT NULL "
-                select = select + str(request.args.get(filt)) + ", "
+                select = select + "n." + str(request.args.get(filt)) + ", "
                 filter_dict[request.args.get(filt)] = filters[request.args.get(filt)]
                 filter_results = " " + str(filters[request.args.get(filt)]) + str(request.args.get(inequal)) + str(request.args.get(filtval))
-    
+
+            if str(request.args.get(filt)) == "ryoe" or str(request.args.get(filt)) == "x_rush_yards":
+                need_ryoe_join += 1
+
     if filter_results != "":
         filter_results += "."
+    
+    if need_ryoe_join > 0:
+        join_query += " JOIN ryoe ON ryoe.season=n.season  AND ryoe.week=n.week AND ryoe.posteam=n.posteam AND ryoe.play_id=n.play_id "
 
     # Set desired sorting mechanism
     sort = [request.args.get("sort"), filters[request.args.get("sort")]]
-    select = select + request.args.get("sort") + ", "
+
+    if request.args.get("sort") != "ryoe" and request.args.get("sort") != "x_rush_yards":
+        select += "n." + request.args.get("sort") + ", "
+    else:
+        select += "ryoe." + request.args.get("sort") + ", "
     order = request.args.get("order")
 
     # Create penalty query
@@ -596,7 +611,6 @@ def results():
     offense_formation = request.args.get("offense_formation")
     defenders_in_box = request.args.get("defenders_in_box")
 
-    join_query = ""
     on_off_query = ""
     o_personnel_query = ""
     d_personnel_query = ""
@@ -613,7 +627,7 @@ def results():
         or o_personnel != "any" or dl != "any" or lb != "any" \
             or offense_formation != "any" or defenders_in_box != "any":
         
-        join_query = ' JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id '
+        join_query += " JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id "
         
         if on_off == "on" and on_off_player != "":
             on_off_query = " AND (offense_players LIKE '%" + on_off_player + "%' OR defense_players LIKE '%" + on_off_player + "%') "
@@ -839,7 +853,7 @@ def results():
                 + on_off_results + o_personnel_results + d_personnel_results + offense_formation_results + defenders_in_box_results \
                 + no_play_results + player_info_results + grouping_results + minplay_results
 
-    select = select + ' season_type, season, home_team, away_team, posteam, defteam, "week", game_date, qtr, quarter_seconds_remaining, down, ydstogo, "desc" '
+    select = select + ' n.season_type, n.season, n.home_team, n.away_team, n.posteam, n.defteam, n.week, n.game_date, n.qtr, n.quarter_seconds_remaining, n.down, n.ydstogo, n.desc '
 
     # limit = request.args.get("limit")
 
