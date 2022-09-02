@@ -466,7 +466,7 @@ def results():
     if request.args.get("sort") != "ryoe" and request.args.get("sort") != "x_rush_yards":
         select += "n." + request.args.get("sort") + ", "
     else:
-        select += + request.args.get("sort") + ", "
+        select += request.args.get("sort") + ", "
 
     if request.args.get("order") != "ryoe" and request.args.get("order") != "x_rush_yards":
         order = request.args.get("order")
