@@ -862,7 +862,7 @@ def results():
     # If no grouping, pass list of plays to plays.html
     if (grouping == "" or grouping is None):    
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
-                            + join_query + " WHERE season>=? AND season<=? "
+                            + join_query + " WHERE n.season>=? AND n.season<=? "
                             + team_query + filter_query + indicators + win_query + drive_result_query + player_info_query \
                             + on_off_query + o_personnel_query + d_personnel_query + defenders_in_box_query + offense_formation_query \
                             + play_type_query + qtr_query + down_query + week_query + player_query + game_query + no_play_query \
@@ -882,7 +882,7 @@ def results():
                             + total + "(" + sort[0] + ") AS total_" + sort[0]  \
                             + ", STRING_AGG(DISTINCT posteam, ', ') AS posteam"
                             + " FROM nflfastR_pbp n " + join_query \
-                            + " WHERE season>=? AND season<=?" \
+                            + " WHERE n.season>=? AND n.season<=?" \
                             + " AND " + sort[0] + " IS NOT NULL AND success IS NOT NULL \
                             and epa IS NOT NULL" + grouping_null \
                             + team_query + filter_query + indicators + win_query + drive_result_query + player_info_query \
