@@ -6,7 +6,7 @@ future::plan("multisession")
 ryoe <- read_csv(url("https://raw.githubusercontent.com/tejseth/RYOE/main/ryoe_github.csv")) %>%
   select(game_id, play_id, exp_yards, ryoe)
 
-participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
+participation <- nflreadr::load_participation(seasons = 2016:2022) %>%
   mutate(
     o_personnel = case_when(
       stringr::str_detect(offense_personnel, "0 RB") & stringr::str_detect(offense_personnel, "0 TE") ~ "00",
@@ -25,9 +25,9 @@ participation <- nflreadr::load_participation(seasons = 2016:2021) %>%
     lb = substr(stringr::str_extract(defense_personnel, regex('([1-9]*) LB')),1,1)
   )
 
-pbp <- nflreadr::load_pbp(seasons = 1999:2021)
+pbp <- nflreadr::load_pbp(seasons = 1999:2022)
 
-rosters <- nflreadr::load_rosters(seasons = 1999:2021)
+rosters <- nflreadr::load_rosters(seasons = 1999:2022)
 
 season_rosters <- nflreadr::load_ff_playerids() %>%
   rename(full_name = name)
@@ -139,7 +139,7 @@ quarterbacks <- pbp %>%
   ) %>%
   ungroup() %>%
   mutate(is_eligible = case_when(
-    # season == 2022 & espn_plays >= min_plays & dropbacks >= min_plays ~ 1,
+    season == 2022 & espn_plays >= 15*max(pbp$week, na.rm = T) & dropbacks >= 15*max(pbp$week, na.rm = T) ~ 1,
     espn_plays >= 300 & dropbacks >= 250 ~ 1,
     TRUE ~ 0
   )) %>%
@@ -166,7 +166,7 @@ any_att <- pbp %>%
 dvoa <- readxl::read_excel("Data/dvoa.xlsx") %>%
   select(-QBR)
 
-full_rosters <- nflreadr::load_rosters(seasons = 1999:2021) %>%
+full_rosters <- nflreadr::load_rosters(seasons = 1999:2022) %>%
   filter(position == "QB") %>%
   rename(espn_id_roster = espn_id) %>%
   filter(!is.na(gsis_id)) %>%
@@ -201,7 +201,7 @@ no_espn_id <- full_rosters %>%
   mutate(missing_espn = 1) %>%
   distinct()
 
-qbrs <- nflreadr::load_espn_qbr(seasons = 2006:2021) %>%
+qbrs <- nflreadr::load_espn_qbr(seasons = 2006:2022) %>%
   filter(season_type == "Regular") %>%
   left_join(no_espn_id, by=c("name_display","season")) %>%
   mutate(qbr_join = ifelse(is.na(missing_espn), player_id, name_display))
