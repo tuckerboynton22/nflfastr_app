@@ -105,8 +105,9 @@ conn <- DBI::dbConnect(RPostgres::Postgres(),
                        user = Sys.getenv("DB_USER"),
                        password = Sys.getenv("DB_PASSWORD"))
 
-nflfastR::update_db(db_connection = conn, tblname = "nflfastr_pbp", force_rebuild = FALSE)
+# nflfastR::update_db(db_connection = conn, tblname = "nflfastr_pbp", force_rebuild = FALSE)
 
+DBI::dbWriteTable(conn, "nflfastr_pbp", pbp, overwrite = T)
 DBI::dbWriteTable(conn, "participation", participation, overwrite = T)
 DBI::dbWriteTable(conn, "receivers", receivers, overwrite = T)
 DBI::dbWriteTable(conn, "rushers", rushers, overwrite = T)
