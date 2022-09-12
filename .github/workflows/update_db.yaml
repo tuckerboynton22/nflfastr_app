@@ -1,7 +1,7 @@
 name: update_db
 
 on:
-  pull_request:
+  push:
 
 jobs:
   update_db:
