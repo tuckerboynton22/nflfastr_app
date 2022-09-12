@@ -1,9 +1,7 @@
 name: update_db
 
 on:
-  push:
-  schedule:
-    - cron: 00 05 * * *
+  pull_request:
 
 jobs:
   update_db:
