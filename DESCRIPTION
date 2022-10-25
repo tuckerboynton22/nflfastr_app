@@ -19,5 +19,5 @@ Imports:
     future (>= 1.27.0),
     tidyverse (>= 1.3.2),
     nflreadr (>= 1.3.0),
-    gsisdecoder (>= 0.0.1)
+    gsisdecoder (>= 0.0.1),
     nflfastR (>= 4.4.0.9012)
