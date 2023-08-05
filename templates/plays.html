@@ -59,7 +59,7 @@
                         <td>{{ '%0.2f'|format(play[filter]|float) }}</td>
                     {%- endfor -%}
                     {% if play.week < 10 %}
-                        {% set week = "0" + str(play.week) %}
+                        {% set week = "0" + play.week|string %}
                     {% else %}
                         {% set week = play.week %}
                     {% endif %}
