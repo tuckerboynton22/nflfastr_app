@@ -58,7 +58,11 @@
                     {%- for filter in filter_dict.keys() -%}
                         <td>{{ '%0.2f'|format(play[filter]|float) }}</td>
                     {%- endfor -%}
-                    <td><a href="https://rbsdm.com/stats/box_scores/?_inputs_&type={{ play.season_type|lower }}&away={{ play.away_team }}&home={{ play.home_team }}&year={{ play.season }}">Box Score</a></td>
+                    {% if play.week < 10 %}
+                        {% set week = "0" + play.week %}
+                    {% else %}
+                        {% set week = play.week %}
+                    <td><a href="https://rbsdm.com/stats/box_scores/?_inputs_&team=%22%22&gameID=%22{{ play.season }}_{{ week }}__{{ play.away_team }}_{{ play.home_team }}%22&update=2=&year=%22%22&team_open=false">Box Score</a></td>
                 </tr>
             {% endfor %}
         </tbody>
