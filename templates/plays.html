@@ -62,8 +62,9 @@
                         {% set week = "0" + play.week %}
                     {% else %}
                         {% set week = play.week %}
+                    {% endif %}
                     <td><a href="https://rbsdm.com/stats/box_scores/?_inputs_&team=%22%22&gameID=%22{{ play.season }}_{{ week }}__{{ play.away_team }}_{{ play.home_team }}%22&update=2=&year=%22%22&team_open=false">Box Score</a></td>
-                </tr>
+g                </tr>
             {% endfor %}
         </tbody>
     </table>
