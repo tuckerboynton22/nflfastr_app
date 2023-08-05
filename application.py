@@ -112,7 +112,10 @@ post_weeks = {
 app = Flask(__name__)
 
 # Update database
-db = SQL(os.getenv("DATABASE_URL"))
+uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+db = SQL(uri)
 
 passers = db.execute("SELECT * FROM passers")
 rushers = db.execute("SELECT * FROM rushers")
