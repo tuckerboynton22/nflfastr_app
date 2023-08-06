@@ -117,7 +117,6 @@ if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 db = SQL(uri)
 db.execute("ROLLBACK")
-db.commit()
 
 passers = db.execute("SELECT * FROM passers")
 rushers = db.execute("SELECT * FROM rushers")
