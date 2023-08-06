@@ -633,7 +633,7 @@ def results():
         or o_personnel != "any" or dl != "any" or lb != "any" \
             or offense_formation != "any" or defenders_in_box != "any":
         
-        join_query += " JOIN (SELECT * FROM participation) AS p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id "
+        join_query += " JOIN participation p ON p.old_game_id=n.old_game_id AND p.play_id=n.play_id "
         
         if on_off == "on" and on_off_player != "":
             on_off_query = " AND (offense_players LIKE '%" + on_off_player + "%' OR defense_players LIKE '%" + on_off_player + "%') "
