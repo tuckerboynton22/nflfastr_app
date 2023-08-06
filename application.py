@@ -116,8 +116,7 @@ uri = os.getenv("DATABASE_URL")
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 db = SQL(uri)
-curs = db.cursor()
-curs.execute("ROLLBACK")
+db.execute("ROLLBACK")
 db.commit()
 
 passers = db.execute("SELECT * FROM passers")
