@@ -174,7 +174,7 @@ def index():
 
     inequalities = ["=", ">", "<"]
 
-    seasons = [x for x in range(2022, 1998, -1)]
+    seasons = [x for x in range(2023, 1998, -1)]
 
     reg_weeks = ["Any", "None", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
