@@ -167,6 +167,8 @@ def homepage():
 # Play index
 @app.route("/index", methods=["GET"])
 def index():
+    
+    db.execute("ROLLBACK")
 
     # Provide form for query
     teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
