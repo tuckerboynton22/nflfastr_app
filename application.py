@@ -864,7 +864,8 @@ def results():
     # limit = request.args.get("limit")
 
     # If no grouping, pass list of plays to plays.html
-    if (grouping == "" or grouping is None):    
+    if (grouping == "" or grouping is None):
+        db.execute("ROLLBACK")  
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
                             + join_query + " WHERE n.season>=? AND n.season<=? "
                             + team_query + filter_query + indicators + win_query + drive_result_query + player_info_query \
@@ -880,6 +881,7 @@ def results():
 
 
     else:
+        db.execute("ROLLBACK")
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
                             AVG(epa) AS epa, " + grouping_aggregator \
                             + ", AVG(success) AS success, " \
