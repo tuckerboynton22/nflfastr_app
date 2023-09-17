@@ -349,7 +349,7 @@ def results():
         week_query = " AND" + post_week_query
         week_results = " REG Wks: None, POST Wks: " + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + "."
     else:
-        week_query = " (season_type != 'POST' AND season_type != 'REG' ) "
+        week_query = " (season_type != 'POST' AND season_type != 'REG') "
         week_results = " REG Wks: None, POST Wks: None."
 
     # Create quarter query
