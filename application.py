@@ -252,12 +252,12 @@ def results():
         if offense != "" and offense is not None:
             team_query = team_query + " AND " + offense + "='" + team + "' "
         elif (offense == "" or offense is None) and (home == "" or home is None):
-            team_query = team_query + " AND(n.posteam='" + team + "' OR defteam='" + team + "') "
+            team_query = team_query + " AND (n.posteam='" + team + "' OR defteam='" + team + "') "
 
     elif (team == "" or team is None) and opp != "" and opp is not None:
         team_results = "any team"
         opp_results = opp
-        team_query = team_query + " AND(n.posteam='" + opp + "' OR defteam='" + opp + "') "
+        team_query = team_query + " AND (n.posteam='" + opp + "' OR defteam='" + opp + "') "
         if home != "" and home is not None:
             team_query = team_query + " AND " + home + "!='" + opp + "' "
         if offense != "" and offense is not None:
@@ -266,7 +266,7 @@ def results():
     elif team != "" and opp != "" and team is not None and opp is not None:
         team_results = team
         opp_results = opp
-        team_query = team_query + " AND((n.posteam='" + opp + "' AND defteam='" + team + "') OR (n.posteam='" + team + "' AND defteam='" + opp + "')) "
+        team_query = team_query + " AND ((n.posteam='" + opp + "' AND defteam='" + team + "') OR (n.posteam='" + team + "' AND defteam='" + opp + "')) "
         if home != "" and home is not None:
             team_query = team_query + " AND " + home + "='" + team + "' "
         if offense != "" and offense is not None:
@@ -339,7 +339,7 @@ def results():
         post_week_query = ""
     
     if reg_week_query != "" and post_week_query != "" and reg_week_query is not None and post_week_query is not None:
-        week_query = " AND(" + reg_week_query + " OR " + post_week_query + ") "
+        week_query = " AND (" + reg_week_query + " OR " + post_week_query + ") "
         week_results = " REG Wks: " + start_reg_week + "-" + end_reg_week + ", POST Wks: " \
                          + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + "."
     elif reg_week_query != "" and reg_week_query is not None:
@@ -349,7 +349,7 @@ def results():
         week_query = " AND" + post_week_query
         week_results = " REG Wks: None, POST Wks: " + str(int(start_post_week)-17) + "-" + str(int(end_post_week)-17) + "."
     else:
-        week_query = " (season_type != 'POST' AND season_type != 'REG') "
+        week_query = " AND (season_type != 'POST' AND season_type != 'REG') "
         week_results = " REG Wks: None, POST Wks: None."
 
     # Create quarter query
@@ -358,10 +358,10 @@ def results():
         if str(request.args.get(quarter)) in quarters:
             if (qtr_query == "" or qtr_query is None):
                 if str(request.args.get(quarter)) == "5":
-                    qtr_query = " AND(qtr=5 OR qtr=6"
+                    qtr_query = " AND (qtr=5 OR qtr=6"
                     qtrs = "OT"
                 else:
-                    qtr_query = " AND(qtr=" + str(request.args.get(quarter))
+                    qtr_query = " AND (qtr=" + str(request.args.get(quarter))
                     qtrs = str(request.args.get(quarter))
             else:
                 if str(request.args.get(quarter)) == "5":
@@ -379,10 +379,10 @@ def results():
         if str(request.args.get(down + '_down')) in downs:
             if (down_query == "" or down_query is None):
                 if str(request.args.get(down + '_down')) == "5":
-                    down_query = " AND(down IS NULL"
+                    down_query = " AND (down IS NULL"
                     dwns = "None"
                 else:
-                    down_query = " AND(down=" + str(request.args.get(down + '_down'))
+                    down_query = " AND (down=" + str(request.args.get(down + '_down'))
                     dwns = str(request.args.get(down + '_down'))
             else:
                 if str(request.args.get(down + '_down')) == "5":
@@ -401,14 +401,14 @@ def results():
         playtype = str(request.args.get(play))
         if playtype != "rush" and playtype != "pass" and playtype != "two_point_attempt" and playtype in play_types.keys():
             if (play_type_query == "" or play_type_query is None):
-                play_type_query = "AND(play_type='" + str(request.args.get(play)) + "' "
+                play_type_query = "AND (play_type='" + str(request.args.get(play)) + "' "
                 play_type_results = " " + str(play_types[playtype])
             else:
                 play_type_query = play_type_query + "OR play_type='" + playtype + "' "
                 play_type_results = play_type_results + ", " + play_types[playtype]
         elif (playtype == "pass" or playtype == "rush" or playtype == "two_point_attempt") and playtype in play_types.keys():
             if (play_type_query == "" or play_type_query is None):
-                play_type_query = " AND(" + playtype + "=1 "
+                play_type_query = " AND (" + playtype + "=1 "
                 play_type_results = " "  + play_types[playtype]
             else:
                 play_type_query = play_type_query + " OR " + play + "=1 "
