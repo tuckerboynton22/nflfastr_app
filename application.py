@@ -116,7 +116,6 @@ uri = os.getenv("DATABASE_URL")
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 db = SQL(uri)
-db.execute("ROLLBACK")
 
 passers = db.execute("SELECT * FROM passers")
 rushers = db.execute("SELECT * FROM rushers")
@@ -168,8 +167,6 @@ def homepage():
 @app.route("/index", methods=["GET"])
 def index():
     
-    db.execute("ROLLBACK")
-
     # Provide form for query
     teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC",
                 "LA", "LAC", "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"]
@@ -213,25 +210,21 @@ def results():
     if request.args.get("name") != "" and request.args.get("name") is not None:
         name = request.args.get("name")
         player_query = player_query + " AND id = '" + name + "' "
-        db.execute("ROLLBACK")
         name_dict = db.execute("SELECT name FROM names WHERE id = '" + name + "'")
         name_results = " Passer/Rusher: " + name_dict[0]['name'] + "."
     if request.args.get("passer") != "" and request.args.get("passer") is not None:
         passer = request.args.get("passer")
         player_query = player_query + " AND passer_id = '" + passer + "' "
-        db.execute("ROLLBACK")
         passer_dict = db.execute("SELECT passer FROM passers WHERE passer_id = '" + passer + "'")
         passer_results = " Passer: " + passer_dict[0]['passer'] + "."
     if request.args.get("receiver") != "" and request.args.get("receiver") is not None:
         receiver = request.args.get("receiver")
         player_query = player_query + " AND receiver_id = '" + receiver + "' "
-        db.execute("ROLLBACK")
         receiver_dict = db.execute("SELECT receiver FROM receivers WHERE receiver_id = '" + receiver + "'")
         receiver_results = " Receiver: " + receiver_dict[0]['receiver'] + "."
     if request.args.get("rusher") != "" and request.args.get("rusher") is not None:
         rusher = request.args.get("rusher")
         player_query = player_query + " AND rusher_id = '" + rusher + "' "
-        db.execute("ROLLBACK")
         rusher_dict = db.execute("SELECT rusher FROM rushers WHERE rusher_id = '" + rusher + "'")
         rusher_results = " Rusher: " + rusher_dict[0]['rusher'] + "."
 
@@ -643,12 +636,10 @@ def results():
         
         if on_off == "on" and on_off_player != "":
             on_off_query = " AND (offense_players LIKE '%" + on_off_player + "%' OR defense_players LIKE '%" + on_off_player + "%') "
-            db.execute("ROLLBACK")
             on_off_dict = db.execute("SELECT player FROM players WHERE gsis_id = '" + on_off_player + "'")
             on_off_results = " " + on_off_dict[0]['player'] + " is on the field."
         elif on_off == "off" and on_off_player != "":
             on_off_query = " AND (offense_players NOT LIKE '%" + on_off_player + "%' AND defense_players NOT LIKE '%" + on_off_player + "%') "
-            db.execute("ROLLBACK")
             on_off_dict = db.execute("SELECT player FROM players WHERE gsis_id = '" + on_off_player + "'")
             on_off_results = " " + on_off_dict[0]['player'] + " is off the field."
         
@@ -738,7 +729,6 @@ def results():
         game_results = " Game ID = " + str(game_id) + "."
     if kicker_player_name != "":
         kicker_query = " AND kicker_player_id = '" + kicker_player_name + "' "
-        db.execute("ROLLBACK")
         kicker_dict = db.execute("SELECT kicker_player_name FROM kickers WHERE kicker_player_id = '" + kicker_player_name + "'")
         kicker_results = " Kicker: " + kicker_dict[0]['kicker_player_name'] + "."
 
@@ -874,7 +864,6 @@ def results():
 
     # If no grouping, pass list of plays to plays.html
     if (grouping == "" or grouping is None):
-        db.execute("ROLLBACK")  
         plays = db.execute("SELECT " + select + " FROM nflfastR_pbp n " \
                             + join_query + " WHERE n.season>=? AND n.season<=? "
                             + team_query + filter_query + indicators + win_query + drive_result_query + player_info_query \
@@ -890,7 +879,6 @@ def results():
 
 
     else:
-        db.execute("ROLLBACK")
         plays = db.execute("SELECT " + grouping_id + ", COUNT(*) AS total, \
                             AVG(epa) AS epa, " + grouping_aggregator \
                             + ", AVG(success) AS success, " \
@@ -1016,7 +1004,6 @@ def qb_gamelog():
         quarterback_query = ""
         game_desc += ", QB: Any"
     
-    db.execute("ROLLBACK")
     quarterback_gamelog = db.execute("SELECT * FROM qb_gamelog WHERE season >=" \
                                     + season_start + " AND season <= " + season_end \
                                     + " AND week >= " + week_start + " AND week <= " \
@@ -1048,7 +1035,6 @@ def qb_seasons():
         quarterback_query = ""
         season_desc += ", QB: Any"
 
-    db.execute("ROLLBACK")
     quarterback_seasons = db.execute("SELECT * FROM qb_seasons WHERE season >=" \
                                     + season_start + " AND season <= " + season_end \
                                     + team_query + quarterback_query)
