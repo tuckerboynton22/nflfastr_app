@@ -114,9 +114,9 @@ app = Flask(__name__)
 
 # Update database
 uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = uri
-# if uri.startswith("postgres://"):
-#     uri = uri.replace("postgres://", "postgresql://", 1)
 db = SQLAlchemy(app)
 
 passers = db.execute("SELECT * FROM passers")
