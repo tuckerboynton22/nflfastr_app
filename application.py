@@ -1,11 +1,12 @@
 import os
-import datetime
-import re
+# import datetime
+# import re
 # from types import NoneType
 
-from cs50 import SQL
+# from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -113,9 +114,10 @@ app = Flask(__name__)
 
 # Update database
 uri = os.getenv("DATABASE_URL")
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
-db = SQL(uri)
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
+# if uri.startswith("postgres://"):
+#     uri = uri.replace("postgres://", "postgresql://", 1)
+db = SQLAlchemy(app)
 
 passers = db.execute("SELECT * FROM passers")
 rushers = db.execute("SELECT * FROM rushers")
