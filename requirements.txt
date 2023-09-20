@@ -3,4 +3,4 @@ Flask-Session
 requests
 gunicorn
 psycopg2
-flask_sqlalchemy
+psycopg2

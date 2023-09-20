@@ -6,10 +6,33 @@ import os
 # from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+from urllib.parse import urlparse # for python 3+ use: from urllib.parse import urlparse
+import psycopg2
+
+# Update database
+uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+result = urlparse(uri)
+username = result.username
+password = result.password
+database = result.path[1:]
+hostname = result.hostname
+port = result.port
+connection = psycopg2.connect(
+    database = database,
+    user = username,
+    password = password,
+    host = hostname,
+    port = port
+)
+
+db = connection.cursor()
 
 # Create global filters
 filters = {
@@ -111,13 +134,6 @@ post_weeks = {
 
 # Configure application
 app = Flask(__name__)
-
-# Update database
-uri = os.getenv("DATABASE_URL")
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
-app.config['SQLALCHEMY_DATABASE_URI'] = uri
-db = SQLAlchemy(app)
 
 passers = db.execute("SELECT * FROM passers")
 rushers = db.execute("SELECT * FROM rushers")
