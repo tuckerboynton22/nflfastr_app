@@ -3,4 +3,4 @@ Flask-Session
 requests
 gunicorn
 psycopg2
-psycopg2
+cs50
